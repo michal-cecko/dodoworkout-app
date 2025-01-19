@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommonResource\CommonResource;
-use App\Filament\Resources\PostTagResource\Pages;
-use App\Models\PostTag;
+use App\Filament\Resources\EventCategoryResource\Pages;
+use App\Models\EventCategory;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -12,16 +12,15 @@ use Filament\Forms\Form;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Tables\Columns\TextColumn;
 
-class PostTagResource extends CommonResource
+class EventCategoryResource extends CommonResource
 {
     use Translatable;
 
-    protected static ?string $model = PostTag::class;
-
+    protected static ?string $model = EventCategory::class;
     protected static ?string $navigationIcon = 'heroicon-c-tag';
-    protected static ?string $modelLabel = "Značka článku";
-    protected static ?string $pluralModelLabel = "Značky článkov";
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $modelLabel = "Kategória eventu";
+    protected static ?string $pluralModelLabel = "Kategórie eventov";
+    protected static ?string $recordTitleAttribute = 'title';
     protected static string $defaultSortColumn = 'created_at';
 
     public static function form(Form $form): Form
@@ -102,9 +101,9 @@ class PostTagResource extends CommonResource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPostTags::route('/'),
-            'create' => Pages\CreatePostTag::route('/create'),
-            'edit' => Pages\EditPostTag::route('/{record}/edit'),
+            'index' => Pages\ListEventCategories::route('/'),
+            'create' => Pages\CreateEventCategory::route('/create'),
+            'edit' => Pages\EditEventCategory::route('/{record}/edit'),
         ];
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\PostTagResource\Pages;
+namespace App\Filament\Resources\EventResource\Pages;
 
-use App\Filament\Resources\PostTagResource;
+use App\Filament\Resources\EventResource;
 use Filament\Actions;
 use Filament\Actions\CreateAction;
 use Filament\Actions\LocaleSwitcher;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\ListRecords\Concerns\Translatable;
 
-class ListPostTags extends ListRecords
+class ListEvents extends ListRecords
 {
     use Translatable;
 
-    protected static string $resource = PostTagResource::class;
+    protected static string $resource = EventResource::class;
 
     protected function getHeaderActions(): array
     {

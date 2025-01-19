@@ -6,6 +6,8 @@ use App\Filament\Resources\PostTagResource;
 use App\Models\PostTag;
 use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\LocaleSwitcher;
 use Filament\Forms\Components\Placeholder;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\EditRecord\Concerns\Translatable;
@@ -19,8 +21,8 @@ class EditPostTag extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\LocaleSwitcher::make(),
-            Actions\DeleteAction::make(),
+            LocaleSwitcher::make(),
+            DeleteAction::make(),
         ];
     }
 }

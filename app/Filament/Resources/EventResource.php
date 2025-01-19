@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommonResource\CommonResource;
-use App\Filament\Resources\PostResource\Pages;
+use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Trait\UseContentBuilder;
-use App\Models\Post;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Builder;
+use App\Filament\Trait\UseMapField;
+use App\Models\Event;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -23,17 +21,16 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
-class PostResource extends CommonResource
+class EventResource extends CommonResource
 {
-    use Translatable, UseContentBuilder;
+    use Translatable, UseContentBuilder, UseMapField;
 
-    protected static ?string $model = Post::class;
-    protected static ?string $navigationIcon = 'heroicon-s-newspaper';
-    protected static ?string $modelLabel = "Článok";
-    protected static ?string $pluralModelLabel = "Články";
+    protected static ?string $model = Event::class;
+    protected static ?string $navigationIcon = 'heroicon-c-calendar-days';
+    protected static ?string $modelLabel = "Event";
+    protected static ?string $pluralModelLabel = "Eventy";
     protected static ?string $recordTitleAttribute = 'title';
     protected static string $defaultSortColumn = 'created_at';
-
 
     public static function form(Form $form): Form
     {
@@ -68,16 +65,6 @@ class PostResource extends CommonResource
                     'md' => 3,
                     'lg' => 4,
                 ]),
-                Placeholder::make('likes')
-                    ->label("Hodnotenia článku")
-                    ->content(fn($record) => "dobré: {$record?->likes} | zlé: {$record?->dislikes}")
-                    ->visible(fn($get, $record) => $record && !$get('is_draft'))
-                    ->columnSpan([
-                        'default' => 6,
-                        'sm' => 3,
-                        'md' => 3,
-                        'lg' => 4,
-                    ])
             ])
         ])->hiddenOn("create");
 
@@ -105,19 +92,18 @@ class PostResource extends CommonResource
         $fields['image'] = SpatieMediaLibraryFileUpload::make('image')
             ->label("Obrázok")
             ->preserveFilenames()
-            ->image()
             ->required()
+            ->image()
             ->imageEditor()
             ->collection('image')
             ->columnSpan(12);
 
-        $fields['tags'] = Select::make('tags')
-            ->label("Značky")
-            ->relationship("tags", "name")
-            ->multiple()
+        $fields['category_id'] = Select::make('category_id')
+            ->label("Kategória")
+            ->relationship("category", "name")
             ->preload()
             ->searchable()
-            ->createOptionForm(PostTagResource::getFormFields())
+            ->createOptionForm(EventCategoryResource::getFormFields())
             ->columnSpan(12);
 
         $fields['is_draft'] = Checkbox::make('is_draft')
@@ -131,18 +117,63 @@ class PostResource extends CommonResource
                 'lg' => 3,
             ]);
 
-        $fields['published_at'] = DateTimePicker::make('published_at')
-            ->label("Zverejnené dňa")
+        $fields['start_at'] = DateTimePicker::make('start_at')
+            ->label("Začiatok eventu")
             ->native(false)
             ->weekStartsOnMonday()
-            ->default(now())
             ->required()
-            ->visible(fn($get) => !$get('is_draft'))
             ->columnSpan([
                 'default' => 6,
                 'sm' => 3,
                 'md' => 3,
                 'lg' => 4,
+            ]);
+
+        $fields['end_at'] = DateTimePicker::make('end_at')
+            ->label("Koniec eventu")
+            ->native(false)
+            ->weekStartsOnMonday()
+            ->columnSpan([
+                'default' => 6,
+                'sm' => 3,
+                'md' => 3,
+                'lg' => 4,
+            ]);
+
+        $fields = array_merge($fields, self::getGoogleMapField());
+
+        $fields['map']->label("Miesto konania");
+
+        $fields['address'] = TextInput::make('address')
+            ->label("Adresa miesta konania")
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['participants_count'] = TextInput::make('participants_count')
+            ->label("Max. počet účastníkov")
+            ->numeric()
+            ->minValue(1)
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['price'] = TextInput::make('price')
+            ->label("Cena")
+            ->numeric()
+            ->suffix("€")
+            ->minValue(1)
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['last_price'] = TextInput::make('last_price')
+            ->label("Cena pred zľavou")
+            ->numeric()
+            ->suffix("€")
+            ->minValue(1)
+            ->columnSpan([
+                'default' => 12,
             ]);
 
         $fields['content'] = self::getContentBuilder(fieldLabel: "Obsah článku");
@@ -156,6 +187,8 @@ class PostResource extends CommonResource
 
         $columns['image'] = SpatieMediaLibraryImageColumn::make('image')->label('Obrázok')->collection('image');
         $columns['title'] = TextColumn::make('title')->label('Titulok')->sortable()->searchable();
+        $columns['category_id'] = TextColumn::make('category.name')->label('Kategória')->sortable()->searchable();
+        $columns['price'] = TextColumn::make('price')->label('Cena (€)')->numeric()->sortable()->searchable();
         $columns['is_published'] = IconColumn::make('is_published')
             ->label('Je publikovaný?')
             ->sortable(['is_draft'])
@@ -166,7 +199,6 @@ class PostResource extends CommonResource
                 true => "success",
                 false => "danger",
             });
-        $columns['published_at'] = TextColumn::make('published_at')->label('Publikované dňa')->dateTime()->sortable()->searchable();
 
         return $columns;
     }
@@ -174,9 +206,9 @@ class PostResource extends CommonResource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => Pages\ListEvents::route('/'),
+            'create' => Pages\CreateEvent::route('/create'),
+            'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
 }

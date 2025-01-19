@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string("default_title");
-            $table->json("title");
-            $table->json("content");
-            $table->json("excerpt");
-            $table->json("slug");
+            $table->jsonb("title");
+            $table->jsonb("content");
+            $table->jsonb("excerpt");
+            $table->jsonb("slug");
             $table->unsignedSmallInteger("likes")->default(0);
             $table->unsignedSmallInteger("dislikes")->default(0);
             $table->timestamp("published_at")->nullable();

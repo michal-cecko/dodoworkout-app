@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(SlugObserver::class)]
-class PostTag extends Model implements Sluggable
+class EventCategory extends Model implements Sluggable
 {
     use HasTranslations, HasSlug, HasFactory;
-
     protected $fillable = [
         'name',
         'slug',
@@ -38,8 +38,8 @@ class PostTag extends Model implements Sluggable
         return Str::slug($translations[$locale] ?? $translations[config('app.fallback_locale') ?? null]);
     }
 
-    public function posts(): BelongsToMany
+    public function events(): HasMany
     {
-        return $this->belongsToMany(Post::class, "post_tag_post_pivot", "tag_id", "post_id");
+        return $this->hasMany(Event::class, "category_id");
     }
 }
