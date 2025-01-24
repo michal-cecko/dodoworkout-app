@@ -10,4 +10,24 @@ class PageController extends Controller
     {
         return view('pages.home');
     }
+
+    public function blogArchive(): View
+    {
+        return view('pages.blog');
+    }
+
+    public function article(string $slug): View
+    {
+        return view('pages.article');
+    }
+
+    public function workshopsArchive(): View
+    {
+        return view('pages.workshops');
+    }
+
+    public function workshop(string $slug): View
+    {
+        return view('pages.workshop');
+    }
 }

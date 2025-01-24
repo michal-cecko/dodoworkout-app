@@ -16,6 +16,8 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        @livewireStyles
+
         @hasSection('head')
             @yield('head')
         @endif
@@ -34,5 +36,7 @@
         @else
             @include('parts.footer')
         @endif
+
+        @livewireScripts
     </body>
 </html>

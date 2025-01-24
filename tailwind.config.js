@@ -3,13 +3,13 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/**/*.blade.php',
-        './resources/**/*.js',
-        './resources/**/*.vue',
-        './vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css'
-    ],
+		'./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+		 './storage/framework/views/*.php',
+		 './resources/**/*.blade.php',
+		 './resources/**/*.js',
+		 './resources/**/*.vue',
+		 './vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css',
+	],
     theme: {
         extend: {
             fontFamily: {
@@ -17,5 +17,7 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+		require("daisyui")
+	],
 };
