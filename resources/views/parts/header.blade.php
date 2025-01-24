@@ -14,12 +14,12 @@
             </div>
 
             <ul class="nav">
-                <li><a href="#">{{__("nav.about")}}</a></li>
-                <li><a href="#">{{__("nav.blog")}}</a></li>
-                <li><a href="#">{{__("nav.trainings")}}</a></li>
-                <li><a href="#">{{__("nav.events")}}</a></li>
-                <li><a href="#">{{__("nav.shop")}}</a></li>
-                <li><a href="#">{{__("nav.contact")}}</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>
                 <li><a href="#">{{app()->currentLocale() === "sk" ? "EN" : "SK"}}</a></li>
             </ul>
 
