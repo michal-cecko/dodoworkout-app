@@ -3,9 +3,9 @@
 @section('body')
     <section id="hp_hero">
 
-        {!! svgIcon(public_path("svg/dots-mesh.svg"), ['class' => ['dots-mesh']]) !!}
+        {!! svgIcon("svg/dots-mesh.svg", ['class' => ['dots-mesh']]) !!}
 
-        {!! svgIcon(public_path("svg/dots-mesh.svg"), ['class' => ['striped-circle']]) !!}
+        {!! svgIcon("svg/dots-mesh.svg", ['class' => ['striped-circle']]) !!}
 
         <div class="red-rectangle"></div>
 
