@@ -11,6 +11,6 @@ trait HasSlug
 
     public function uniqueSlugQuery(string $slug, ?string $locale = null): ?object
     {
-        return static::query()->where("slug->" . $locale, $slug)->first();
+        return static::query()->where("slug->" . $locale, $slug)->exists();
     }
 }

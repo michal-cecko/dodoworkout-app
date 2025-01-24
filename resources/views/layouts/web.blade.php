@@ -6,9 +6,15 @@
 
         @include('parts.meta')
 
-        <title>Dodoworkout</title>
+        <title>
+            @hasSection('head')
+                @yield('head')
+            @else
+                Dodoworkout
+            @endif
+        </title>
 
-        @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @hasSection('head')
             @yield('head')

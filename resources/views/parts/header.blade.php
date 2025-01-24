@@ -4,12 +4,12 @@
             <span></span>
         </div>
 
-        {!! svgIcon(public_path("logo/logo-black-red.svg"), ['class' => ['logo']]) !!}
+        {!! svgIcon("logo/logo-black-red.svg", ['class' => ['logo']]) !!}
 
         <div class="nav-container">
 
             <div class="searchbar">
-                {!! svgIcon(public_path("icon/icon-search.svg"), ['class' => ['search-icon']]) !!}
+                {!! svgIcon("icon/icon-search.svg", ['class' => ['search-icon']]) !!}
                 <input type="text" placeholder="{{__("searchbar.placeholder")}}">
             </div>
 
@@ -30,13 +30,13 @@
 
         <div class="icons-container">
             <div class="icon-container">
-                <a href="#">{!! svgIcon(public_path("icon/icon-search.svg"), ['class' => ['search-icon']]) !!}</a>
+                <a href="#">{!! svgIcon("icon/icon-search.svg", ['class' => ['search-icon']]) !!}</a>
             </div>
             <div class="icon-container">
-                <a href="#">{!! svgIcon(public_path("icon/icon-cart.svg"), ['class' => ['cart-icon']]) !!}</a>
+                <a href="#">{!! svgIcon("icon/icon-cart.svg", ['class' => ['cart-icon']]) !!}</a>
             </div>
             <div class="icon-container">
-                <a href="#">{!! svgIcon(public_path("icon/icon-profile.svg"), ['class' => ['profile-icon']]) !!}</a>
+                <a href="#">{!! svgIcon("icon/icon-profile.svg", ['class' => ['profile-icon']]) !!}</a>
             </div>
             <div class="icon-container">
                 <a href="#">{{app()->currentLocale() === "sk" ? "EN" : "SK"}}</a>

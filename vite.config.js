@@ -6,7 +6,8 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/app.js',
-                'resources/scss/filament/dashboard/theme.scss'
+                'resources/css/app.css',
+                'resources/css/filament/dashboard/theme.css'
             ],
             refresh: true,
         }),
