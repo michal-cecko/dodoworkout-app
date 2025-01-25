@@ -14,14 +14,12 @@
 
   &[data-highlight="true"] {
     --tag-background: white;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
-    padding-right: 2rem;
+
+    @apply lg:grid lg:grid-cols-2 lg:pr-8 lg:gap-10 lg:col-span-2 border-none lg:col-span-2 bg-primary text-white w-full border-none;
 
     .image-container {
-      grid-row: span 4;
-      height: 100%;
+      @apply lg:row-span-4 lg:h-full;
     }
 
     time {
@@ -35,8 +33,6 @@
     .tags {
       padding-top: 4px;
     }
-
-    @apply col-span-2 bg-primary text-white w-full border-none;
 
     .cta-link::after {
       content: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8L22 12M22 12L18 16M22 12H2" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') !important;
@@ -155,6 +151,10 @@
         translate: 5px;
       }
     }
+  }
+
+  @container (width > 100px) {
+    background-color: red;
   }
 }
 

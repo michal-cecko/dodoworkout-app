@@ -7,85 +7,104 @@
   <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-28">
   Explore my insights on workouts, skills, and mindset to elevate your training and transform your approach to calisthenics.
   </p>
-  <div class="flex gap-14">
-    <aside class="w-[222px] shrink-0">
-      <div class="mt-2 border border-[#DDDDDDEE] rounded-lg text-sm overflow-hidden flex pl-3 h-[36px] bg-white items-center focus-within:ring-2 focus-within:ring-primary mb-4">
-        {!! svgIcon("icon/icon-search.svg", ['class' => ['text-[#AAAAAAEE]']]) !!}
+  <div class="flex gap-14 max-lg:flex-col max-lg:gap-0">
+    <aside class="w-[222px] shrink-0 max-lg:w-full">
+      <div class="flex gap-2 mt-2">
+        <label class="relative hidden max-lg:flex items-center gap-3 shrink-0 text-xs text-textSecondary bg-white border border-[#EDEDED] rounded-lg px-2 py-1 font-medium">
+          {!! svgIcon("icon/icon-settings.svg", ['class' => ['']]) !!}
+          Filter by
+          <input id="filter-visible" type="checkbox" class="absolute invisible opacity-0 scale-0" name="filter-visible" />
+        </label>
 
-        <input type="search" class="w-full bg-tranparent border-none outline-none pl-3" placeholder="Vyhľadať" />
+        <div class="w-full max-lg:mb-0 border border-[#DDDDDDEE] rounded-lg text-sm overflow-hidden flex pl-3 h-[36px] bg-white items-center focus-within:ring-2 focus-within:ring-primary mb-8">
+          {!! svgIcon("icon/icon-search.svg", ['class' => ['text-[#AAAAAAEE]']]) !!}
+  
+          <input type="search" class="w-full bg-tranparent border-none outline-none pl-3" placeholder="Vyhľadať" />
+        </div>
       </div>
 
-      <button class="text-xs px-3 py-2 mb-2">Reset filters</button>
-
-      <div class="filter-container">
-        <h5 class="filter-heading">Availability</h5>
-
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="availability" checked value="free">
-          Free
-        </label>
-
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="availability" value="premium">
-          Premium
-        </label>
-      </div>
-
-      <div class="filter-container">
-        <h5 class="filter-heading">Tags</h5>
-
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" checked value="achievements">
-          Achievements
-        </label>
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="mindset">
-          Mindset
-        </label>
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="workout">
-          Workout
-        </label>
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="skills">
-          Skills
-        </label>
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="recovery">
-          Recovery
-        </label>        
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="planche">
-          Planche
-        </label>        
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="coaching">
-          Coaching
-        </label>        
-        <label class="filter-label">
-          <input type="checkbox" class="filter-checkbox" name="tags" value="competitions">
-          Competitions
-        </label>
+      <div class="filter-wrapper" data-visible="false">
+        <div class="filter-header">
+          <span class="title">Filter</span>
+          <button class="reset-button">RESET</button>
+          <label for="filter-visible">&times;</label>
+        </div>
+        <div class="filter-container-wrapper">
+          <div class="filter-container">
+            <h5 class="filter-heading">Availability</h5>
+    
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="availability" checked value="free">
+              Free
+            </label>
+    
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="availability" value="premium">
+              Premium
+            </label>
+          </div>
+    
+          <div class="filter-container">
+            <h5 class="filter-heading">Tags</h5>
+    
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" checked value="achievements">
+              Achievements
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="mindset">
+              Mindset
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="workout">
+              Workout
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="skills">
+              Skills
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="recovery">
+              Recovery
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="planche">
+              Planche
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="coaching">
+              Coaching
+            </label>
+            <label class="filter-label">
+              <input type="checkbox" class="filter-checkbox" name="tags" value="competitions">
+              Competitions
+            </label>
+          </div>
+        </div>
+        <div class="filter-footer">
+          <button class="btn" data-variant="primary">APPLY & SHOW RESULTS</button>
+        </div>
       </div>
     </aside>
 
-    <div class="pt-4 card-holder white w-full">
+    <div class="pt-2 card-holder white w-full">
       <div class="mb-7 text-sm flex gap-6 items-center">
-        <span class="text-textSecondary font-semibold">Active filters</span>
+        <span class="text-textSecondary font-semibold max-lg:hidden">Active filters</span>
         <div class="flex gap-2 items-center text-xs font-medium">
           <div class="bg-primary text-white flex items-center gap-2 px-3 py-2 leading-0 rounded-xl">
-            Achievements
+            Čadca
 
             <span>&times;</span>
           </div>
           <div class="bg-primary text-white flex items-center gap-2 px-3 py-2 leading-0 rounded-xl">
             Free
             <span>&times;</span>
-          </div>    
+          </div> 
         </div>
+        <button class="text-textSecondary bg-white border border-[#EDEDED] rounded-lg px-2 py-1 font-medium">Reset filters</button>
       </div>
 
-      <div class="grid grid-cols-2 gap-10">
+      <div class="grid grid-cols-2 gap-10 max-lg:grid-cols-1">
         <!-- Cez data atribut highlight vies zapnut highlight layout -->
         <div class="card" data-highlight="true">
           <div class="image-container">

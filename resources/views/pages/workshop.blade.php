@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <div class="col-span-1 flex flex-col pl-11 py-11 border-l border-dashed border-[#EDEDED]">
+        <div class="col-span-1 flex flex-col pl-11 py-11 workshop-right">
           <span class="sale-tag mb-5">SALE!</span>
           <h3 class="font-black text-3xl hfont"><span class="highlight">Register</span> now,<br />still 5 places left!</h3>
           
