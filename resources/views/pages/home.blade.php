@@ -11,6 +11,9 @@
             <div class="w-1/2 flex flex-col gap-20 max-lg:w-full">
               <div>
                 <h2 class="text-5xl uppercase max-w-[586px] max-lg:max-w-full mb-11 hfont max-lg:text-3xl">From the <b>World's Stage</b> to Your <b class="text-primary">Training Plan</b></h2>
+                <p class="text-textSecondary text-xl mb-5 pr-20 max-lg:pr-8">As the 2022 World Calisthenics Champion, I bring elite skills in strength and freestyle.
+                  Through coaching, eBooks, and seminars, I help athletes push limits and achieve their goals.
+                </p>
                 <div class="flex ml-2">
                   <a class="btn" data-variant="primary" href="#">My offer</a>
                   <a class="btn" href="#">About me</a>
@@ -25,9 +28,6 @@
               </div>  
               
               <div>
-                <p class="text-textSecondary text-xl mb-5 pr-20 max-lg:pr-8">As the 2022 World Calisthenics Champion, I bring elite skills in strength and freestyle.
-                  Through coaching, eBooks, and seminars, I help athletes push limits and achieve their goals.
-                </p>
                 <div class="opacity-75 flex items-center gap-6">
                   <a href="#">{!! svgIcon("icon/socials/instagram.svg") !!}</a>
                   <a href="#">{!! svgIcon("icon/socials/facebook.svg") !!}</a>

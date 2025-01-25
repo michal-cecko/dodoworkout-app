@@ -27,6 +27,10 @@
   &:has(input:checked) {
     @apply border-primary text-primary;
   }
+
+  &:hover {
+    @apply border-primary;
+  }
 }
 
 .filter-checkbox {
