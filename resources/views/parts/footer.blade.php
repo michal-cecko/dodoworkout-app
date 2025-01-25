@@ -1,5 +1,5 @@
-<footer class="border-t border-[#EEE5E5] pt-20 mt-auto bg-white">
-  <div class="container-wrapper flex gap-24 mb-10 max-lg:flex-col">
+<footer class="border-t border-[#EEE5E5] pt-20 mt-auto bg-white max-lg:pt-10">
+  <div class="container-wrapper flex gap-24 mb-10 max-lg:flex-col max-lg:gap-10">
     <div class="relative">
       <div class="logo-container mb-7">{!! svgIcon("logo/logo-black-red.svg", ['class' => ['h-[46px] w-[110px] max-lg:h-[34px] max-lg:w-[81px]']]) !!}</div>
       <a class="flex items-center gap-3 mb-4" href="mailto:me@dodoworkout.com">

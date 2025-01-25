@@ -4,7 +4,7 @@
 <section id="blog" class="container-wrapper pt-10 pb-24 relative">
   <span class="block text-primary font-semibold mx-auto w-fit mb-7 uppercase">blog</span>
   <h1 class="hfont text-4xl font-black mb-7 text-center uppercase">Articles for Every Athlete</h1>
-  <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-24">
+  <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-28">
   Explore my insights on workouts, skills, and mindset to elevate your training and transform your approach to calisthenics.
   </p>
   <div class="flex gap-14">
@@ -43,33 +43,33 @@
           Mindset
         </label>
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="workout">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="workout">
           Workout
         </label>
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="skills">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="skills">
           Skills
         </label>
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="recovery">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="recovery">
           Recovery
         </label>        
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="planche">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="planche">
           Planche
         </label>        
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="coaching">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="coaching">
           Coaching
         </label>        
         <label class="filter-label">
-          <input type="workout" class="filter-checkbox" name="tags" value="competitions">
+          <input type="checkbox" class="filter-checkbox" name="tags" value="competitions">
           Competitions
         </label>
       </div>
     </aside>
 
-    <div class="pt-4 card-holder white">
+    <div class="pt-4 card-holder white w-full">
       <div class="mb-7 text-sm flex gap-6 items-center">
         <span class="text-textSecondary font-semibold">Active filters</span>
         <div class="flex gap-2 items-center text-xs font-medium">

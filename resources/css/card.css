@@ -4,7 +4,8 @@
   border-radius: 1.5rem;
   background-color: var(--card-background, white);
   position: relative;
-
+  container-type: inline-size;
+  container-name: card;
 
   &[data-sale="true"]::before {
     content: 'Sale!';
@@ -36,6 +37,10 @@
     }
 
     @apply col-span-2 bg-primary text-white w-full border-none;
+
+    .cta-link::after {
+      content: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8L22 12M22 12L18 16M22 12H2" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') !important;
+    }
   }
 
   .image-container {

@@ -123,10 +123,10 @@
         <h2 class="text-3xl font-bold uppercase max-w-[500px] hfont max-lg:text-3xl">UPCOMING WORSHOPS</h2>
     
         <div class="flex gap-4 ml-auto items-center text-[#B2B2B2] justify-between max-lg:ml-0">
-          <button id="workshop-swiper-prev" class="border-2 border-[#B2B2B2] rounded-lg h-12 w-14 grid place-items-center">
+          <button id="workshop-swiper-prev" class="swiper-button">
           {!! svgIcon("icon/icon-arrow.svg") !!}
           </button>
-          <button id="workshop-swiper-next" class="border-2 border-[#B2B2B2] rounded-lg h-12 w-14 grid place-items-center">
+          <button id="workshop-swiper-next" class="swiper-button">
           {!! svgIcon("icon/icon-arrow.svg", ['class' => ['rotate-180']]) !!}
           </button>
         </div>
@@ -259,7 +259,7 @@
           '768': {
             slidesPerView: 2,
           },
-          '1024': {
+          '1280': {
             slidesPerView: 3,
           }
         }

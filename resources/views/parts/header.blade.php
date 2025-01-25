@@ -1,7 +1,10 @@
 <header id="header" class="h-[var(--header-height)] relative z-[100]">
     <div class="container-wrapper flex items-center h-full gap-[95px] max-lg:justify-between max-lg:gap-0">
         <label class="hidden max-lg:block relative cursor-pointer" id="hamburger">
-          {!! svgIcon("icon/icon-menu.svg", ['class' => ['h-8 w-8']]) !!}
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
           <input id="menu-toggle" type="checkbox" class="invisible scale-0 absolute" />
         </label>
 

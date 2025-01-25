@@ -39,8 +39,8 @@
             </div>
 
             <!-- Toto je image ktory sa zobrazuje v slideri na desktope --> 
-            <div class="w-1/2 shrink-0 max-lg:hidden">
-              <img src="image/hp-hero-placeholder.jpg" class="w-full" alt="Dominik klimek performing one arm handstand.">
+            <div class="w-1/2 shrink-0 max-lg:hidden overflow-hidden" style="max-height: calc(100dvh - var(--header-height) * 2);">
+              <img src="image/hp-hero-placeholder.jpg" class="w-full h-full object-cover" alt="Dominik klimek performing one arm handstand.">
             </div>
           </div>
         </div>
@@ -50,6 +50,9 @@
             <div class="w-1/2 flex flex-col gap-20 max-lg:w-full">
               <div>
                 <h2 class="text-5xl uppercase max-w-[586px] max-lg:max-w-full mb-11 hfont max-lg:text-3xl">From the <b>World's Stage</b> to Your <b class="text-primary">Training Plan</b></h2>
+                <p class="text-textSecondary text-xl mb-5 pr-20 max-lg:pr-8">As the 2022 World Calisthenics Champion, I bring elite skills in strength and freestyle.
+                  Through coaching, eBooks, and seminars, I help athletes push limits and achieve their goals.
+                </p>
                 <div class="flex ml-2">
                   <a class="btn" data-variant="primary" href="#">My offer</a>
                   <a class="btn" href="#">About me</a>
@@ -64,9 +67,6 @@
               </div>  
               
               <div>
-                <p class="text-textSecondary text-xl mb-5 pr-20 max-lg:pr-8">As the 2022 World Calisthenics Champion, I bring elite skills in strength and freestyle.
-                  Through coaching, eBooks, and seminars, I help athletes push limits and achieve their goals.
-                </p>
                 <div class="opacity-75 flex items-center gap-6">
                   <a href="#">{!! svgIcon("icon/socials/instagram.svg") !!}</a>
                   <a href="#">{!! svgIcon("icon/socials/facebook.svg") !!}</a>
@@ -78,8 +78,8 @@
             </div>
 
             <!-- Toto je image ktory sa zobrazuje v slideri na desktope --> 
-            <div class="w-1/2 shrink-0 max-lg:hidden">
-              <img src="image/hp-hero-placeholder.jpg" class="w-full" alt="Dominik klimek performing one arm handstand.">
+            <div class="w-1/2 shrink-0 max-lg:hidden overflow-hidden" style="max-height: calc(100dvh - var(--header-height) * 2);">
+              <img src="image/hp-hero-placeholder.jpg" class="w-full h-full object-cover" alt="Dominik klimek performing one arm handstand.">
             </div>
           </div>
         </div>
@@ -121,11 +121,13 @@
         init: function () {
           document.getElementById('hero-swiper-total-pages').textContent =
             this.slides.length
-        },
-        slideChange: function () {
           document.getElementById('hero-swiper-current-page').textContent =
             this.activeIndex + 1
-        }
+        },
+        realIndexChange: function () {
+          document.getElementById('hero-swiper-current-page').textContent =
+            this.activeIndex + 1
+        },
       }
     })
   </script>
@@ -139,10 +141,10 @@
       a better coach?</h2>
   
       <div class="flex gap-4 ml-auto items-center text-[#B2B2B2] justify-between max-lg:ml-0">
-        <button id="workshop-swiper-prev" class="border-2 border-[#B2B2B2] rounded-lg h-12 w-14 grid place-items-center">
+        <button id="workshop-swiper-prev" class="swiper-button">
         {!! svgIcon("icon/icon-arrow.svg") !!}
         </button>
-        <button id="workshop-swiper-next" class="border-2 border-[#B2B2B2] rounded-lg h-12 w-14 grid place-items-center">
+        <button id="workshop-swiper-next" class="swiper-button">
         {!! svgIcon("icon/icon-arrow.svg", ['class' => ['rotate-180']]) !!}
         </button>
       </div>
@@ -335,7 +337,7 @@
         '768': {
           slidesPerView: 2,
         },
-        '1024': {
+        '1280': {
           slidesPerView: 3,
         }
       }
