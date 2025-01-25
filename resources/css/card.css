@@ -2,13 +2,40 @@
   padding: 1rem;
   border: 1px solid #EDEDED;
   border-radius: 1.5rem;
-  background-color: white;
-  width: 455px;
+  background-color: var(--card-background, white);
   position: relative;
+
 
   &[data-sale="true"]::before {
     content: 'Sale!';
     @apply bg-primary text-white absolute top-8 z-10 left-8 rounded-full px-3 py-1 font-bold uppercase text-xs;
+  }
+
+  &[data-highlight="true"] {
+    --tag-background: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    padding-right: 2rem;
+
+    .image-container {
+      grid-row: span 4;
+      height: 100%;
+    }
+
+    time {
+      color: white;
+    }
+
+    .cta-link {
+      color: white;
+    }
+
+    .tags {
+      padding-top: 4px;
+    }
+
+    @apply col-span-2 bg-primary text-white w-full border-none;
   }
 
   .image-container {
@@ -28,30 +55,9 @@
 
   .date-badge {
     position: absolute;
-    background-color: white;
     z-index: 10;
     bottom: 1rem;
     right: 1rem;
-    width: 3.5rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    text-transform: uppercase;
-    font-size: 1.25rem;
-    color: #373737;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .date-badge .month {
-    font-size: 0.75rem;
-    color: white;
-    width: 100%;
-    text-align: center;
-    padding: 0.25rem 0;
-    line-height: 1;
-    font-weight: bold;
-    @apply bg-primary;
   }
 
   .title {
@@ -62,13 +68,28 @@
   }
 
   .info-container {
-    background-color: #F8F8F8;
+    background-color: var(--tag-background, #f8f8f8);
     padding: 1rem;
     border-radius: 0.75rem;
     margin-bottom: 1rem;
     font-size: 0.875rem;
     display: flex;
     gap: 1rem;
+  }
+
+  .tags {
+    @apply flex gap-2 items-center flex-wrap mb-3;
+
+    .tag {
+      background-color: var(--tag-background, white);
+      @apply text-xs text-black px-[10px] py-2 rounded-lg leading-none;
+    }
+  }
+
+  time {
+    font-size: 12px;
+
+    @apply text-textSecondary;
   }
 
   .info-item {
@@ -90,6 +111,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    align-self: end;
 
     .price {
       font-size: 1.5rem;
@@ -113,6 +135,55 @@
       font-weight: bold;
       font-size: 0.875rem;
       margin-left: auto;
+    }
+  }
+}
+
+.card-holder {
+  &.white {
+    background-color: white;
+    --card-background: #F8F8F8;
+    --tag-background: white;
+  }
+
+  &.gray {
+    background-color: #F8F8F8;
+    --card-background: white;
+    --tag-background: #F8F8F8;
+  }
+}
+
+.date-badge {
+  background-color: white;
+  width: 3.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  color: #373737;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .month {
+    font-size: 0.75rem;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 0.25rem 0;
+    line-height: 1;
+    font-weight: bold;
+    @apply bg-primary;
+  }
+
+  &[data-variant="lg"] {
+    width: 83px;
+    font-size: 1.65rem;
+    border-radius: 0.75rem;
+
+    .month {
+      font-size: 1.25rem;
+      padding: 0.65rem 0;
     }
   }
 }

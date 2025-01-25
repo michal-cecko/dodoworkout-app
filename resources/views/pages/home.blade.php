@@ -1,7 +1,6 @@
 @extends('layouts.web')
 
 @section('body')
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
 <section id="hp_hero" class="relative px-14 mb-14 -mt-[var(--header-height)] pt-[var(--header-height)] max-lg:px-0" style="min-height: calc(100dvh - var(--header-height));">
   <div class="container-wrapper max-lg:mt-16 max-lg:!max-w-full">
@@ -132,7 +131,7 @@
   </script>
 </section>
 
-<section class="bg-backgroundSecondary py-20 relative">
+<section class="card-holder gray py-20 relative">
   <div class="container-wrapper mb-12">
     <h4 class="text-primary font-semibold mb-7 max-lg:mb-6">WORKSHOPS & CERTIFICATIONS</h4>
     <div class="flex gap-4 max-lg:flex-col">

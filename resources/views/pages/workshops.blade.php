@@ -1,9 +1,9 @@
 @extends('layouts.web')
 
 @section('body')
-<section id="bootcamps" class="container-wrapper pt-10 pb-24">
+<section id="bootcamps" class="container-wrapper pt-10 pb-24 relative">
   <span class="block text-primary font-semibold mx-auto w-fit mb-7">BOOTCAMPS & CERTIFICATIONS</span>
-  <h1 class="hfont text-4xl font-black mb-7 text-center">UPCOMING BOOTCAMPS</h1>
+  <h1 class="hfont text-4xl font-black mb-7 text-center uppercase">UPCOMING BOOTCAMPS</h1>
   <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-24">
     Explore our workshops, seminars, and bootcamps to elevate your fitness, mindset, and skills.
     Expert-led sessions for all levels to push your limits.
@@ -247,6 +247,11 @@
   <div class="flex justify-center mt-auto pt-24">
     <button class="btn" data-variant="primary">Load more</button>
   </div>
+
+  {!! svgIcon("svg/triangle-mesh.svg", ['class' => ['max-lg:hidden absolute top-[60%] w-[calc(100vw * 2)] text-[#FFC1C1]']]) !!}
+  {!! svgIcon("svg/dots-mesh.svg", ['class' => ['max-lg:hidden absolute right-10 top-[10%] w-[calc(100vw * 2)] text-[#D9D9D9]']]) !!}
+  {!! svgIcon("svg/dots-mesh.svg", ['class' => ['max-lg:hidden z-[-1] absolute top-1/5 right-20 w-[calc(100vw * 2)] text-[#D9D9D9]']]) !!}
+
 </section>
 
 @endsection
