@@ -1,0 +1,41 @@
+.filter-container {
+  font-weight: 600;
+  /* font-semibold */
+  margin-bottom: 1rem;
+  /* mb-4 */
+  @apply text-textSecondary;
+}
+
+.filter-heading {
+  margin-bottom: 1rem;
+  /* mb-4 */
+  @apply text-primary;
+}
+
+.filter-label {
+  position: relative;
+  /* relative */
+  padding: 0.5rem 0.75rem;
+  /* py-2 px-3 */
+  display: block;
+  /* block */
+  border-left: 1.5px solid #EDEDED;
+  /* border-l-[1.5px] border-[#EDEDED] */
+  cursor: pointer;
+  /* cursor-pointer */
+
+  &:has(input:checked) {
+    @apply border-primary;
+  }
+}
+
+.filter-checkbox {
+  position: absolute;
+  /* absolute */
+  visibility: hidden;
+  /* invisible */
+  transform: scale(0);
+  /* scale-0 */
+  opacity: 0;
+  /* opacity-0 */
+}

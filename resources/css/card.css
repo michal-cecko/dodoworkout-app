@@ -1,0 +1,118 @@
+.card {
+  padding: 1rem;
+  border: 1px solid #EDEDED;
+  border-radius: 1.5rem;
+  background-color: white;
+  width: 455px;
+  position: relative;
+
+  &[data-sale="true"]::before {
+    content: 'Sale!';
+    @apply bg-primary text-white absolute top-8 z-10 left-8 rounded-full px-3 py-1 font-bold uppercase text-xs;
+  }
+
+  .image-container {
+    height: 219px;
+    background-color: #F3F4F6;
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .date-badge {
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    bottom: 1rem;
+    right: 1rem;
+    width: 3.5rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .date-badge .month {
+    font-size: 0.75rem;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 0.25rem 0;
+    line-height: 1;
+    font-weight: bold;
+    @apply bg-primary;
+  }
+
+  .title {
+    font-weight: bold;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .info-container {
+    background-color: #F8F8F8;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .hidden-lg {
+    display: none;
+  }
+
+  .description {
+    font-size: 0.875rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .price-cta-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .price {
+      font-size: 1.5rem;
+      color: #212121;
+    }
+
+    .sale-price {
+      font-size: 1.5rem;
+      color: #212121;
+      @apply text-primary font-bold;
+    }
+
+    &:has(.sale-price) .price {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      @apply text-lg;
+    }
+
+
+    .cta-link {
+      font-weight: bold;
+      font-size: 0.875rem;
+      margin-left: auto;
+    }
+  }
+}
