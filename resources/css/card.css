@@ -153,8 +153,11 @@
     }
   }
 
-  @container (width > 100px) {
-    background-color: red;
+}
+
+@container card (width < 400px) {
+  .info-item:last-of-type {
+    display: none;
   }
 }
 

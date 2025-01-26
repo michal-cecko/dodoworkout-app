@@ -14,12 +14,12 @@
 
         <nav class="max-lg:hidden">
           <ul class="uppercase flex gap-12">
-            <li><a href="#">About</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="#">Trainings</a></li>
-            <li><a href="/workshops">WoRKSHOPS</a></li>
-            <li><a href="#">shop</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a class="hover:text-primary" href="#">About</a></li>
+            <li><a class="hover:text-primary" href="/blog">Blog</a></li>
+            <li><a class="hover:text-primary" href="#">Trainings</a></li>
+            <li><a class="hover:text-primary" href="/workshops">WoRKSHOPS</a></li>
+            <li><a class="hover:text-primary" href="#">shop</a></li>
+            <li><a class="hover:text-primary" href="#">Contact</a></li>
           </ul>
         </nav>
 
@@ -40,7 +40,7 @@
     </div>
 </header>
 
-<!-- Mobilne menu ktore sa ukaze ak je input:checkbox s id #menu-toggle checked, smart -->
+<!-- Mobilne menu ktore sa ukaze ak je input:checkbox s id #menu-toggle checked, smart 😎 -->
 <aside id="mobile-menu" class="fixed flex-col hidden max-lg:flex bg-[#DBDBDB] inset-0 z-[99] translate-x-[-100%] transition-all duration-300 ease-in-out pt-[var(--header-height)] px-6 pb-16">
   <div class="mt-2 rounded-full overflow-hidden flex pl-5 h-12 bg-white items-center focus-within:ring-2 focus-within:ring-primary mb-12">
     {!! svgIcon("icon/icon-search.svg", ['class' => ['']]) !!}
