@@ -1,12 +1,12 @@
 @extends('layouts.web')
 
 @section('body')
-<section id="blog" class="pt-10 pb-24 relative">
-  <div class="container-wrapper relative">
-    <span class="block text-primary font-semibold mx-auto w-fit mb-3 uppercase">blog</span>
-    <h1 class="hfont text-4xl font-black mb-7 text-center">I was nominated to be sportsman of the year</h1>
-    <div class="flex gap-2 items-center mb-11 justify-center">
-      <time class="mr-6">15. Marec 2024 - 15:48</time>
+<section id="blog" class="pt-10 pb-24 relative flex flex-col max-lg:pt-0">
+  <div class="container-wrapper relative max-lg:order-2 max-lg:pt-6 max-lg:-mt-6 z-[20] max-lg:rounded-3xl bg-white max-lg:px-6 max-lg:!max-w-full">
+    <span class="block text-primary font-semibold mx-auto w-fit mb-3 uppercase max-lg:mx-0 max-lg:text-sm max-lg:mt-6">blog</span>
+    <h1 class="hfont text-4xl font-black mb-7 text-center max-lg:text-2xl max-lg:text-left">I was nominated to be sportsman of the year</h1>
+    <div class="flex gap-2 items-center mb-11 justify-center max-lg:justify-start max-lg:mb-0">
+      <time class="mr-6 text-textSecondary max-lg:text-xs">15. Marec 2024 - 15:48</time>
   
       <button class="flex items-center border border-[#EDEDED] p-[6px] bg-[#F8F8F8] text-sm gap-1 rounded-lg h-6">
         {!! svgIcon("icon/icon-like.svg", ['class' => ['']]) !!}
@@ -22,15 +22,15 @@
 
   </div>
 
-  <div class="relative isolate">
-    <div class="absolute max-h-[240px] top-1/2 -translate-y-1/2 left-0 w-full h-full bg-primary z-[-1]"></div>
-    <div class="h-[414px] max-w-[1098px] mx-auto rounded-3xl overflow-hidden">
+  <div class="relative isolate max-lg:order-1">
+    <div class="absolute max-h-[240px] top-1/2 -translate-y-1/2 left-0 w-full h-full bg-primary z-[-1] max-lg:hidden"></div>
+    <div class="h-[414px] max-w-[1098px] mx-auto rounded-3xl overflow-hidden max-lg:rounded-none">
       <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
     </div>
   </div>
 
-  <div class="container-wrapper mt-12">
-    <article class="w-full max-w-[697px] mx-auto">
+  <div class="container-wrapper mt-12 order-3">
+    <article class="w-full max-w-[697px] mx-auto max-lg:!max-w-full">
       <h1>Heading 1</h1>
 
       <p>
@@ -91,6 +91,35 @@
         we'll dive into why consistency matters and how you can cultivate it to unlock your full potential.
       </p>
 
+      <h3>Gallery of dominik the muskľe</h3>
+
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://loremflickr.com/320/240/nature?lock=1" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://loremflickr.com/320/240/nature?lock=1" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://loremflickr.com/320/240/nature?lock=1" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Dominik Klimek performing one arm handstand.">
+        </div>
+      </div>
+
       <h3>Heading 3</h3> 
 
       <p>
@@ -106,9 +135,8 @@
       </div>
     </article>
   </div>
-
-
 </section>
+
 <div class="bg-white py-20 card-holder gray relative">
   <div class="container-wrapper mb-12">
     <h4 class="text-primary font-semibold mb-7 max-lg:mb-6">READY FOR MORE? </h4>

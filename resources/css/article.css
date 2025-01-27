@@ -11,27 +11,27 @@ article {
   }
 
   h1 {
-    @apply text-4xl;
-  }
-
-  h2 {
     @apply text-3xl;
   }
 
-  h3 {
+  h2 {
     @apply text-2xl;
   }
 
-  h4 {
+  h3 {
     @apply text-xl;
   }
 
-  h5 {
+  h4 {
     @apply text-lg;
   }
 
-  h6 {
+  h5 {
     @apply text-base;
+  }
+
+  h6 {
+    @apply text-sm;
   }
 
   .image-container {
@@ -98,6 +98,18 @@ article {
 
     .tag {
       @apply border border-[#EDEDED] px-2 py-1 rounded-xl text-textSecondary bg-[#F8F8F8];
+    }
+  }
+
+  .gallery {
+    @apply mb-6 columns-3 max-lg:columns-2 max-sm:columns-1;
+
+    .gallery-item {
+      @apply mb-3;
+
+      img {
+        @apply rounded-xl
+      }
     }
   }
 }

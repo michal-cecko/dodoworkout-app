@@ -9,31 +9,35 @@
   
   <div class="pb-24">
     <div class="-mt-[100px] max-w-[1027px] mx-auto">
-      <div class="bg-white px-11 rounded-[30px] border border-[#EDEDED] grid grid-cols-3 mb-14">
-        <div class="col-span-2 pr-11 py-11">
+      <div class="bg-white relative px-11 rounded-[30px] border border-[#EDEDED] grid grid-cols-3 mb-14 max-lg:grid-cols-1 max-lg:px-0">
+        <div class="col-span-2 pr-11 py-11 max-lg:col-span-1 max-lg:px-6 workshop-left">
           <div class="flex gap-9 items-start mb-4">
-            <div class="date-badge bg-[#F8F8F8] border border-[#EDEDED] shrink-0" data-variant="lg">
+            <div class="date-badge bg-[#F8F8F8] border border-[#EDEDED] shrink-0 max-lg:absolute top-0 right-6 max-lg:-translate-y-1/2" data-variant="lg">
               <span class="month">NOV</span>
               <span>30</span>
             </div>
             <div>
               <span class="uppercase text-sm text-textSecondary mb-3">bootcamp</span>
-              <h2 class="hfont text-3xl font-black">Become a WSWCF certified calisthenics coach </h2>
+              <h2 class="hfont text-3xl font-black max-lg:text-2xl">Become a WSWCF certified calisthenics coach </h2>
             </div>
           </div>
-          <p class="text-sm text-textSecondary mb-10">Join the World Association's Calisthenics Coach Certification Program. Enhance your skills,
-            gain recognition, and advance your coaching career!</p>
-          <div class="flex gap-12">
-            <div class="text-textSecondary text-lg">
-              <div class="text-primary font-bold text-sm flex items-center gap-3 mb-1">
+          
+          <p class="text-sm text-textSecondary mb-10">
+            Join the World Association's Calisthenics Coach Certification Program.
+            Enhance your skills, gain recognition, and advance your coaching career!
+          </p>
+
+          <div class="flex gap-12 max-lg:gap-5">
+            <div class="text-textSecondary text-lg max-lg:text-sm">
+              <div class="text-primary font-bold text-sm flex items-center gap-3 mb-1 max-lg:mb-2">
               {!! svgIcon("icon/icon-map_marker.svg") !!}
               Address
               </div>
               Online meeting
             </div>
 
-            <div class="text-textSecondary text-lg">
-              <div class="text-primary font-bold text-sm flex items-center gap-3 mb-1">
+            <div class="text-textSecondary text-lg max-lg:text-sm">
+              <div class="text-primary font-bold text-sm flex items-center gap-3 mb-1 max-lg:mb-2">
               {!! svgIcon("icon/icon-calendar.svg") !!}
               Date
               </div>
@@ -42,9 +46,11 @@
           </div>
         </div>
 
-        <div class="col-span-1 flex flex-col pl-11 py-11 workshop-right">
-          <span class="sale-tag mb-5">SALE!</span>
-          <h3 class="font-black text-3xl hfont"><span class="highlight">Register</span> now,<br />still 5 places left!</h3>
+        <div class="col-span-1 flex flex-col pl-11 py-11 workshop-right max-lg:px-6 max-lg:pb-8">
+          <span class="sale-tag mb-5 max-lg:absolute top-0 left-6 -translate-y-1/2">SALE!</span>
+          <h3 class="font-black text-3xl hfont max-lg:text-2xl max-lg:mb-8">
+            <span class="highlight">Register</span> now,<br class="max-lg:hidden" /> still 5 places left!
+          </h3>
           
           <div class="flex mt-auto">
             <div>
@@ -60,8 +66,8 @@
         </div>
       </div>
 
-      <div class="flex gap-12 items-start pl-11">
-        <article class="w-full">
+      <div class="flex gap-12 items-start pl-11 max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
+        <article class="w-full max-lg:px-6">
           <h1>Heading 1</h1>
 
           <p>
@@ -106,7 +112,7 @@
           </div>
         </article>
 
-        <aside class="sticky top-[20px] shrink-0 w-[416px] bg-white px-9 pt-10 pb-8 border border-[#EDEDED] rounded-[30px] min-h-[600px] flex flex-col">
+        <aside class="sticky top-[20px] shrink-0 w-[416px] max-lg:w-full bg-white px-9 pt-10 pb-8 border border-[#EDEDED] rounded-[30px] min-h-[600px] flex flex-col max-lg:px-6">
           <h3 class="font-black text-2xl hfont">Registration form</h3>
 
           <button class="btn w-fit mt-auto mx-auto"  data-variant="primary">REGISTER & PROCEED TO CHECKOUT

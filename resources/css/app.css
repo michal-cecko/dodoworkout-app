@@ -25,17 +25,22 @@
 }
 
 .workshop-right {
-  position: relative;
+  @apply relative max-lg:static;
 
   &::before {
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23EDEDED' stroke-width='6' stroke-dasharray='6%2c 14' stroke-dashoffset='30' stroke-linecap='square'/%3e%3c/svg%3e");
     content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    z-index: 1;
+    @apply absolute top-0 left-0 w-[3px] h-full z-[1] max-lg:hidden;
+  }
+}
+
+.workshop-left {
+  @apply max-lg:relative;
+
+  &::after {
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23EDEDED' stroke-width='6' stroke-dasharray='6%2c12' stroke-dashoffset='30' stroke-linecap='square'/%3e%3c/svg%3e");
+    content: "";
+    @apply hidden absolute bottom-0 left-0 w-full h-[3px] z-[1] max-lg:block;
   }
 }
 
