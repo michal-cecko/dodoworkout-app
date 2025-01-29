@@ -164,99 +164,107 @@
 
     <div id="workshops-swiper" class="overflow-hidden w-full">
       <div class="swiper-wrapper">
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
-          </div>
-        </div>
-
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+            </div>
+  
+            <div class="tags">
+              <span class="tag">Achievements</span>
+              <span class="tag">Slovakia</span>
+              <span class="tag">Self development</span>
+            </div>
+  
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+  
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+  
+            <div class="price-cta-container">
+              <time>15. Marec 2024 - 15:48</time>
+              <a href="#" class="cta-link text-primary">Read article</a>
+            </div>
           </div>
         </div>
 
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-          </div>
-
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+            </div>
+  
+            <div class="tags">
+              <span class="tag">Achievements</span>
+              <span class="tag">Slovakia</span>
+              <span class="tag">Self development</span>
+            </div>
+  
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+  
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+  
+            <div class="price-cta-container">
+              <time>15. Marec 2024 - 15:48</time>
+              <a href="#" class="cta-link text-primary">Read article</a>
+            </div>
           </div>
         </div>
 
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+            </div>
+  
+            <div class="tags">
+              <span class="tag">Achievements</span>
+              <span class="tag">Slovakia</span>
+              <span class="tag">Self development</span>
+            </div>
+  
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+  
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+  
+            <div class="price-cta-container">
+              <time>15. Marec 2024 - 15:48</time>
+              <a href="#" class="cta-link text-primary">Read article</a>
+            </div>
           </div>
+        </div>
 
-          <div class="tags">
-            <span class="tag">Achievements</span>
-            <span class="tag">Slovakia</span>
-            <span class="tag">Self development</span>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <time>15. Marec 2024 - 15:48</time>
-            <a href="#" class="cta-link text-primary">Read article</a>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+            </div>
+  
+            <div class="tags">
+              <span class="tag">Achievements</span>
+              <span class="tag">Slovakia</span>
+              <span class="tag">Self development</span>
+            </div>
+  
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+  
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+  
+            <div class="price-cta-container">
+              <time>15. Marec 2024 - 15:48</time>
+              <a href="#" class="cta-link text-primary">Read article</a>
+            </div>
           </div>
         </div>
       </div>
@@ -270,7 +278,6 @@
 
     const swiper = new Swiper('#workshops-swiper', {
       slidesPerView: 1,
-      spaceBetween: 24,
       loop: true,
       navigation: {
         nextEl: '#workshop-swiper-next',

@@ -108,7 +108,6 @@
 
     const swiper = new Swiper('#hero-swiper', {
       slidesPerView: 1,
-      loop: true,
       spaceBetween: 60,
       navigation: {
         nextEl: '#hero-swiper-next',
@@ -160,159 +159,167 @@
 
     <div id="workshops-swiper" class="overflow-hidden w-full">
       <div class="swiper-wrapper">
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-            <div class="date-badge">
-              <span class="month">NOV</span>
-              <span>30</span>
-            </div>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <div class="info-container">
-            <div class="info-item">
-              {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>5 places left!</span>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+              <div class="date-badge">
+                <span class="month">NOV</span>
+                <span>30</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>Online meeting</span>
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+
+            <div class="info-container">
+              <div class="info-item">
+                {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>5 places left!</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>Online meeting</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>2 days</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>2 days</span>
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+
+            <div class="price-cta-container">
+              <span class="price">999 €</span>
+              <a href="#" class="cta-link text-primary">Register now</a>
             </div>
-          </div>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <span class="price">999 €</span>
-            <a href="#" class="cta-link text-primary">Register now</a>
           </div>
         </div>
 
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-            <div class="date-badge">
-              <span class="month">NOV</span>
-              <span>30</span>
-            </div>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <div class="info-container">
-            <div class="info-item">
-              {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>5 places left!</span>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+              <div class="date-badge">
+                <span class="month">NOV</span>
+                <span>30</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>Online meeting</span>
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+
+            <div class="info-container">
+              <div class="info-item">
+                {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>5 places left!</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>Online meeting</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>2 days</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>2 days</span>
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+
+            <div class="price-cta-container">
+              <span class="price">999 €</span>
+              <a href="#" class="cta-link text-primary">Register now</a>
             </div>
-          </div>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <span class="price">999 €</span>
-            <a href="#" class="cta-link text-primary">Register now</a>
           </div>
         </div>
 
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-            <div class="date-badge">
-              <span class="month">NOV</span>
-              <span>30</span>
-            </div>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <div class="info-container">
-            <div class="info-item">
-              {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>5 places left!</span>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+              <div class="date-badge">
+                <span class="month">NOV</span>
+                <span>30</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>Online meeting</span>
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+
+            <div class="info-container">
+              <div class="info-item">
+                {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>5 places left!</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>Online meeting</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>2 days</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>2 days</span>
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+
+            <div class="price-cta-container">
+              <span class="price">999 €</span>
+              <a href="#" class="cta-link text-primary">Register now</a>
             </div>
-          </div>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <span class="price">999 €</span>
-            <a href="#" class="cta-link text-primary">Register now</a>
           </div>
         </div>
 
-        <div class="card swiper-slide">
-          <div class="image-container">
-            <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
-            <div class="date-badge">
-              <span class="month">NOV</span>
-              <span>30</span>
-            </div>
-          </div>
-
-          <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
-
-          <div class="info-container">
-            <div class="info-item">
-              {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>5 places left!</span>
+        <div class="swiper-slide px-3 max-md:px-6">
+          <div class="card">
+            <div class="image-container">
+              <img class="w-full h-full object-cover" src="https://loremflickr.com/455/219" alt="Dominik Klimek performing one arm handstand.">
+              <div class="date-badge">
+                <span class="month">NOV</span>
+                <span>30</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>Online meeting</span>
+            <h3 class="title">Become a WSWCF certified calisthenics coach</h3>
+
+            <div class="info-container">
+              <div class="info-item">
+                {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>5 places left!</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>Online meeting</span>
+              </div>
+
+              <div class="info-item">
+                {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
+                <span>2 days</span>
+              </div>
             </div>
 
-            <div class="info-item">
-              {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
-              <span>2 days</span>
+            <p class="description">
+              Join the World Association's Calisthenics Coach Certification Program.
+              Enhance your skills, gain recognition, and advance your coaching career!
+            </p>
+
+            <div class="price-cta-container">
+              <span class="price">999 €</span>
+              <a href="#" class="cta-link text-primary">Register now</a>
             </div>
-          </div>
-
-          <p class="description">
-            Join the World Association's Calisthenics Coach Certification Program.
-            Enhance your skills, gain recognition, and advance your coaching career!
-          </p>
-
-          <div class="price-cta-container">
-            <span class="price">999 €</span>
-            <a href="#" class="cta-link text-primary">Register now</a>
           </div>
         </div>
       </div>
@@ -327,7 +334,6 @@
 
     const swiper = new Swiper('#workshops-swiper', {
       slidesPerView: 1,
-      spaceBetween: 24,
       loop: true,
       navigation: {
         nextEl: '#workshop-swiper-next',

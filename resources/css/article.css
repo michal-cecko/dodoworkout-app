@@ -108,7 +108,7 @@ article {
       @apply mb-3;
 
       img {
-        @apply rounded-xl
+        @apply rounded-xl w-full h-full object-cover;
       }
     }
   }

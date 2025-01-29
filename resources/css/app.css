@@ -77,6 +77,8 @@ body {
 }
 
 .btn {
+  --_loading-color: black;
+
   text-transform: uppercase;
   font-weight: bold;
   padding: 12px 28px;
@@ -88,6 +90,20 @@ body {
   align-items: center;
   font-size: 14px;
   transition: background-color 0.2s ease-in-out;
+  position: relative;
+
+  &[data-loading="true"] {
+    @apply cursor-wait pointer-events-none !text-transparent;
+
+    &::after {
+      content: '';
+      animation: spin 1s linear infinite;
+      border: 3px solid var(--_loading-color, black);
+      border-right-color: transparent;
+      translate: -50% 0;
+      @apply w-5 h-5 rounded-full absolute left-1/2;
+    }
+  }
 
   &:has(svg) {
     padding-block: 8px;
@@ -96,7 +112,19 @@ body {
   }
 
   &[data-variant="primary"] {
+    --_loading-color: white;
+
     @apply bg-primary text-white hover:bg-[crimson];
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 
