@@ -1,5 +1,5 @@
 <header id="header" class="h-[var(--header-height)] relative z-[100]">
-    <div class="container-wrapper flex items-center h-full gap-[95px] max-lg:justify-between max-lg:gap-0">
+    <div class="px-10 flex items-center h-full gap-[95px] max-lg:justify-between max-lg:gap-0">
         <label class="hidden max-lg:block relative cursor-pointer" id="hamburger">
           <span></span>
           <span></span>

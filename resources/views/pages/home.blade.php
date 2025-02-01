@@ -87,9 +87,9 @@
   
       <div class="absolute bg-primary text-white left-[50%] bottom-[60px] translate-x-[-50%] z-10 flex rounded-xl max-lg:top-[68%] max-lg:translate-y-[-50%] max-lg:bottom-auto">
         <button class="pl-4 py-3" id="hero-swiper-prev">{!! svgIcon("icon/icon-arrow.svg") !!}</button>
-        <div class="flex items-center gap-1 h-12 px-4">
+        <div class="flex items-center gap-1 h-12 px-4 font-bold">
           <span id="hero-swiper-current-page"></span>
-          /
+          <span>/</span>
           <span id="hero-swiper-total-pages"></span>
         </div>
         <button class="pr-4 py-3" id="hero-swiper-next">{!! svgIcon("icon/icon-arrow.svg", ['class' => ['rotate-180']]) !!}</button>
