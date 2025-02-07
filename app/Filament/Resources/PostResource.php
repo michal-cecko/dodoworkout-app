@@ -2,12 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CommonResource\CommonResource;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Trait\UseContentBuilder;
 use App\Models\Post;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;

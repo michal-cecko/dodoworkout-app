@@ -11,8 +11,8 @@
         @include('parts.meta')
 
         <title>
-            @hasSection('head')
-                @yield('head')
+            @hasSection('title')
+                @yield('title')
             @else
                 Dodoworkout
             @endif
@@ -39,6 +39,10 @@
             @yield('footer')
         @else
             @include('parts.footer')
+        @endif
+
+        @hasSection("scripts")
+            @yield('scripts')
         @endif
 
         @livewireScripts

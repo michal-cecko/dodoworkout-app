@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CommonResource\CommonResource;
 use App\Filament\Resources\EventCategoryResource\Pages;
 use App\Models\EventCategory;
 use Filament\Forms\Components\Grid;

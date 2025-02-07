@@ -5,6 +5,7 @@ namespace App\Filament\Trait;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -41,6 +42,9 @@ trait UseContentBuilder
                         ->required()
                         ->imageEditor()
                         ->collection('content_media'),
+                    Checkbox::make('is_video')
+                        ->label('Video?')
+                        ->inline(false),
                     RichEditor::make('description')
                         ->label("Popis média")
                         ->toolbarButtons(['bold', 'italic', 'link', 'redo', 'strike', 'underline', 'undo'])

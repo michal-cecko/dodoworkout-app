@@ -32,7 +32,7 @@ class DashboardPanelProvider extends PanelProvider
             ->darkModeBrandLogo("/logo/logo-white-red.png")
             ->favicon("/favicon/favicon.ico")
             ->login()
-            ->registration()
+            //  ->registration()
             ->profile()
             //->maxContentWidth("")
             ->passwordReset()

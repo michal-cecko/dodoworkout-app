@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CommonResource\CommonResource;
 use App\Filament\Resources\PostTagResource\Pages;
 use App\Models\PostTag;
 use Filament\Forms\Components\Grid;

@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\PostTagResource\RelationManagers;
 
-use App\Filament\Resources\CommonResource\CommonRelationManager;
 use App\Filament\Resources\PostResource;
 use App\Filament\Resources\PostTagResource;
-use App\Models\PostTag;
+use Synapps\Filament\Resources\CommonRelationManager;
 
 class PostTagPostRelationManager extends CommonRelationManager
 {

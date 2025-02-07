@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CommonResource\CommonResource;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Trait\UseContentBuilder;
 use App\Filament\Trait\UseMapField;

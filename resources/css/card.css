@@ -75,7 +75,8 @@
     margin-bottom: 1rem;
     font-size: 0.875rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 
@@ -154,12 +155,6 @@
     }
   }
 
-}
-
-@container card (width < 400px) {
-  .info-item:last-of-type {
-    display: none;
-  }
 }
 
 .card-holder {

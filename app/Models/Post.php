@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Sluggable;
 use App\Observers\SlugObserver;
+use App\Traits\HasDraftOption;
 use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use Spatie\Translatable\HasTranslations;
 #[ObservedBy(SlugObserver::class)]
 class Post extends Model implements Sluggable, HasMedia
 {
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory;
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraftOption;
 
     protected $fillable = [
         'title',

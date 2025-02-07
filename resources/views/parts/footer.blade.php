@@ -1,3 +1,4 @@
+@php use App\Services\LocaleService; @endphp
 <footer class="border-t border-[#EEE5E5] pt-20 mt-auto bg-white max-lg:pt-10">
   <div class="container-wrapper flex gap-24 mb-10 max-lg:flex-col max-lg:gap-10">
     <div class="relative">
@@ -11,10 +12,7 @@
         +421 911 266 631
       </a>
       <div class="flex gap-6 items-center text-[#373737]">
-        <a href="#">{!! svgIcon("icon/socials/instagram.svg") !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/facebook.svg") !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/linkedin.svg") !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/youtube.svg") !!}</a>
+          @include('parts.socials')
       </div>
       {!! svgIcon("svg/striped-circle.svg", ['class' => ['text-[#F4F4F4] absolute z-[-1] right-0 top-[10%]']]) !!}
     </div>
@@ -33,12 +31,12 @@
       <div>
         <h5 class="mb-5 uppercase text-primary font-bold">Links</h5>
         <ul class="flex flex-col gap-3">
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Personal / online training</a></li>
-          <li><a href="#">Seminars & certifications</a></li>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="{{ LocaleService::localizePath("/blog") }}">Blog</a></li>
+          {{--<li><a href="#">Personal / online training</a></li>--}}
+          <li><a href="{{ LocaleService::localizePath("/events") }}">Seminars & certifications</a></li>
+          {{--<li><a href="#">Shop</a></li>--}}
+          {{--<li><a href="#">About</a></li>--}}
+          {{--<li><a href="#">Contact</a></li>--}}
         </ul>
       </div>
       <div>

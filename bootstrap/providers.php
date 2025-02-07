@@ -1,6 +1,11 @@
 <?php
 
+use App\Providers\Filament\DashboardPanelProvider;
+use Synapps\Filament\Providers\FilamentProvider;
+use App\Providers\AppServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\DashboardPanelProvider::class,
+    AppServiceProvider::class,
+    DashboardPanelProvider::class,
+    FilamentProvider::class,
 ];
