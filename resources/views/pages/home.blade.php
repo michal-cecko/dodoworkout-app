@@ -28,7 +28,7 @@
                                 <div class="hidden relative max-lg:block w-full"
                                      style="translate: calc(-1 * var(--container-padding));">
                                     <img src="image/hp-hero-placeholder.jpg"
-                                         class="w-full h-full object-cover rounded-r-3xl"
+                                         class="w-full h-full object-cover object-center rounded-r-3xl"
                                          alt="Dominik klimek performing one arm handstand.">
 
                                     <div
@@ -44,9 +44,9 @@
                             </div>
 
                             <!-- Toto je image ktory sa zobrazuje v slideri na desktope -->
-                            <div class="w-1/2 shrink-0 max-lg:hidden overflow-hidden"
+                            <div class="w-1/2 shrink-0 max-lg:hidden overflow-hidden rounded-3xl"
                                  style="max-height: calc(100dvh - var(--header-height) * 2);">
-                                <img src="image/hp-hero-placeholder.jpg" class="w-full h-full object-cover rounded-3xl"
+                                <img src="image/hp-hero-placeholder.jpg" class="w-full h-full object-cover object-center"
                                      alt="Dominik klimek performing one arm handstand.">
                             </div>
                         </div>
@@ -104,59 +104,7 @@
                     <div class="swiper-wrapper">
                         @foreach($events as $event)
                             <div class="swiper-slide px-3 max-md:px-6">
-                                <a href="{{ $event->permalink }}">
-                                    <div class="card">
-                                        <div class="image-container">
-                                            <img class="w-full h-full object-cover"
-                                                 src="{{$event->getFirstMediaUrl("image")}}" alt="{{$event->title}}">
-                                            <div class="date-badge">
-                                                <span class="month">{{ $event->start_at->translatedFormat('M') }}</span>
-                                                <span>{{ $event->start_at->format('d') }}</span>
-                                            </div>
-                                        </div>
-
-                                        <h3 class="title">{{ $event->title }}</h3>
-
-                                        <div class="info-container">
-                                            @if(!empty($event->participants_count))
-                                                <div class="info-item">
-                                                    {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-                                                    <span class="{{ $event->last_few_left ? "text-primary font-bold" : "" }}">{{ $event->participants_available }} {{ __("places_left") }}</span>
-                                                </div>
-                                            @endif
-
-                                            @if(!empty($event->address))
-                                                <div class="info-item">
-                                                    {!! svgIcon("icon/icon-map_marker.svg", ['class' => ['text-primary mx-auto']]) !!}
-                                                    <span>{{ $event->address }}</span>
-                                                </div>
-                                            @endif
-
-                                            @if($event->days > 0)
-                                                <div class="info-item">
-                                                    {!! svgIcon("icon/icon-hourglass.svg", ['class' => ['text-primary mx-auto']]) !!}
-                                                    <span>{{ $event->days }} {{ __("days") }}</span>
-                                                </div>
-                                            @endif
-                                        </div>
-
-                                        @if(!empty($event->excerpt))
-                                            <p class="description">
-                                                {{ $event->excerpt }}
-                                            </p>
-                                        @endif
-
-                                        <div class="price-cta-container">
-                                            @if(!empty($event->last_price))
-                                                <span class="sale-price">{{ $event->price }} €</span>
-                                                <span class="price">{{ $event->last_price }} €</span>
-                                            @else
-                                                <span class="price">{{ $event->price }} €</span>
-                                            @endif
-                                            <span class="cta-link text-primary">{{ __("register_now") }}</span>
-                                        </div>
-                                    </div>
-                                </a>
+                                @include("parts.event-card", ["event" => $event])
                             </div>
                         @endforeach
                     </div>

@@ -17,10 +17,10 @@ class EditPost extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\LocaleSwitcher::make(),
             Actions\Action::make('view')
                 ->label('Náhľad')
-                ->url(fn (): string => route('post', ['slug' => $this->record->slug]), true),
-            Actions\LocaleSwitcher::make(),
+                ->url(fn (): string => $this->record->permalink, true),
             Actions\DeleteAction::make(),
         ];
     }

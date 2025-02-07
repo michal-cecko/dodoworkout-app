@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => "en", 'middleware' => [SetLocale::class]], function () {
     Route::get('/', [PageController::class, 'homepage'])->name('en.homepage');
-    Route::get('/blog', [PageController::class, 'blog'])->name('en.blog');
+    Route::get('/blog', [PageController::class, 'postsArchive'])->name('en.blog');
     Route::get('/blog/{post}', [PageController::class, 'article'])->name('en.article');
-    Route::get('/events', [PageController::class, 'events'])->name('en.events');
+    Route::get('/events', [PageController::class, 'eventsArchive'])->name('en.events');
     Route::get('/events/{event}', [PageController::class, 'event'])->name('en.event');
 });
 

@@ -17,6 +17,9 @@ class EditEvent extends EditRecord
     {
         return [
             Actions\LocaleSwitcher::make(),
+            Actions\Action::make('view')
+                ->label('Náhľad')
+                ->url(fn (): string => $this->record->permalink, true),
             Actions\DeleteAction::make(),
         ];
     }

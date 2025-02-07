@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Post;
-use Illuminate\Config\Repository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\App;
 
@@ -12,7 +11,7 @@ class PageController extends Controller
 {
     public function homepage(): View
     {
-        $events = Event::latest()->with(['media'])->limit(5)->get();
+        $events = Event::with(['media'])->orderBy("start_at", "asc")->get();
         return view('pages.home', ['events' => $events]);
     }
 
@@ -23,8 +22,9 @@ class PageController extends Controller
 
     public function eventsArchive(): View
     {
-        return view('pages.workshops');
+        return view('pages.events');
     }
+
     public function post(string $slug): View
     {
         $post = Post::whereRaw("slug->> ? = ?", [App::currentLocale(), $slug])
@@ -32,8 +32,32 @@ class PageController extends Controller
             ->published()
             ->firstOrFail();
 
-        return view('pages.article', ['post' => $post]);
+        // Get related posts by shared tags
+        $relatedPosts = Post::whereHas('tags', function ($query) use ($post) {
+            $query->whereIn('tags.id', $post->tags->pluck('id'));
+        })
+            ->where('id', '!=', $post->id) // Exclude the current post
+            ->published()
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        // Fallback: If no related posts, get posts without tags
+        if ($relatedPosts->isEmpty()) {
+            $relatedPosts = Post::doesntHave('tags')
+                ->where('id', '!=', $post->id)
+                ->published()
+                ->orderBy('created_at', 'desc')
+                ->limit(5)
+                ->get();
+        }
+
+        return view('pages.article', [
+            'post' => $post,
+            'relatedPosts' => $relatedPosts,
+        ]);
     }
+
 
     public function event(string $slug): View
     {
@@ -42,6 +66,22 @@ class PageController extends Controller
             ->published()
             ->firstOrFail();
 
-        return view('pages.workshop', ['event' => $event]);
+        $relatedEvents = Event::where('category_id', $event->category_id)
+            ->where('id', '!=', $event->id) // Exclude the current event
+            ->where('start_at', '>=', now())
+            ->orderBy('start_at', 'asc')
+            ->limit(5)
+            ->get();
+
+        if ($relatedEvents->isEmpty()) {
+            $relatedEvents = Event::whereNull('category_id')
+                ->where('id', '!=', $event->id)
+                ->where('start_at', '>=', now())
+                ->orderBy('start_at', 'asc')
+                ->limit(5)
+                ->get();
+        }
+
+        return view('pages.event', ['event' => $event, 'relatedEvents' => $relatedEvents]);
     }
 }

@@ -36,7 +36,7 @@
                 <a href="{{route("filament.dashboard.auth.login")}}">{!! svgIcon("icon/icon-profile.svg", ['class' => ['profile-icon']]) !!}</a>
             </div>
             <div class="icon-container max-lg:hidden font-bold">
-                <a href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk") }}">
+                <a href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk", request()->route()->parameters()) }}">
                     {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
                 </a>
             </div>
@@ -63,7 +63,7 @@
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("contact") }}">{{__("header_contact")}}</a></li>--}}
         <li>
             <a class="py-4 block text-primary font-bold"
-               href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk") }}">
+               href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk", request()->route()->parameters()) }}">
                 {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
             </a>
         </li>
@@ -71,10 +71,7 @@
     </ul>
 
     <div class="mt-auto flex gap px-4 justify-between items-center text-[#838383]">
-        <a href="#">{!! svgIcon("icon/socials/instagram.svg", ['class' => ['w-9 h-9']]) !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/facebook.svg", ['class' => ['w-9 h-9']]) !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/linkedin.svg", ['class' => ['w-9 h-9']]) !!}</a>
-        <a href="#">{!! svgIcon("icon/socials/youtube.svg", ['class' => ['w-9 h-9']]) !!}</a>
+        @include('parts.socials', ['iconClases' => ['w-9 h-9']])
     </div>
 
     {!! svgIcon("svg/progress-small.svg", ['class' => ['text-white absolute z-[-1] bottom-[25%] left-0 w-full']]) !!}

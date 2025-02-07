@@ -104,7 +104,7 @@ class Event extends Model implements Sluggable, HasMedia
 
     public function getPermalinkAttribute(): string
     {
-        return LocaleService::getLocalizedRoutePathByName(name: "event", parameters: ['event' => $this->slug], );
+        return LocaleService::getLocalizedRoutePathByName(name: "event", parameters: ['event' => $this->slug]);
     }
 
     public function registerMediaCollections(): void
