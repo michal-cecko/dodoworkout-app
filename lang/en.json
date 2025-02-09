@@ -31,5 +31,15 @@
     "register_and_proceed_to_checkout": "Register and proceed to checkout",
     "event_related_subheading": "Do you want to improve even more?",
     "event_related_heading": "Upcoming events",
-    "event_date_from_to_label": "Date"
+    "event_date_from_to_label": "Date",
+    "FormFieldFormat.TEXT": "Text",
+    "FormFieldFormat.EMAIL": "Email",
+    "FormFieldFormat.BOOL": "True / False",
+    "FormFieldFormat.NUMBER": "Number",
+    "FormFieldFormat.PHONE": "Phone number",
+    "FormFieldFormat.DATE": "Date",
+    "FormFieldFormat.TIME": "Time",
+    "FormFieldFormat.DATETIME": "Datetime",
+    "FormFieldFormat.SELECT": "Select",
+    "FormFieldFormat.CHECKBOX": "Checkbox"
 }

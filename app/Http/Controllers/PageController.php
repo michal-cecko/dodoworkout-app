@@ -29,7 +29,7 @@ class PageController extends Controller
     {
         $post = Post::whereRaw("slug->> ? = ?", [App::currentLocale(), $slug])
             ->with(['media', 'tags'])
-            ->published()
+            ->visible()
             ->firstOrFail();
 
         // Get related posts by shared tags
@@ -37,7 +37,7 @@ class PageController extends Controller
             $query->whereIn('tags.id', $post->tags->pluck('id'));
         })
             ->where('id', '!=', $post->id) // Exclude the current post
-            ->published()
+            ->visible()
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
@@ -46,7 +46,7 @@ class PageController extends Controller
         if ($relatedPosts->isEmpty()) {
             $relatedPosts = Post::doesntHave('tags')
                 ->where('id', '!=', $post->id)
-                ->published()
+                ->visible()
                 ->orderBy('created_at', 'desc')
                 ->limit(5)
                 ->get();
@@ -63,7 +63,7 @@ class PageController extends Controller
     {
         $event = Event::whereRaw("slug->> ? = ?", [App::currentLocale(), $slug])
             ->with(['media', 'category'])
-            ->published()
+            ->visible()
             ->firstOrFail();
 
         $relatedEvents = Event::where('category_id', $event->category_id)

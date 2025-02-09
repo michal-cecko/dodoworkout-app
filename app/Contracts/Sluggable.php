@@ -2,9 +2,11 @@
 
 namespace App\Contracts;
 
+use App\Enum\Locale;
+
 interface Sluggable
 {
     function slugColumn() : string;
-    function slugFormat(?string $locale = null) : string;
-    function uniqueSlugQuery(string $slug, ?string $locale = null) : bool;
+    function slugFormat(?Locale $locale = null) : string;
+    function uniqueSlugQuery(string $slug, ?Locale $locale = null) : bool;
 }

@@ -13,10 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 
 class PostTagResource extends CommonResource
 {
-    use Translatable;
-
     protected static ?string $model = PostTag::class;
-
     protected static ?string $navigationIcon = 'heroicon-c-tag';
     protected static ?string $modelLabel = "Značka článku";
     protected static ?string $pluralModelLabel = "Značky článkov";

@@ -5,16 +5,21 @@ namespace App\Models;
 use App\Contracts\Sluggable;
 use App\Observers\SlugObserver;
 use App\Traits\HasSlug;
+use Database\Factories\PostTagFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
+use App\Enum\Locale;
 
 #[ObservedBy(SlugObserver::class)]
 class PostTag extends Model implements Sluggable
 {
+    /**
+     * @use HasFactory<PostTagFactory>
+     */
     use HasTranslations, HasSlug, HasFactory;
 
     protected $fillable = [
@@ -32,10 +37,10 @@ class PostTag extends Model implements Sluggable
         'slug',
     ];
 
-    public function slugFormat(?string $locale = null): string
+    public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("name");
-        return Str::slug($translations[$locale] ?? $translations[config('app.fallback_locale') ?? null]);
+        return Str::slug($translations[$locale->value] ?? $translations[config('app.fallback_locale') ?? null]);
     }
 
     public function posts(): BelongsToMany

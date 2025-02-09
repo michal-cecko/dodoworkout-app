@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\Locale;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,6 +28,8 @@ class EventFactory extends Factory
             'participants_count' => $this->faker->numberBetween(10, 100),
             'price' => $this->faker->numberBetween(0, 100),
             'last_price' => $this->faker->randomElement([null, $this->faker->numberBetween(0, 100)]),
+            'vat_included' => $this->faker->boolean,
+            'locale_scope' => $this->faker->randomElement([null, Locale::SK->value, Locale::EN->value]),
         ];
     }
 }

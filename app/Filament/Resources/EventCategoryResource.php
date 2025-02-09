@@ -13,8 +13,6 @@ use Filament\Tables\Columns\TextColumn;
 
 class EventCategoryResource extends CommonResource
 {
-    use Translatable;
-
     protected static ?string $model = EventCategory::class;
     protected static ?string $navigationIcon = 'heroicon-c-tag';
     protected static ?string $modelLabel = "Kategória eventu";

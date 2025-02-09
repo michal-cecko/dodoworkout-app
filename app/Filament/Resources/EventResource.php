@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enum\Locale;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Trait\UseContentBuilder;
 use App\Filament\Trait\UseMapField;
@@ -22,7 +23,7 @@ use Filament\Tables\Columns\TextColumn;
 
 class EventResource extends CommonResource
 {
-    use Translatable, UseContentBuilder, UseMapField;
+    use UseContentBuilder, UseMapField;
 
     protected static ?string $model = Event::class;
     protected static ?string $navigationIcon = 'heroicon-c-calendar-days';
@@ -171,6 +172,36 @@ class EventResource extends CommonResource
             ->numeric()
             ->suffix("€")
             ->minValue(1)
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['vat_included'] = Checkbox::make('vat_included')
+            ->label("Cena zadaná s DPH")
+            ->inline(false)
+            ->columnSpan([
+                'default' => 6,
+                'sm' => 3,
+                'md' => 2,
+                'lg' => 3,
+            ]);
+
+        $locales = Locale::cases();
+        $locales[null] = "Všetky jazyky";
+        $fields['locale_scope'] =  Select::make('locale_scope')
+            ->label("Cena pred zľavou")
+            ->options($locales)
+            ->default(null)
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['form'] = Select::make('form_id')
+            ->label("Formulár")
+            ->relationship("form", "name")
+            ->preload()
+            ->searchable()
+            ->createOptionForm(FormResource::getFormFields())
             ->columnSpan([
                 'default' => 12,
             ]);

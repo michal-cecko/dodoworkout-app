@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use App\Contracts\Sluggable;
+use App\Contracts\Viewable;
+use App\Enum\Locale;
 use App\Observers\SlugObserver;
 use App\Services\LocaleService;
-use App\Traits\HasDraftOption;
+use App\Traits\HasDraft;
+use App\Traits\HasPermalink;
 use App\Traits\HasSlug;
+use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,9 +23,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(SlugObserver::class)]
-class Event extends Model implements Sluggable, HasMedia
+class Event extends Model implements Sluggable, HasMedia, Viewable
 {
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraftOption;
+    /**
+     * @use HasFactory<EventFactory>
+     */
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft, HasPermalink;
+
+    protected string $frontendView = "event";
 
     protected $fillable = [
         'title',
@@ -37,6 +48,9 @@ class Event extends Model implements Sluggable, HasMedia
         'price',
         'last_price',
         'has_location',
+        'locale_scope',
+        'vat_included',
+        'form_id',
     ];
 
     protected $casts = [
@@ -47,6 +61,7 @@ class Event extends Model implements Sluggable, HasMedia
         'excerpt' => 'array',
         'slug' => 'array',
         'address' => 'array',
+        'locale_scope' => Locale::class,
     ];
 
     protected $translatable = [
@@ -69,42 +84,65 @@ class Event extends Model implements Sluggable, HasMedia
         });
     }
 
-    public function slugFormat(?string $locale = null): string
+    public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("title");
-        return Str::slug($translations[$locale] ?? $translations[config('app.fallback_locale') ?? null]);
+        return Str::slug($translations[$locale->value] ?? $translations[config('app.fallback_locale') ?? null]);
     }
 
-    public function category(): BelongsTo {
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(EventCategory::class);
     }
 
-    public function getIsPublishedAttribute(): bool
+    public function form(): BelongsTo
     {
-        return !$this->is_draft;
+        return $this->belongsTo(Form::class);
     }
 
-    public function getDaysAttribute() : ?int {
-        return $this->end_at?->diffInDays($this->start_at) ?? null;
-    }
-
-    public function getParticipantsAvailableAttribute() : ?int {
-        #TODO calculate participants available
-        return $this->participants_count;
-    }
-
-    public function getLastFewLeftAttribute(): bool
+    public function isPublished() : Attribute
     {
-        if (!$this->participants_count) {
-            return false;
+        return Attribute::make(
+            get: fn(array $attributes) => !$attributes['is_draft'],
+        );
+    }
+
+    public function scopeLocale(Builder $query, Locale|string $locale): Builder
+    {
+        if(is_string($locale)) {
+            $locale = Locale::from($locale);
         }
 
-        return $this->participants_available <= ($this->participants_count * 0.2);
+        return $query->where(function ($subquery) use ($locale) {
+            $subquery->where('locale_scope', $locale)->orWhereNull('locale_scope');
+        });
     }
 
-    public function getPermalinkAttribute(): string
+    public function days() : Attribute
     {
-        return LocaleService::getLocalizedRoutePathByName(name: "event", parameters: ['event' => $this->slug]);
+        return Attribute::make(
+            get: fn(array $attributes) => $attributes['end_at']?->diffInDays($attributes['start_at']) ?? null,
+        );
+    }
+
+    public function participantsAvailable() : Attribute
+    {
+        #TODO calculate participants available
+        return Attribute::make(
+            get: fn(array $attributes) => $attributes['participants_count'],
+        );
+    }
+
+    public function lastFewLeft() : Attribute {
+        return Attribute::make(
+            get: function(array $attributes) {
+                if (!$attributes['participants_count']) {
+                    return false;
+                }
+
+                return $attributes['participants_available'] <= ($attributes['participants_count'] * 0.2);
+            },
+        );
     }
 
     public function registerMediaCollections(): void

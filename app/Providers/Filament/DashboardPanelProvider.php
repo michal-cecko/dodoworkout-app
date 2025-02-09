@@ -46,7 +46,7 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()
-                ->defaultLocales(config('app.locales'))
+                ->defaultLocales(array_map(fn($locale) => $locale->value, config('app.locales')))
             )
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

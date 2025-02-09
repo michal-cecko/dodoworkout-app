@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\Locale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,7 @@ class PostFactory extends Factory
             'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'is_draft' => $this->faker->boolean,
             'content' => json_decode('[{"data": {"content": "<p>Toto je textovy blok</p>"}, "type": "content"}, {"data": {"description": "<p>Toto je popis media</p>"}, "type": "image"}, {"data": {"text": "Citatik nejakej osobnosti", "author": "Autorko", "position": "Neviem"}, "type": "blockquote"}, {"data": [], "type": "gallery"}]'),
+            'locale_scope' => $this->faker->randomElement([null, Locale::SK->value, Locale::EN->value]),
         ];
     }
 }

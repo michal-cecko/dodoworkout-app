@@ -31,5 +31,15 @@
     "register_and_proceed_to_checkout": "Registrovať a pokračovať do pokladne",
     "event_related_subheading": "Máš chuť sa zlepšiť ešte viac?",
     "event_related_heading": "Ďalšie nadchádzajúce eventy",
-    "event_date_from_to_label": "Dátum"
+    "event_date_from_to_label": "Dátum",
+    "FormFieldFormat.TEXT": "Text",
+    "FormFieldFormat.EMAIL": "Email",
+    "FormFieldFormat.BOOL": "Áno / Nie",
+    "FormFieldFormat.NUMBER": "Číslo",
+    "FormFieldFormat.PHONE": "Telefónne číslo",
+    "FormFieldFormat.DATE": "Dátum",
+    "FormFieldFormat.TIME": "Čas",
+    "FormFieldFormat.DATETIME": "Dátum a čas",
+    "FormFieldFormat.SELECT": "Výber",
+    "FormFieldFormat.CHECKBOX": "Zaškrtávacie pole"
 }

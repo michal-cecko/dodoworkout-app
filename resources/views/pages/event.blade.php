@@ -77,8 +77,8 @@
                         <div class="flex mt-auto">
                             <div>
                                 @if(!empty($event->last_price))
-                                    <div class="text-lg line-through text-textSecondary">{{ (float) $event->price }} €</div>
-                                    <div class="text-2xl font-bold text-primary">{{(float) $event->last_price}} €</div>
+                                    <div class="text-lg line-through text-textSecondary">{{ (float) $event->last_price }} €</div>
+                                    <div class="text-2xl font-bold text-primary">{{(float) $event->price}} €</div>
                                 @else
                                     <div class="text-2xl font-semibold text-textSecondary">{{ (float) $event->price }} €</div>
                                 @endif

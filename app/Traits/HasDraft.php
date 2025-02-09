@@ -4,9 +4,9 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait HasDraftOption
+trait HasDraft
 {
-    public function scopePublished(Builder $query): Builder
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->where("is_draft", false);
     }

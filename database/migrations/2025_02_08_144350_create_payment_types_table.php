@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
+            $table->jsonb('name');
+            $table->jsonb('description')->nullable();
+            $table->decimal('price');
+            $table->boolean("is_hidden")->default(false);
+            $table->text('icon')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('payment_types');
     }
 };

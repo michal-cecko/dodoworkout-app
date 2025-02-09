@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Enum\Locale;
+
 trait HasSlug
 {
     public function slugColumn(): string
@@ -9,8 +11,8 @@ trait HasSlug
         return "slug";
     }
 
-    public function uniqueSlugQuery(string $slug, ?string $locale = null): bool
+    public function uniqueSlugQuery(string $slug, ?Locale $locale = null): bool
     {
-        return static::query()->where("slug->" . $locale, $slug)->exists();
+        return static::query()->where("slug->" . $locale->value, $slug)->exists();
     }
 }

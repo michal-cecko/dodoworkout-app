@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use App\Contracts\Sluggable;
+use App\Contracts\Viewable;
+use App\Enum\Locale;
 use App\Observers\SlugObserver;
-use App\Traits\HasDraftOption;
+use App\Services\LocaleService;
+use App\Traits\HasDraft;
+use App\Traits\HasPermalink;
 use App\Traits\HasSlug;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,9 +22,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(SlugObserver::class)]
-class Post extends Model implements Sluggable, HasMedia
+class Post extends Model implements Sluggable, HasMedia, Viewable
 {
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraftOption;
+    /**
+     * @use HasFactory<PostFactory>
+     */
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft, HasPermalink;
+
+    protected string $frontendView = "post";
 
     protected $fillable = [
         'title',
@@ -29,6 +40,7 @@ class Post extends Model implements Sluggable, HasMedia
         'dislikes',
         'published_at',
         'is_draft',
+        'locale_scope',
     ];
 
     public $casts = [
@@ -36,6 +48,7 @@ class Post extends Model implements Sluggable, HasMedia
         'content' => 'array',
         'excerpt' => 'array',
         'slug' => 'array',
+        'locale_scope' => Locale::class,
     ];
 
     protected $translatable = [
@@ -45,10 +58,10 @@ class Post extends Model implements Sluggable, HasMedia
         'slug',
     ];
 
-    public function slugFormat(?string $locale = null): string
+    public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("title");
-        return Str::slug($translations[$locale] ?? $translations[config('app.fallback_locale') ?? null]);
+        return Str::slug($translations[$locale->value] ?? $translations[config('app.fallback_locale') ?? null]);
     }
 
     public function tags(): BelongsToMany
@@ -56,9 +69,11 @@ class Post extends Model implements Sluggable, HasMedia
         return $this->belongsToMany(PostTag::class, "post_tag_post_pivot", "post_id", "tag_id");
     }
 
-    public function getIsPublishedAttribute(): bool
+    public function isPublished() : Attribute
     {
-        return !$this->is_draft;
+        return Attribute::make(
+            get: fn(array $attributes) => !$attributes['is_draft'],
+        );
     }
 
     public function registerMediaCollections(): void

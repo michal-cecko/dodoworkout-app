@@ -1,25 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\PostResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
-use App\Filament\Actions\FrontendViewAction;
-use App\Filament\Resources\PostResource;
+use App\Filament\Resources\FormResource;
 use Filament\Actions;
-use Filament\Pages\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\EditRecord\Concerns\Translatable;
 
-class EditPost extends EditRecord
+class EditForm extends EditRecord
 {
     use Translatable;
 
-    protected static string $resource = PostResource::class;
+    protected static string $resource = FormResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\LocaleSwitcher::make(),
-            FrontendViewAction::make(),
             Actions\DeleteAction::make(),
         ];
     }

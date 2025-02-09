@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EventResource\Pages;
 
+use App\Filament\Actions\FrontendViewAction;
 use App\Filament\Resources\EventResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -17,9 +18,7 @@ class EditEvent extends EditRecord
     {
         return [
             Actions\LocaleSwitcher::make(),
-            Actions\Action::make('view')
-                ->label('Náhľad')
-                ->url(fn (): string => $this->record->permalink, true),
+            FrontendViewAction::make(),
             Actions\DeleteAction::make(),
         ];
     }
