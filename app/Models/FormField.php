@@ -62,16 +62,12 @@ class FormField extends Model
                 $model->min = is_numeric($model->min_select) ? $model->min_select : null;
                 $model->max = is_numeric($model->max_select) ? $model->max_select : null;
 
-                dump($model);
-
                 if($model->is_required) {
                     $model->min_select = 1;
                     $model->max_select = 1;
                 } else {
                     $model->min_select = null;
                 }
-
-                dd($model);
             } else {
                 $model->min = null;
                 $model->max = null;

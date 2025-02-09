@@ -258,6 +258,7 @@ class FormResource extends CommonResource
             ->collapsible()
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::SELECT->value, FormFieldFormat::CHECKBOX->value]))
             ->deleteAction(fn(Action $action) => $action->requiresConfirmation())
+            ->itemLabel(fn (array $state): ?string => $state['value'] ?? null)
             ->schema([
                 TextInput::make('value')->label("Hodnota")->required()->columnSpan("full")
             ]);
@@ -271,6 +272,7 @@ class FormResource extends CommonResource
             ->reorderable()
             ->reorderableWithButtons()
             ->collapsible()
+            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
             ->deleteAction(fn(Action $action) => $action->requiresConfirmation())
             ->schema([Grid::make([
                 'default' => 12,
