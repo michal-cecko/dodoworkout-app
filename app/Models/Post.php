@@ -8,11 +8,9 @@ use App\Enum\Locale;
 use App\Observers\SlugObserver;
 use App\Services\LocaleService;
 use App\Traits\HasDraft;
-use App\Traits\HasPermalink;
 use App\Traits\HasSlug;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,9 +25,7 @@ class Post extends Model implements Sluggable, HasMedia, Viewable
     /**
      * @use HasFactory<PostFactory>
      */
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft, HasPermalink;
-
-    protected string $frontendView = "post";
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft;
 
     protected $fillable = [
         'title',
@@ -69,11 +65,9 @@ class Post extends Model implements Sluggable, HasMedia, Viewable
         return $this->belongsToMany(PostTag::class, "post_tag_post_pivot", "post_id", "tag_id");
     }
 
-    public function isPublished() : Attribute
+    public function getPermalinkAttribute(): string
     {
-        return Attribute::make(
-            get: fn(array $attributes) => !$attributes['is_draft'],
-        );
+        return LocaleService::getLocalizedRoutePathByName(name: "post", changeToLocale: $this->locale_scope?->value, parameters: ['post' => $this->slug]);
     }
 
     public function registerMediaCollections(): void

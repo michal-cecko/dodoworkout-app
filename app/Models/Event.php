@@ -8,12 +8,9 @@ use App\Enum\Locale;
 use App\Observers\SlugObserver;
 use App\Services\LocaleService;
 use App\Traits\HasDraft;
-use App\Traits\HasPermalink;
 use App\Traits\HasSlug;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,9 +25,7 @@ class Event extends Model implements Sluggable, HasMedia, Viewable
     /**
      * @use HasFactory<EventFactory>
      */
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft, HasPermalink;
-
-    protected string $frontendView = "event";
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft;
 
     protected $fillable = [
         'title',
@@ -100,49 +95,29 @@ class Event extends Model implements Sluggable, HasMedia, Viewable
         return $this->belongsTo(Form::class);
     }
 
-    public function isPublished() : Attribute
+    public function getDaysAttribute(): ?int
     {
-        return Attribute::make(
-            get: fn(array $attributes) => !$attributes['is_draft'],
-        );
+        return $this->end_at?->diffInDays($this->start_at) ?? null;
     }
 
-    public function scopeLocale(Builder $query, Locale|string $locale): Builder
+    public function getPermalinkAttribute(): string
     {
-        if(is_string($locale)) {
-            $locale = Locale::from($locale);
-        }
-
-        return $query->where(function ($subquery) use ($locale) {
-            $subquery->where('locale_scope', $locale)->orWhereNull('locale_scope');
-        });
+        return LocaleService::getLocalizedRoutePathByName(name: "event", changeToLocale: $this->locale_scope?->value, parameters: ['event' => $this->slug]);
     }
 
-    public function days() : Attribute
-    {
-        return Attribute::make(
-            get: fn(array $attributes) => $attributes['end_at']?->diffInDays($attributes['start_at']) ?? null,
-        );
-    }
-
-    public function participantsAvailable() : Attribute
+    public function getParticipantsAvailableAttribute(): ?int
     {
         #TODO calculate participants available
-        return Attribute::make(
-            get: fn(array $attributes) => $attributes['participants_count'],
-        );
+        return $this->participants_count;
     }
 
-    public function lastFewLeft() : Attribute {
-        return Attribute::make(
-            get: function(array $attributes) {
-                if (!$attributes['participants_count']) {
-                    return false;
-                }
+    public function getLastFewLeftAttribute(): bool
+    {
+        if (!$this->participants_count) {
+            return false;
+        }
 
-                return $attributes['participants_available'] <= ($attributes['participants_count'] * 0.2);
-            },
-        );
+        return $this->participants_available <= ($this->participants_count * 0.2);
     }
 
     public function registerMediaCollections(): void
