@@ -7,8 +7,10 @@ const heroSwiper = new Swiper('#hero-swiper', {
         nextEl: '#hero-swiper-next',
         prevEl: '#hero-swiper-prev'
     },
+    allowTouchMove: false,
+    speed: 800,
     autoplay: {
-        delay: 5000
+        delay: 7000
     },
     on: {
         init: function () {

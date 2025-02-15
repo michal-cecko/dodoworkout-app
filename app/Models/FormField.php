@@ -2,27 +2,28 @@
 
 namespace App\Models;
 
+use App\Contracts\CanCopyLocaleMutations;
 use App\Enum\FormFieldFormat;
+use App\Traits\Translations\HasCopyLocaleMutations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
 
-class FormField extends Model
+class FormField extends Model implements CanCopyLocaleMutations
 {
-    use HasTranslations;
+    use HasTranslations, HasCopyLocaleMutations;
 
     protected $fillable = [
         'form_id',
         'label',
-        'min',
-        'max',
         'format',
         'options',
         'help_text',
         'is_required',
-
         'min',
         'max',
+
+        //These below are not in the DB, just for Filament form.
         'min_select',
         'max_select',
         'min_number',
@@ -42,6 +43,8 @@ class FormField extends Model
 
     protected $translatable = [
         'label',
+        'help_text',
+        'options',
     ];
 
     protected static function boot(): void

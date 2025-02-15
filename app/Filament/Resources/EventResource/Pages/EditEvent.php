@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EventResource\Pages;
 
+use App\Filament\Actions\CopyLocaleFieldsAction;
 use App\Filament\Actions\FrontendViewAction;
 use App\Filament\Resources\EventResource;
 use Filament\Actions;
@@ -18,6 +19,7 @@ class EditEvent extends EditRecord
     {
         return [
             Actions\LocaleSwitcher::make(),
+            CopyLocaleFieldsAction::make(),
             FrontendViewAction::make(),
             Actions\DeleteAction::make(),
         ];

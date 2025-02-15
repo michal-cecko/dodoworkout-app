@@ -186,22 +186,19 @@ class EventResource extends CommonResource
                 'lg' => 3,
             ]);
 
-        $locales = Locale::cases();
-        $locales[null] = "Všetky jazyky";
+        $locales = array_map(fn($locale) => $locale->value, Locale::cases());
         $fields['locale_scope'] =  Select::make('locale_scope')
-            ->label("Cena pred zľavou")
+            ->label("Event dostupný v jazykoch")
+            ->placeholder("Všetky jazyky")
             ->options($locales)
-            ->default(null)
             ->columnSpan([
                 'default' => 12,
             ]);
 
         $fields['form'] = Select::make('form_id')
             ->label("Formulár")
-            ->relationship("form", "name")
-            ->preload()
+            ->options(\App\Models\Form::query()->pluck('name', 'id'))
             ->searchable()
-            ->createOptionForm(FormResource::getFormFields())
             ->columnSpan([
                 'default' => 12,
             ]);

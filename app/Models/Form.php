@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Contracts\CanCopyLocaleMutations;
+use App\Traits\Translations\HasCopyLocaleMutations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
-class Form extends Model
+class Form extends Model implements CanCopyLocaleMutations
 {
-    use HasTranslations, HasFactory;
+    use HasTranslations, HasFactory, HasCopyLocaleMutations;
 
     protected $fillable = [
         'name',
@@ -23,6 +25,17 @@ class Form extends Model
         'name',
         'fields'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Form $model) {
+            if($model->getAttribute("fields") !== null) {
+                unset($model->fields);
+            }
+        });
+    }
 
     public function fields(): HasMany
     {

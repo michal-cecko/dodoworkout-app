@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PostResource\Pages;
 
+use App\Filament\Actions\CopyLocaleFieldsAction;
 use App\Filament\Actions\FrontendViewAction;
 use App\Filament\Resources\PostResource;
 use Filament\Actions;
@@ -19,6 +20,7 @@ class EditPost extends EditRecord
     {
         return [
             Actions\LocaleSwitcher::make(),
+            CopyLocaleFieldsAction::make(),
             FrontendViewAction::make(),
             Actions\DeleteAction::make(),
         ];

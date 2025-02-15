@@ -45,8 +45,8 @@ class LocaleService
     public static function getLocalizedRoutePathByName(string $name, ?string $changeToLocale = null, array $parameters = []): string {
         if($changeToLocale) {
             foreach (config("app.locales") as $locale) {
-                if (str_starts_with($name, $locale . ".")) {
-                    $name = str_replace($locale . ".", "", $name);
+                if (str_starts_with($name, strtolower($locale->value) . ".")) {
+                    $name = str_replace(strtolower($locale->value) . ".", "", $name);
                     break;
                 }
             }
@@ -54,8 +54,8 @@ class LocaleService
             $changeToLocale = strtolower(app()->currentLocale());
         }
 
-        if($changeToLocale !== config("app.fallback_locale")) {
-            $name = $changeToLocale . "." . $name;
+        if(strtolower($changeToLocale) !== strtolower(config("app.fallback_locale"))) {
+            $name = strtolower($changeToLocale) . "." . $name;
         }
 
         return self::localizeUrl(route($name, $parameters));

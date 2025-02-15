@@ -24,7 +24,7 @@ class SlugObserver
                 $number++;
             } while ($model->uniqueSlugQuery($slug, $locale));
 
-            $finalSlug[$locale->value] = $slug;
+            $finalSlug[strtolower($locale->value)] = $slug;
         }
 
         $model->{$model->slugColumn()} = $finalSlug;

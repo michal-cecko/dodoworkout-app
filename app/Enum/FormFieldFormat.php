@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-use App\Traits\TranslatableEnum;
+use App\Traits\Translations\TranslatableEnum;
 
 enum FormFieldFormat : string
 {

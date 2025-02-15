@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Traits;
-
-use App\Enum\Locale;
+namespace App\Traits\Translations;
 
 trait TranslatableEnum
 {

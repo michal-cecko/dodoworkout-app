@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enum\Locale;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Trait\UseContentBuilder;
 use App\Models\Post;
@@ -121,6 +122,18 @@ class PostResource extends CommonResource
             ->label("Uložiť ako koncept?")
             ->inline(false)
             ->live()
+            ->columnSpan([
+                'default' => 6,
+                'sm' => 3,
+                'md' => 2,
+                'lg' => 3,
+            ]);
+
+        $locales = array_map(fn($locale) => $locale->value, Locale::cases());
+        $fields['locale_scope'] =  Select::make('locale_scope')
+            ->label("Event dostupný v jazykoch")
+            ->placeholder("Všetky jazyky")
+            ->options($locales)
             ->columnSpan([
                 'default' => 6,
                 'sm' => 3,

@@ -11,8 +11,8 @@ class PageController extends Controller
 {
     public function homepage(): View
     {
-        $events = Event::with(['media'])->orderBy("start_at", "asc")->get();
-        return view('pages.home', ['events' => $events]);
+        $posts = Post::with(['media', 'tags'])->orderBy("published_at", "desc")->get();
+        return view('pages.home', ['posts' => $posts]);
     }
 
     public function postsArchive(): View
@@ -52,7 +52,7 @@ class PageController extends Controller
                 ->get();
         }
 
-        return view('pages.article', [
+        return view('pages.post', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
         ]);
@@ -62,7 +62,7 @@ class PageController extends Controller
     public function event(string $slug): View
     {
         $event = Event::whereRaw("slug->> ? = ?", [App::currentLocale(), $slug])
-            ->with(['media', 'category'])
+            ->with(['media', 'category', 'form.fields'])
             ->visible()
             ->firstOrFail();
 

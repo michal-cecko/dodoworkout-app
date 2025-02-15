@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\CanCopyLocaleMutations;
 use App\Contracts\Sluggable;
 use App\Contracts\Viewable;
 use App\Enum\Locale;
@@ -9,6 +10,7 @@ use App\Observers\SlugObserver;
 use App\Services\LocaleService;
 use App\Traits\HasDraft;
 use App\Traits\HasSlug;
+use App\Traits\Translations\HasCopyLocaleMutations;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,12 +22,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(SlugObserver::class)]
-class Event extends Model implements Sluggable, HasMedia, Viewable
+class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocaleMutations
 {
     /**
      * @use HasFactory<EventFactory>
      */
-    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft;
+    use HasTranslations, HasSlug, InteractsWithMedia, HasFactory, HasDraft, HasCopyLocaleMutations;
 
     protected $fillable = [
         'title',
@@ -82,7 +84,7 @@ class Event extends Model implements Sluggable, HasMedia, Viewable
     public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("title");
-        return Str::slug($translations[$locale->value] ?? $translations[config('app.fallback_locale') ?? null]);
+        return Str::slug($translations[strtolower($locale->value)] ?? $translations[strtolower(config('app.fallback_locale') ?? null)]);
     }
 
     public function category(): BelongsTo

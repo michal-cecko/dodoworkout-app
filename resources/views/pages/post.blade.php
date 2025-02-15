@@ -93,7 +93,7 @@
                     <div class="swiper-wrapper">
                         @foreach($relatedPosts as $post)
                             <div class="swiper-slide px-3 max-md:px-6">
-                                @include('parts.article-card', ['article' => $post])
+                                @include('parts.post-card', ['post' => $post])
                             </div>
                         @endforeach
                     </div>

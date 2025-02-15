@@ -31,25 +31,25 @@
             <div>
                 <h5 class="mb-5 uppercase text-primary font-bold">{{__("footer_links_heading")}}</h5>
                 <ul class="flex flex-col gap-3">
-                    <li><a href="{{ LocaleService::localizePath("/blog") }}">Blog</a></li>
+                    <li><a href="{{ LocaleService::localizePath("/blog") }}">{{__("header_blog")}}</a></li>
                     {{--<li><a href="#">Personal / online training</a></li>--}}
-                    <li><a href="{{ LocaleService::localizePath("/events") }}">Seminars & certifications</a></li>
+                    <li><a href="{{ LocaleService::localizePath("/events") }}">{{__("header_events")}}</a></li>
                     {{--<li><a href="#">Shop</a></li>--}}
                     {{--<li><a href="#">About</a></li>--}}
                     {{--<li><a href="#">Contact</a></li>--}}
                 </ul>
             </div>
-            <div>
+            {{--<div>
                 <h5 class="mb-5 uppercase text-primary font-bold">{{__("footer_info_heading")}}</h5>
                 <ul class="flex flex-col gap-3">
                     <li><a href="#">Return policy</a></li>
                     <li><a href="#">Privacy policy</a></li>
                     <li><a href="#">Business conditions</a></li>
                 </ul>
-            </div>
+            </div>--}}
         </div>
     </div>
-    <div class="bg-[#F8F8F8] border-t border-[#EEE5E5] h-12 flex items-center justify-center">
-        Copyright © 2024 | DODOWORKOUT
+    <div class="bg-[#F8F8F8] border-t border-[#EEE5E5] h-12 flex items-center justify-center text-sm">
+        Copyright © 2024 | DODOWORKOUT | All rights reserved
     </div>
 </footer>

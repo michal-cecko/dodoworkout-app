@@ -269,6 +269,11 @@ class FormResource extends CommonResource
             ->columnSpan('full')
             ->addActionLabel('Pridať nové pole')
             ->cloneable()
+            ->hint(function($operation) {
+                if($operation !== "create") return "";
+
+                return "Ak chcete skopírovať polia do iného jazyka, uložte formulár v hlavnom jazyku a pri úprave použite možnosť \"Kopírovať jazykovú mutáciu\".";
+            })
             ->reorderable()
             ->reorderableWithButtons()
             ->collapsible()

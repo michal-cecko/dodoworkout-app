@@ -40,7 +40,7 @@ class EventCategory extends Model implements Sluggable
     public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("name");
-        return Str::slug($translations[$locale->value] ?? $translations[config('app.fallback_locale') ?? null]);
+        return Str::slug($translations[strtolower($locale->value)] ?? $translations[strtolower(config('app.fallback_locale') ?? null)]);
     }
 
     public function events(): HasMany

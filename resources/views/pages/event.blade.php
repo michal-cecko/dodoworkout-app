@@ -1,6 +1,15 @@
 @php use App\Services\LocaleService; @endphp
 @extends('layouts.web')
 
+@section("head")
+    @vite(['resources/css/filament/dashboard/theme.css'])
+    @filamentStyles
+@endsection
+
+@section("scripts")
+    @filamentScripts
+@endsection
+
 @section('body')
     <section id="bootcamp">
         <div
@@ -25,41 +34,43 @@
                             <div>
                                 @if(!empty($event->category))
                                     <span
-                                        class="uppercase text-sm text-textSecondary mb-3">{{ $event->category->name }}</span>
+                                        class="uppercase text-base text-textSecondary mb-3">{{ $event->category->name }}</span>
                                 @endif
                                 <h2 class="hfont text-3xl font-black max-lg:text-2xl">{{ $event->title }}</h2>
                             </div>
                         </div>
 
                         @if(!empty($event->excerpt))
-                            <p class="text-sm text-textSecondary mb-10">
+                            <p class="text-base text-textSecondary mb-10">
                                 {{ $event->excerpt }}
                             </p>
                         @endif
 
                         <div class="flex gap-12 max-lg:gap-5">
                             @if(!empty($event->address))
-                                <div class="text-textSecondary text-lg max-lg:text-sm">
+                                <div class="text-textSecondary text-lg max-lg:text-base">
                                     <div
-                                        class="text-primary font-bold text-sm flex items-center gap-3 mb-1 max-lg:mb-2">
+                                        class="text-primary font-bold text-base flex items-center gap-3 mb-1 max-lg:mb-2">
                                         {!! svgIcon("icon/icon-map_marker.svg") !!}
                                         {{ __("address") }}
                                     </div>
-                                    {{ $event->address }}
+                                    <span class="text-base">{{ $event->address }}</span>
                                 </div>
                             @endif
 
-                            <div class="text-textSecondary text-lg max-lg:text-sm">
-                                <div class="text-primary font-bold text-sm flex items-center gap-3 mb-1 max-lg:mb-2">
+                            <div class="text-textSecondary text-lg max-lg:text-base">
+                                <div class="text-primary font-bold text-base flex items-center gap-3 mb-1 max-lg:mb-2">
                                     {!! svgIcon("icon/icon-calendar.svg") !!}
                                     {{__("event_date_from_to_label")}}
                                 </div>
-                                @if($event->start_at->diffInDays($event->end_at) > 0)
-                                    {{ $event->start_at->translatedFormat("d. F Y") }}
-                                    - {{ $event->end_at->translatedFormat("d. F Y") }}
-                                @else
-                                    {{ $event->start_at->translatedFormat("d. F Y") }}
-                                @endif
+                                <span class="text-base">
+                                    @if($event->start_at->diffInDays($event->end_at) > 0)
+                                        {{ $event->start_at->translatedFormat("d. F Y") }}
+                                        - {{ $event->end_at->translatedFormat("d. F Y") }}
+                                    @else
+                                        {{ $event->start_at->translatedFormat("d. F Y") }}
+                                    @endif
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -69,40 +80,45 @@
                             <span
                                 class="sale-tag mb-5 max-lg:absolute top-0 left-6 -translate-y-1/2">{{__("sale_tag")}}</span>
                         @endif
-                        <h3 class="font-black text-3xl hfont max-lg:text-2xl max-lg:mb-8">
+                        <h3 class="font-black text-2xl hfont max-lg:text-2xl max-lg:mb-8">
                             <span class="highlight">{{__("event_register_cta_partial")}},</span><br
                                 class="max-lg:hidden"/>{{__("still_places_left", ["count" => 5])}}
                         </h3>
 
-                        <div class="flex mt-auto">
-                            <div>
-                                @if(!empty($event->last_price))
-                                    <div class="text-lg line-through text-textSecondary">{{ (float) $event->last_price }} €</div>
-                                    <div class="text-2xl font-bold text-primary">{{(float) $event->price}} €</div>
-                                @else
-                                    <div class="text-2xl font-semibold text-textSecondary">{{ (float) $event->price }} €</div>
-                                @endif
-
-                            </div>
-
-                            <button class="btn self-end ml-auto" data-variant="primary">{{__("register_now")}}
-                                {!! svgIcon("icon/icon-lucide_arrow.svg") !!}
-                            </button>
+                        <div class="flex justify-end items-center mt-auto mb-3">
+                            @if(!empty($event->last_price))
+                                <div
+                                    class="text-lg line-through text-textSecondary mr-2">{{ (float) $event->last_price }}
+                                    €
+                                </div>
+                                <div class="text-2xl font-bold text-primary">{{(float) $event->price}} €</div>
+                            @else
+                                <div class="text-2xl font-semibold text-textSecondary">{{ (float) $event->price }}
+                                    €
+                                </div>
+                            @endif
                         </div>
+
+                        <button class="btn self-end ml-auto" data-variant="primary">{{__("register_now")}}
+                            {!! svgIcon("icon/icon-lucide_arrow.svg") !!}
+                        </button>
                     </div>
                 </div>
 
-                <div class="flex gap-12 items-start pl-11 max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
+                <div class="flex flex-col gap-12 items-start pl-11 max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
+                    <aside
+                        class="sticky top-[20px] shrink-0 w-[416px] {{--max-lg:w-full--}} w-full bg-white px-9 pt-10 pb-8 border border-[#EDEDED] rounded-[30px] min-h-[600px] flex flex-col max-lg:px-6">
+                        <h3 class="font-black text-2xl hfont">{{__("registration_form")}}</h3>
+
+                        <!-- Include the Livewire component -->
+                        @livewire('event-registration-form', ['event' => $event])
+
+                        {{--<button class="btn w-fit mt-auto mx-auto"
+                                data-variant="primary">{{__("register_and_proceed_to_checkout")}}</button>--}}
+                    </aside>
                     <article class="w-full max-lg:px-6">
                         @include("parts.builder", ['contents' => $event->content])
                     </article>
-
-                    <aside
-                        class="sticky top-[20px] shrink-0 w-[416px] max-lg:w-full bg-white px-9 pt-10 pb-8 border border-[#EDEDED] rounded-[30px] min-h-[600px] flex flex-col max-lg:px-6">
-                        <h3 class="font-black text-2xl hfont">{{__("registration_form")}}</h3>
-
-                        <button class="btn w-fit mt-auto mx-auto" data-variant="primary">{{__("register_and_proceed_to_checkout")}}</button>
-                    </aside>
                 </div>
             </div>
         </div>
@@ -128,7 +144,8 @@
                 <div class="flex gap-[141px] max-lg:flex-col-reverse max-lg:gap-12">
                     <div class="max-lg:mx-auto"
                          style="padding-left: max(calc((100vw - var(--max-container-width)) / 2), var(--container-padding));">
-                        <a href="{{ LocaleService::getLocalizedRoutePathByName("events") }}" class="btn self-start whitespace-nowrap" data-variant="primary">
+                        <a href="{{ LocaleService::getLocalizedRoutePathByName("events") }}"
+                           class="btn self-start whitespace-nowrap" data-variant="primary">
                             {{__("view_all")}}
                             {!! svgIcon("icon/icon-arrow.svg", ['class' => ['rotate-180']]) !!}
                         </a>

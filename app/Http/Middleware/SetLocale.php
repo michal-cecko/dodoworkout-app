@@ -13,8 +13,8 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         foreach (LocaleService::getLocaleOptions(skipDefault: true) as $locale) {
-            if ($request->route()->named($locale . '.*')) {
-                App::setLocale($locale);
+            if ($request->route()->named(strtolower($locale->value) . '.*')) {
+                App::setLocale(strtolower($locale->value));
                 return $next($request);
             }
         }

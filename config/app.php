@@ -80,11 +80,11 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', Locale::EN->value),
+    'locale' => env('APP_LOCALE', strtolower(Locale::SK->value)),
 
-    'locales' => array_values(Locale::cases()),
+    'locales' => Locale::cases(),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', Locale::SK->value),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', strtolower(Locale::SK->value)),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
