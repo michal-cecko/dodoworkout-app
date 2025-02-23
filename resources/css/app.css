@@ -2,6 +2,7 @@
 @import url('./filter.css');
 @import url('./article.css');
 @import url('./swiper.css');
+@import url('./order.css');
 
 @tailwind base;
 @tailwind components;

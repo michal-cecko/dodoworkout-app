@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('form_submissions', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId("form_id")->nullable();
             $table->foreign("form_id")->references("id")->on("forms")->nullOnDelete();
             $table->foreignId("user_id")->nullable();
             $table->foreign("user_id")->references("id")->on("users")->nullOnDelete();
             $table->morphs("priceable");
+
             $table->timestamps();
         });
     }

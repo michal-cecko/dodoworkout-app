@@ -55,6 +55,8 @@ Thumbs.db
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/framework/cache
+/storage/framework/views
 /vendor
 .env
 .env.backup

@@ -2,26 +2,45 @@
 
 namespace App\Models;
 
+use App\Contracts\CanCopyLocaleMutations;
+use App\Enum\PaymentTypeEnum;
 use App\Traits\HasHidden;
+use App\Traits\Translations\HasCopyLocaleMutations;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
-class PaymentType extends Model
+class PaymentType extends Model implements CanCopyLocaleMutations
 {
-    use HasHidden;
+    use HasTranslations, HasHidden, HasCopyLocaleMutations;
 
     protected $fillable = [
-        'label',
+        'name',
         'description',
         'price',
         'is_hidden',
+        'type',
         'icon',
     ];
 
     protected $casts = [
-        'label' => 'array',
+        'name' => 'array',
+        'description' => 'array',
+        'type' => PaymentTypeEnum::class,
     ];
 
     protected $translatable = [
-        'label',
+        'name',
+        'description',
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (PaymentType $model) {
+            if (empty($model->price)) {
+                $model->price = 0;
+            }
+        });
+    }
 }

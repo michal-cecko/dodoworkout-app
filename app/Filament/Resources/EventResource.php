@@ -10,6 +10,7 @@ use App\Models\Event;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -77,6 +78,13 @@ class EventResource extends CommonResource
 
         $fields['title'] = TextInput::make('title')
             ->label("Titulok")
+            ->required()
+            ->columnSpan([
+                'default' => 12,
+            ]);
+
+        $fields['order_item_name'] = TextInput::make('order_item_name')
+            ->label("Názov položky v objednávke")
             ->required()
             ->columnSpan([
                 'default' => 12,
@@ -176,7 +184,7 @@ class EventResource extends CommonResource
                 'default' => 12,
             ]);
 
-        $fields['vat_included'] = Checkbox::make('vat_included')
+        /*$fields['vat_included'] = Checkbox::make('vat_included')
             ->label("Cena zadaná s DPH")
             ->inline(false)
             ->columnSpan([
@@ -184,9 +192,9 @@ class EventResource extends CommonResource
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
-            ]);
+            ]);*/
 
-        $locales = array_map(fn($locale) => $locale->value, Locale::cases());
+        $locales = collect(Locale::cases())->mapWithKeys(fn($locale) => [$locale->value => $locale->value])->toArray();
         $fields['locale_scope'] =  Select::make('locale_scope')
             ->label("Event dostupný v jazykoch")
             ->placeholder("Všetky jazyky")
@@ -202,6 +210,20 @@ class EventResource extends CommonResource
             ->columnSpan([
                 'default' => 12,
             ]);
+
+        $fields['confirmation_email_content'] = RichEditor::make('confirmation_email_content')
+            ->label("Text k potvrdzovaciemu emailu")
+            ->columnSpan("full")
+            ->toolbarButtons(['bold', 'bulletList', 'h1', 'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'underline', 'undo']);
+
+        $fields['confirmation_email_attachments'] = SpatieMediaLibraryFileUpload::make('confirmation_email_attachments')
+            ->label("Prílohy k potvrdzovaciemu emailu")
+            ->preserveFilenames()
+            ->multiple()
+            ->required()
+            ->imageEditor()
+            ->collection('confirmation_email_attachments')
+            ->columnSpan(12);
 
         $fields['content'] = self::getContentBuilder(fieldLabel: "Obsah článku");
 

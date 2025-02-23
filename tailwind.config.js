@@ -9,6 +9,7 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
         "./vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css",
+        './vendor/jaocero/radio-deck/resources/views/**/*.blade.php',
     ],
     theme: {
         extend: {

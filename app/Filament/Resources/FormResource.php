@@ -18,6 +18,7 @@ use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class FormResource extends CommonResource
 {
@@ -192,10 +193,34 @@ class FormResource extends CommonResource
                 'lg' => 3,
             ]);
 
+        $fields['min_file_count'] = TextInput::make('min_file_count')
+            ->label("Minimálny počet (vrátane)")
+            ->numeric()
+            ->afterStateHydrated(fn(?Model $record, callable $set) => $set('min_file_count', !empty($record->min) ? (int) $record->min : null))
+            ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::FILE->value]))
+            ->columnSpan([
+                'default' => 6,
+                'sm' => 3,
+                'md' => 2,
+                'lg' => 3,
+            ]);
+
+        $fields['max_file_count'] = TextInput::make('max_file_count')
+            ->label("Maximálny počet (vrátane)")
+            ->numeric()
+            ->afterStateHydrated(fn(?Model $record, callable $set) => $set('max_file_count', !empty($record->max) ? (int) $record->max : null))
+            ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::FILE->value]))
+            ->columnSpan([
+                'default' => 6,
+                'sm' => 3,
+                'md' => 2,
+                'lg' => 3,
+            ]);
+
         $fields['min_date'] = DateTimePicker::make('min_date')
             ->label("Minimálna hodnota (vrátane)")
             ->native(false)
-            ->default(now())
+            ->afterStateHydrated(fn(?Model $record, callable $set) => $set('min_date', !empty($record->min) ? $record->min : null))
             ->visible(fn($get) => in_array($get('format'), [
                 FormFieldFormat::DATE->value,
                 FormFieldFormat::DATETIME->value,
@@ -210,36 +235,10 @@ class FormResource extends CommonResource
         $fields['max_date'] = DateTimePicker::make('max_date')
             ->label("Maximálna hodnota (vrátane)")
             ->native(false)
-            ->default(now())
+            ->afterStateHydrated(fn(?Model $record, callable $set) => $set('max_date', !empty($record->max) ? $record->max : null))
             ->visible(fn($get) => in_array($get('format'), [
                 FormFieldFormat::DATE->value,
                 FormFieldFormat::DATETIME->value,
-            ]))
-            ->columnSpan([
-                'default' => 6,
-                'sm' => 3,
-                'md' => 2,
-                'lg' => 3,
-            ]);
-
-        $fields['min_time'] = TimePicker::make('min_time')
-            ->label("Minimálna hodnota (vrátane)")
-            ->native(false)
-            ->visible(fn($get) => in_array($get('format'), [
-                FormFieldFormat::TIME->value,
-            ]))
-            ->columnSpan([
-                'default' => 6,
-                'sm' => 3,
-                'md' => 2,
-                'lg' => 3,
-            ]);
-
-        $fields['max_time'] = TimePicker::make('max_time')
-            ->label("Maximálna hodnota (vrátane)")
-            ->native(false)
-            ->visible(fn($get) => in_array($get('format'), [
-                FormFieldFormat::TIME->value,
             ]))
             ->columnSpan([
                 'default' => 6,

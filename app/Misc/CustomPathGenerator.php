@@ -2,6 +2,12 @@
 
 namespace App\Misc;
 
+use App\Models\Event;
+use App\Models\Form;
+use App\Models\FormField;
+use App\Models\FormSubmissionField;
+use App\Models\Order;
+use App\Models\Post;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
@@ -17,9 +23,13 @@ class CustomPathGenerator implements PathGenerator
         $modID = $mod->id;
 
         return match ($media->model_type) {
-            'post' => "blog{$x}posts{$x}{$mod->slug}{$x}{$media->collection_name}{$x}",
+            MorphMap::getKeyByModel(Post::class) => "clanky{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
+            MorphMap::getKeyByModel(Event::class) => "eventy{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
+            MorphMap::getKeyByModel(Form::class) => "formulare{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
+            MorphMap::getKeyByModel(Order::class) => "objednavky{$x}{$mod->fullOrderNumber}{$x}{$media->collection_name}{$x}",
+            MorphMap::getKeyByModel(FormSubmissionField::class) => "objednavky{$x}{$mod->formSubmission->order->fullOrderNumber}{$x}formulare{$x}{$mod->formSubmission->form->getTranslations("slug")['sk']}{$x}{$mod->formField->getTranslations("slug")['sk']}{$x}",
 
-            default => "uncategorized{$x}" . Str::snake($modelClass) . "{$x}{$modID}{$x}{$media->collection_name}{$x}",
+            default => "nezaradene{$x}" . Str::snake($modelClass) . "{$x}{$modID}{$x}{$media->collection_name}{$x}",
         };
     }
 

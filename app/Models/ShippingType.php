@@ -2,27 +2,45 @@
 
 namespace App\Models;
 
+use App\Contracts\CanCopyLocaleMutations;
+use App\Enum\ShippingTypeEnum;
 use App\Traits\HasHidden;
+use App\Traits\Translations\HasCopyLocaleMutations;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class ShippingType extends Model
+class ShippingType extends Model implements CanCopyLocaleMutations
 {
-    use HasTranslations, HasHidden;
+    use HasTranslations, HasHidden, HasCopyLocaleMutations;
 
     protected $fillable = [
-        'label',
+        'name',
         'description',
         'price',
         'is_hidden',
+        'type',
         'icon',
     ];
 
     protected $casts = [
-        'label' => 'array',
+        'name' => 'array',
+        'description' => 'array',
+        'type' => ShippingTypeEnum::class,
     ];
 
     protected $translatable = [
-        'label',
+        'description',
+        'name',
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (ShippingType $model) {
+            if (empty($model->price)) {
+                $model->price = 0;
+            }
+        });
+    }
 }

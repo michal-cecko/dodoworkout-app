@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Enum\OrderCountry;
 use App\Enum\OrderStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
+    use Notifiable;
+
     protected $fillable = [
         'email',
 
@@ -40,6 +45,7 @@ class Order extends Model
         'total_with_vat',
 
         'user_id',
+        'locale',
         'shipping_type_id',
 
         'is_shipping_address',
@@ -64,6 +70,8 @@ class Order extends Model
 
     protected $casts = [
         'status' => OrderStatus::class,
+        'billing_country' => OrderCountry::class,
+        'shipping_country' => OrderCountry::class,
     ];
 
     public function shippingType(): BelongsTo
@@ -76,6 +84,11 @@ class Order extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
+    public function formSubmission(): HasOne
+    {
+        return $this->hasOne(FormSubmission::class, 'order_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -86,28 +99,23 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    protected function fullBillingName(): Attribute
+    public function getFullBillingNameAttribute(): string
     {
-        return Attribute::make(
-            get: fn(array $attributes) => $attributes['billing_first_name'] . ' ' . $attributes['billing_last_name'],
-        );
+        return $this->is_company ? $this->company_name : $this->billing_first_name . ' ' . $this->billing_last_name;
     }
 
-    protected function shouldPayVat(): Attribute
+    public function getShouldPayVatAttribute(): bool
     {
-        return Attribute::make(
-            get: fn(array $attributes) => !empty($attributes['vat_id']) && strtolower(config("order.base_billing_country")) !== strtolower($attributes['billing_country']),
-        );
+        return !empty($this->vat_id) && config("order.base_billing_country") !== $this->billing_country;
     }
 
-    protected function fullOrderNumber(): Attribute
+    public function getFullOrderNumberAttribute(): string
     {
-        return Attribute::make(
-            get: function (array $attributes) {
-                $year = $attributes['created_at']->format('Y');
-                $paddedOrderNumber = str_pad($attributes['order_number'], 4, '0', STR_PAD_LEFT);
-                return "{$year}{$paddedOrderNumber}";
-            },
-        );
+        return $this->created_at->format('Y') . str_pad($this->order_number, 4, '0', STR_PAD_LEFT);
+    }
+
+    public function routeNotificationForMail()
+    {
+        return $this->email;
     }
 }

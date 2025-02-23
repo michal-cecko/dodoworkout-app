@@ -2,101 +2,181 @@
 
 namespace App\Livewire;
 
+use App\DataTransferObjects\Order\OrderBillingDataDTO;
+use App\DataTransferObjects\Order\OrderShippingDataDTO;
+use App\DataTransferObjects\Order\StoreOrderDTO;
 use App\Enum\FormFieldFormat;
-use App\Forms\OrderForm;
+use App\Enum\Locale;
+use App\Enum\OrderableType;
+use App\Enum\PaymentTypeEnum;
+use App\Enum\ShippingTypeEnum;
+use App\Forms\FrontendOrderForm;
+use App\Misc\MorphMap;
 use App\Models\Event;
+use App\Models\Form;
+use App\Models\FormSubmission;
+use App\Models\Order;
+use App\Models\PaymentType;
+use App\Models\ShippingType;
+use App\Notifications\OrderCreated;
+use App\Services\EventService;
+use App\Services\OrderService;
+use Exception;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
+use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Illuminate\Support\Str;
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\HtmlString;
 use Livewire\Component;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
 class EventRegistrationForm extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    const TEMP_DIR = "temp";
+    protected Event $event;
+    protected OrderService $orderService;
+    protected EventService $eventService;
+
     public ?array $data = [];
-    public Event $event;
+    public array $eventData = [];
+    public array $cartItems = [];
+    public bool $submitted = false;
+
+    public function boot(OrderService $orderService, EventService $eventService): void
+    {
+        $this->orderService = $orderService;
+        $this->eventService = $eventService;
+    }
 
     public function mount(Event $event): void
     {
         $this->event = $event;
-
+        $this->eventData = $event->toArray();
+        $this->initializeCartItems();
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(\Filament\Forms\Form $form): \Filament\Forms\Form
     {
-        return OrderForm::create(form: $form, includeShippingAddress: false)
-            ->statePath('data');
+        return FrontendOrderForm::create(
+            form: $form,
+            shippingTypes: $this->getShippingTypes(),
+            paymentTypes: $this->getPaymentTypes(),
+            cartItems: collect($this->cartItems),
+            includeShippingAddress: false,
+            additionalWizardSteps: $this->getAdditionalWizardSteps(),
+            submitButton: $this->getSubmitButton()
+        )->statePath('data');
     }
 
-    public function getEventSpecificFormFields(): array
+    /**
+     * @throws Exception
+     */
+    public function create(): void
     {
+        try {
+            $data = $this->form->getState();
+            $order = $this->storeOrder($data);
+            $formSubmission = $this->storeFormSubmission($data, $order);
+            $this->submitted = true;
+            $order->notify(new OrderCreated($this->eventData['id'], $order, $formSubmission));
+            Storage::disk("local")->deleteDirectory(self::TEMP_DIR);
+        } catch (Exception $e) {
+            $this->notifyError($e->getMessage());
+            if(!app()->environment("production")) {
+                throw $e;
+            }
+        }
+    }
+
+    public function render(): View
+    {
+        // Conditionally render form or success view
+        return $this->submitted
+            ? view('livewire.event-registration-success') // New success view
+            : view('livewire.event-registration-form');  // Original form view
+    }
+
+    protected function notifyError(string $message): void
+    {
+        Notification::make()
+            ->title(__('An error occurred'))
+            ->body($message)
+            ->danger()
+            ->send();
+    }
+
+    protected function initializeCartItems(): void
+    {
+        $cartItem = [
+            'id' => $this->event->id,
+            'type' => MorphMap::getKeyByModel(Event::class),
+            'name' => $this->event->order_item_name,
+            'quantity' => 1,
+            'price' => $this->event->price,
+        ];
+
+        if (!empty($this->event->last_price)) {
+            $cartItem['last_price'] = $this->event->last_price;
+        }
+
+        $this->cartItems = [$cartItem];
+    }
+
+    protected function getShippingTypes()
+    {
+        return ShippingType::visible()->where('type', ShippingTypeEnum::EMAIL)->get();
+    }
+
+    protected function getPaymentTypes()
+    {
+        return PaymentType::visible()->where('type', PaymentTypeEnum::BANK_TRANSFER)->get();
+    }
+
+    protected function getAdditionalWizardSteps(): array
+    {
+        return [[
+            'key' => 'event',
+            'label' => __('ord_section_event'),
+            'settings' => fn(Step $step) => $step->icon('heroicon-o-document-text'),
+            'form_fields' => $this->getEventSpecificFormFields(),
+        ]];
+    }
+
+    protected function getSubmitButton(): HtmlString
+    {
+        return new HtmlString(
+            '<button type="submit" class="btn w-fit mt-auto mx-auto" data-variant="primary">' .
+            __('submit') .
+            '</button>'
+        );
+    }
+
+    protected function getEventSpecificFormFields(): array
+    {
+        $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
+        if (!$form) {
+            return [];
+        }
+
         $fields = [];
-
-        foreach ($this->event->form->fields as $field) {
-            $key = Str::slug(title: $field->label, separator: "_");
-            switch ($field->format) {
-                case FormFieldFormat::TEXT:
-                    $fields[$field->label] = TextInput::make($key);
-                    break;
-                case FormFieldFormat::EMAIL:
-                    $fields[$field->label] = TextInput::make($key)->email();
-                    break;
-                case FormFieldFormat::NUMBER:
-                    $fields[$field->label] = TextInput::make($key);
-                    break;
-                case FormFieldFormat::PHONE:
-                case FormFieldFormat::BOOL:
-                    $fields[$field->label] = Checkbox::make($key);
-                    break;
-                case FormFieldFormat::SELECT:
-                    $fields[$field->label] = Select::make($key)->options($field->options);
-                    if ($field->max > 1) {
-                        $fields[$field->label]->multiple()
-                            ->maxItems((int)$field->max);
-                        if ($field->min > 0) {
-                            $fields[$field->label]->minItems((int)$field->min);
-                        }
-                    }
-                    break;
-                case FormFieldFormat::CHECKBOX:
-                    $fields[$field->label] = CheckboxList::make($key)
-                        ->options($field->options);
-                    if ($field->min > 0) {
-                        $fields[$field->label]->minItems((int)$field->min);
-                    }
-                    if ($field->max > 0) {
-                        $fields[$field->label]->maxItems((int)$field->max);
-                    }
-                    break;
-                case FormFieldFormat::DATE:
-                    $fields[$field->label] = DatePicker::make($key)->native(false)
-                        ->minDate($field->min)
-                        ->maxDate($field->max);
-                    break;
-                case FormFieldFormat::TIME:
-                    $fields[$field->label] = TimePicker::make($key)->native(false);
-                    break;
-                case FormFieldFormat::DATETIME:
-                    $fields[$field->label] = DateTimePicker::make($key)->native(false);
-                    break;
-            }
-
-            $fields[$field->label]->required($field->is_required);
-
-            if (!empty($help = $field->help_text)) {
-                $fields[$field->label]->helperText($help);
-            }
+        foreach ($form->fields as $field) {
+            $fields[$field->slug] = $this->buildFormField($field);
         }
 
         return [Grid::make([
@@ -107,13 +187,157 @@ class EventRegistrationForm extends Component implements HasForms
         ])->schema($fields)];
     }
 
-    public function create(): void
+    protected function buildFormField($field): mixed
     {
-        dd($this->form->getState());
+        $key = $field->slug;
+        $fieldComponent = match ($field->format) {
+            FormFieldFormat::TEXT => TextInput::make($key),
+            FormFieldFormat::NUMBER => TextInput::make($key)->numeric()->step(1)
+                ->minValue((int)$field->min ?: null)
+                ->maxValue((int)$field->max ?: null),
+            FormFieldFormat::PHONE => PhoneInput::make($key)
+                ->defaultCountry('sk')
+                ->locale(app()->currentLocale()),
+            FormFieldFormat::BOOL => Checkbox::make($key)
+                ->inline(false)
+                ->columns(['default' => 4, 'md' => 3, 'sm' => 2, 'xs' => 1]),
+            FormFieldFormat::SELECT => Select::make($key)
+                ->options($this->formatOptions($field->options))
+                ->multiple($field->max > 1)
+                ->maxItems((int)$field->max ?: null)
+                ->minItems((int)$field->min ?: null),
+            FormFieldFormat::CHECKBOX => CheckboxList::make($key)
+                ->options($this->formatOptions($field->options))
+                ->minItems((int)$field->min ?: null)
+                ->maxItems((int)$field->max ?: null),
+            FormFieldFormat::DATE => DatePicker::make($key)
+                ->native(false)
+                ->minDate($field->min ?: null)
+                ->maxDate($field->max ?: null),
+            FormFieldFormat::TIME => TimePicker::make($key)->native(false),
+            FormFieldFormat::DATETIME => DateTimePicker::make($key)
+                ->native(false)
+                ->minDate($field->min ?: null)
+                ->maxDate($field->max ?: null),
+            FormFieldFormat::FILE => FileUpload::make($key)
+                ->preserveFilenames()
+                ->disk("local")
+                ->directory(self::TEMP_DIR)
+                ->acceptedFileTypes([
+                    'image/jpeg',
+                    'image/png',
+                    'image/gif',
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ])
+                ->columnSpan(12)
+                ->multiple($field->max != 1)
+                ->minFiles((int)$field->min ?: null)
+                ->maxFiles((int)$field->max ?: null),
+            default => TextInput::make($key),
+        };
+
+        return $fieldComponent
+            ->label($field->label)
+            ->required($field->is_required)
+            ->helperText($field->help_text ?: null)
+            ->columnSpan($field->format !== FormFieldFormat::FILE ? [
+                'default' => 12,
+                'sm' => 3,
+                'md' => 4,
+                'lg' => 3,
+            ] : 12);
     }
 
-    public function render()
+    protected function formatOptions(array $options): array
     {
-        return view('livewire.event-registration-form');
+        return array_combine(
+            array_column($options, 'value'),
+            array_column($options, 'value')
+        );
+    }
+
+    protected function storeOrder(array $data)
+    {
+        $billingData = new OrderBillingDataDTO(
+            email: $data['email'],
+            billing_first_name: $data['billing_first_name'],
+            billing_last_name: $data['billing_last_name'],
+            billing_address: $data['billing_address'],
+            billing_city: $data['billing_city'],
+            billing_zip: $data['billing_zip'],
+            billing_country: $data['billing_country'],
+            billing_phone: $data['billing_phone'],
+            is_company: $data['is_company'],
+            company_name: $data['is_company'] ? $data['company_name'] : null,
+            business_id: $data['is_company'] ? $data['business_id'] : null,
+            tax_id: $data['is_company'] ? ($data['tax_id'] ?? null) : null,
+            vat_id: $data['is_company'] ? ($data['vat_id'] ?? null) : null,
+        );
+
+        $isShippingAddress = $data['is_shipping_address'] ?? false;
+        $shippingData = new OrderShippingDataDTO(
+            is_shipping_address: $isShippingAddress,
+            shipping_first_name: $isShippingAddress ? $data['shipping_first_name'] : null,
+            shipping_last_name: $isShippingAddress ? $data['shipping_last_name'] : null,
+            shipping_address: $isShippingAddress ? $data['shipping_address'] : null,
+            shipping_city: $isShippingAddress ? $data['shipping_city'] : null,
+            shipping_zip_code: $isShippingAddress ? $data['shipping_zip_code'] : null,
+            shipping_country: $isShippingAddress ? $data['shipping_country'] : null,
+            shipping_phone: $isShippingAddress ? $data['shipping_phone'] : null,
+        );
+
+        $orderData = new StoreOrderDTO(
+            billing: $billingData,
+            shipping: $shippingData,
+            shipping_type_id: $data['shipping_type_id'],
+            payment_type_id: $data['payment_type_id'],
+            note: $data['note'] ?? null,
+            marketing: $data['marketing'] ?? false,
+            user_id: auth()->user()?->id,
+            locale: Locale::from(strtoupper(app()->currentLocale())),
+        );
+
+        return $this->orderService->storeOrder(
+            orderDTO: $orderData,
+            products: collect($this->cartItems),
+        );
+    }
+
+    protected function storeFormSubmission(array $data, Order $order): ?FormSubmission
+    {
+        if(!$this->eventData['form_id']) {
+            return null;
+        }
+
+        $submission = FormSubmission::create([
+            'form_id' => $this->eventData['form_id'],
+            'user_id' => auth()->user()?->id,
+            'order_id' => $order->id,
+            'priceable_id' => $this->eventData['id'],
+            'priceable_type' => OrderableType::EVENT->value,
+        ]);
+
+        $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
+        if ($form) {
+            foreach ($form->fields as $field) {
+                if (isset($data[$field->slug])) {
+                    $value = $data[$field->slug];
+                    if($value instanceof UploadedFile) {
+                        $value = "binary_value";
+                        $field = $submission->fields()->create([
+                            'form_field_id' => $field->id,
+                            'value' => $value,
+                        ]);
+                        $field->addMediaFromUpload($value)->toMediaCollection("media");
+                    }
+                }
+            }
+        }
+
+        $submission->load("fields.formField");
+
+        return $submission;
     }
 }

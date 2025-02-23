@@ -13,9 +13,11 @@ use App\Traits\HasSlug;
 use App\Traits\Translations\HasCopyLocaleMutations;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -54,8 +56,10 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
         'start_at' => 'datetime',
         'end_at' => 'datetime',
         'title' => 'array',
+        'order_item_name' => 'array',
         'content' => 'array',
         'excerpt' => 'array',
+        'confirmation_email_content' => 'array',
         'slug' => 'array',
         'address' => 'array',
         'locale_scope' => Locale::class,
@@ -63,6 +67,8 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
 
     protected $translatable = [
         'title',
+        'order_item_name',
+        'confirmation_email_content',
         'content',
         'excerpt',
         'slug',
@@ -97,11 +103,20 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
         return $this->belongsTo(Form::class);
     }
 
+    public function formSubmissions(): MorphMany
+    {
+        return $this->morphMany(FormSubmission::class, "priceable");
+    }
+
     public function getDaysAttribute(): ?int
     {
         return $this->end_at?->diffInDays($this->start_at) ?? null;
     }
 
+    protected function getOrderNameAttribute(): string
+    {
+        return $this->order_item_name;
+    }
     public function getPermalinkAttribute(): string
     {
         return LocaleService::getLocalizedRoutePathByName(name: "event", changeToLocale: $this->locale_scope?->value, parameters: ['event' => $this->slug]);
@@ -109,8 +124,12 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
 
     public function getParticipantsAvailableAttribute(): ?int
     {
-        #TODO calculate participants available
-        return $this->participants_count;
+        if(empty($this->participants_count)) {
+            return null;
+        }
+        $countOfRegistrations = $this->formSubmissions->count();
+
+        return $this->participants_count - $countOfRegistrations;
     }
 
     public function getLastFewLeftAttribute(): bool
@@ -119,12 +138,13 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
             return false;
         }
 
-        return $this->participants_available <= ($this->participants_count * 0.2);
+        return $this->participants_available <= ($this->participants_count * 0.15);
     }
 
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')->singleFile();
         $this->addMediaCollection('content_media');
+        $this->addMediaCollection('confirmation_email_attachments');
     }
 }

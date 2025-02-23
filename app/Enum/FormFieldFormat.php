@@ -9,7 +9,6 @@ enum FormFieldFormat : string
     use TranslatableEnum;
 
     case TEXT = "TEXT";
-    case EMAIL = "EMAIL";
     case BOOL = "BOOL";
     case NUMBER = "NUMBER";
     case PHONE = "PHONE";
@@ -18,4 +17,5 @@ enum FormFieldFormat : string
     case DATETIME = "DATETIME";
     case SELECT = "SELECT";
     case CHECKBOX = "CHECKBOX";
+    case FILE = "FILE";
 }

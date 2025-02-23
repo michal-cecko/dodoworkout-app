@@ -16,7 +16,6 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\Concerns\Translatable;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -68,7 +67,7 @@ class PostResource extends CommonResource
                 ]),
                 Placeholder::make('likes')
                     ->label("Hodnotenia článku")
-                    ->content(fn($record) => "dobré: {$record?->likes} | zlé: {$record?->dislikes}")
+                    ->content(fn($record) => "dobré: {$record?->likes}, zlé: {$record?->dislikes}")
                     ->visible(fn($get, $record) => $record && !$get('is_draft'))
                     ->columnSpan([
                         'default' => 6,
@@ -129,9 +128,9 @@ class PostResource extends CommonResource
                 'lg' => 3,
             ]);
 
-        $locales = array_map(fn($locale) => $locale->value, Locale::cases());
-        $fields['locale_scope'] =  Select::make('locale_scope')
-            ->label("Event dostupný v jazykoch")
+        $locales = collect(Locale::cases())->mapWithKeys(fn($locale) => [$locale->value => $locale->value])->toArray();
+        $fields['locale_scope'] = Select::make('locale_scope')
+            ->label("Článok dostupný v jazykoch")
             ->placeholder("Všetky jazyky")
             ->options($locales)
             ->columnSpan([

@@ -11,7 +11,7 @@ class FormSubmission extends Model
 {
     protected $fillable = [
         'form_id',
-        'user_id',
+        'order_id',
         'priceable_id',
         'priceable_type',
     ];
@@ -19,6 +19,11 @@ class FormSubmission extends Model
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function priceable(): MorphTo

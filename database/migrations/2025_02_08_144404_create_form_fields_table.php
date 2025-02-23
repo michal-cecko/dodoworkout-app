@@ -18,7 +18,7 @@ return new class extends Migration
             $table->jsonb("label");
             $table->integer("min");
             $table->integer("max")->nullable();
-            $table->enum("format", ['TEXT', 'EMAIL', 'BOOL', 'NUMBER', 'PHONE', 'DATE', 'TIME', 'DATETIME', 'SELECT', 'CHECKBOX'])->default('TEXT');
+            $table->enum("format", ['TEXT', 'EMAIL', 'BOOL', 'NUMBER', 'PHONE', 'DATE', 'TIME', 'DATETIME', 'SELECT', 'CHECKBOX', 'FILE'])->default('TEXT');
             $table->jsonb("options")->nullable();
             $table->jsonb("help_text")->nullable();
             $table->timestamps();

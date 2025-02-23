@@ -8,6 +8,7 @@
 
 @section("scripts")
     @filamentScripts
+    <livewire:filament-notifications />
 @endsection
 
 @section('body')
@@ -81,8 +82,12 @@
                                 class="sale-tag mb-5 max-lg:absolute top-0 left-6 -translate-y-1/2">{{__("sale_tag")}}</span>
                         @endif
                         <h3 class="font-black text-2xl hfont max-lg:text-2xl max-lg:mb-8">
-                            <span class="highlight">{{__("event_register_cta_partial")}},</span><br
-                                class="max-lg:hidden"/>{{__("still_places_left", ["count" => 5])}}
+                            @if($event->last_few_left)
+                                <span class="highlight">{{__("event_register_cta_partial")}},</span><br
+                                    class="max-lg:hidden"/>{{__("still_places_left", ["count" => $event->participants_available])}}
+                            @else
+                                <span class="highlight">{{__("event_register_cta_partial")}}</span>
+                            @endif
                         </h3>
 
                         <div class="flex justify-end items-center mt-auto mb-3">
@@ -99,26 +104,26 @@
                             @endif
                         </div>
 
-                        <button class="btn self-end ml-auto" data-variant="primary">{{__("register_now")}}
+                        <a href="#register-form" class="btn self-end ml-auto" data-variant="primary">
+                            {{__("register_now")}}
                             {!! svgIcon("icon/icon-lucide_arrow.svg") !!}
-                        </button>
+                        </a>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-12 items-start pl-11 max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
-                    <aside
-                        class="sticky top-[20px] shrink-0 w-[416px] {{--max-lg:w-full--}} w-full bg-white px-9 pt-10 pb-8 border border-[#EDEDED] rounded-[30px] min-h-[600px] flex flex-col max-lg:px-6">
-                        <h3 class="font-black text-2xl hfont">{{__("registration_form")}}</h3>
+                <div class="flex flex-col gap-12 items-start max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
 
-                        <!-- Include the Livewire component -->
-                        @livewire('event-registration-form', ['event' => $event])
-
-                        {{--<button class="btn w-fit mt-auto mx-auto"
-                                data-variant="primary">{{__("register_and_proceed_to_checkout")}}</button>--}}
-                    </aside>
                     <article class="w-full max-lg:px-6">
                         @include("parts.builder", ['contents' => $event->content])
                     </article>
+
+                    @if($event->participants_available !== 0)
+                        <aside id="register-form"
+                               class="w-full pt-10 pb-8 flex flex-col">
+                            <h2 class="font-black text-3xl hfont mb-6">{{__("registration_form")}}</h2>
+                            @livewire('event-registration-form', ['event' => $event])
+                        </aside>
+                    @endif
                 </div>
             </div>
         </div>
