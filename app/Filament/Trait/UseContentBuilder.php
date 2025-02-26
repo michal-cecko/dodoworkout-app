@@ -11,6 +11,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use FilamentTiptapEditor\TiptapEditor;
 
 trait UseContentBuilder
 {
@@ -30,9 +31,8 @@ trait UseContentBuilder
             Block::make('content')
                 ->label("Text")
                 ->schema([
-                    RichEditor::make('content')
-                        ->label("Text")
-                        ->toolbarButtons(['bold', 'bulletList', 'h1', 'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'underline', 'undo',])
+                    TiptapEditor::make('content')
+                        ->required(),
                 ]),
             Block::make('image')
                 ->label("Obrázok / Video")

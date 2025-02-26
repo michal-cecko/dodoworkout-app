@@ -220,7 +220,6 @@ class EventResource extends CommonResource
             ->label("Prílohy k potvrdzovaciemu emailu")
             ->preserveFilenames()
             ->multiple()
-            ->required()
             ->imageEditor()
             ->collection('confirmation_email_attachments')
             ->columnSpan(12);

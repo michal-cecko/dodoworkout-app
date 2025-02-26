@@ -27,7 +27,7 @@ class CustomPathGenerator implements PathGenerator
             MorphMap::getKeyByModel(Event::class) => "eventy{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
             MorphMap::getKeyByModel(Form::class) => "formulare{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
             MorphMap::getKeyByModel(Order::class) => "objednavky{$x}{$mod->fullOrderNumber}{$x}{$media->collection_name}{$x}",
-            MorphMap::getKeyByModel(FormSubmissionField::class) => "objednavky{$x}{$mod->formSubmission->order->fullOrderNumber}{$x}formulare{$x}{$mod->formSubmission->form->getTranslations("slug")['sk']}{$x}{$mod->formField->getTranslations("slug")['sk']}{$x}",
+            MorphMap::getKeyByModel(FormSubmissionField::class) => "objednavky{$x}{$mod->formSubmission->order->fullOrderNumber}{$x}formulare{$x}{$mod->formSubmission->form->getTranslations("slug")['sk']}{$x}",
 
             default => "nezaradene{$x}" . Str::snake($modelClass) . "{$x}{$modID}{$x}{$media->collection_name}{$x}",
         };

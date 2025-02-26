@@ -49,13 +49,13 @@ class OrderCreated extends Notification
                 'order' => $this->order,
                 'event' => $this->event,
                 'formSubmission' => $this->formSubmission,
-                'content' => !empty($this->event->confirmation_email_content) ? new HtmlString($this->event->confirmation_email_content) : null,
             ]);
 
-        if (!empty($attachments = $this->event->confirmation_email_attachments)) {
+        $attachments = $this->event->getMedia("confirmation_email_attachments");
+        if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
                 $message->attach($attachment->getPath(), [
-                    'as' => $attachment->getName(),
+                    'as' => $attachment->file_name,
                     'mime' => $attachment->mime_type,
                 ]);
             }

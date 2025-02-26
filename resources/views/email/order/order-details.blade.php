@@ -12,7 +12,7 @@
 </p>
 
 <!-- Custom Confirmation Content -->
-@if($content)
+@if(!empty($content = $event->confirmation_email_content))
 <p style="margin: 0 0 16px">
 {!! $content !!}
 </p>
@@ -25,10 +25,10 @@
 <!-- Order Information -->
 <div style="margin-bottom: 20px;">
 <p style="margin: 0 0 8px; color: #4b5563; font-size: 14px">
-<span style="font-weight: bold;">{{ __('ord_email_order_number') }}:</span> {{ $order->fullOrderNumber }}
+<span style="font-weight: bold;">{{ __('ord_email_order_number') }}</span>: {{ $order->fullOrderNumber }}
 </p>
 <p style="margin: 0 0 8px; color: #4b5563; font-size: 14px">
-<span style="font-weight: bold;">{{__("ord_email_date")}}</span> {{ $order->created_at->translatedFormat('F j, Y') }}
+<span style="font-weight: bold;">{{__("ord_email_date")}}</span>: {{ $order->created_at->translatedFormat('F j, Y') }}
 </p>
 </div>
 
@@ -45,31 +45,31 @@
     </span>{{ $order->fullBillingName }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_billing_address")}}</span> {{ $order->billing_address }}
+    <span style="font-weight: bold;">{{__("ord_fld_billing_address")}}</span>: {{ $order->billing_address }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_billing_city")}}</span> {{ $order->billing_city }}, {{ $order->billing_zip }}
+    <span style="font-weight: bold;">{{__("ord_fld_billing_city")}}</span>: {{ $order->billing_city }}, {{ $order->billing_zip }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_billing_country")}}</span> {{ $order->billing_country->translation() }}
+    <span style="font-weight: bold;">{{__("ord_fld_billing_country")}}</span>: {{ $order->billing_country->translation() }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_billing_phone")}}</span> {{ $order->billing_phone }}
+    <span style="font-weight: bold;">{{__("ord_fld_billing_phone")}}</span>: {{ $order->billing_phone }}
 </p>
 @if ($order->is_company)
 @if ($order->business_id)
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-<span style="font-weight: bold;">{{__("ord_fld_business_id")}}:</span> {{ $order->business_id }}
+<span style="font-weight: bold;">{{__("ord_fld_business_id")}}</span>: {{ $order->business_id }}
 </p>
 @endif
 @if ($order->tax_id)
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-<span style="font-weight: bold;">{{__("ord_fld_tax_id")}}:</span> {{ $order->tax_id }}
+<span style="font-weight: bold;">{{__("ord_fld_tax_id")}}</span>: {{ $order->tax_id }}
 </p>
 @endif
 @if ($order->vat_id)
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-<span style="font-weight: bold;">{{__("ord_fld_vat_id")}}:</span> {{ $order->vat_id }}
+<span style="font-weight: bold;">{{__("ord_fld_vat_id")}}</span>: {{ $order->vat_id }}
 </p>
 @endif
 @endif
@@ -80,19 +80,19 @@
 <div style="margin-bottom: 20px;">
 <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-bottom: 12px;">{{ __('ord_email_shipping_heading') }}</h3>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_shipping_full_name")}}</span> {{ $order->shipping_first_name }} {{ $order->shipping_last_name }}
+    <span style="font-weight: bold;">{{__("ord_fld_shipping_full_name")}}</span>: {{ $order->shipping_first_name }} {{ $order->shipping_last_name }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_shipping_address")}}</span> {{ $order->shipping_address }}
+    <span style="font-weight: bold;">{{__("ord_fld_shipping_address")}}</span>: {{ $order->shipping_address }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_shipping_city")}}</span> {{ $order->shipping_city }}, {{ $order->shipping_zip }}
+    <span style="font-weight: bold;">{{__("ord_fld_shipping_city")}}</span>: {{ $order->shipping_city }}, {{ $order->shipping_zip }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_billing_country")}}</span> {{ $order->shipping_country->translation() }}
+    <span style="font-weight: bold;">{{__("ord_fld_billing_country")}}</span>: {{ $order->shipping_country->translation() }}
 </p>
 <p style="margin: 0 0 4px; color: #4b5563; font-size: 14px">
-    <span style="font-weight: bold;">{{__("ord_fld_shipping_phone")}}</span> {{ $order->shipping_phone }}
+    <span style="font-weight: bold;">{{__("ord_fld_shipping_phone")}}</span>: {{ $order->shipping_phone }}
 </p>
 </div>
 @endif
@@ -106,6 +106,10 @@
 <span style="font-weight: bold;">{{ $field->formField->label ?? "N/A" }}:</span>
 @if (is_array($field->value))
 {{ implode(', ', $field->value) }}
+@elseif($field->value === "_binary_")
+@foreach($field->getMedia("media") as $media)
+    <a href="{{ $media->getUrl() }}" target="_blank">{{ $media->file_name }}</a>
+@endforeach
 @else
 {{ $field->value }}
 @endif
@@ -210,13 +214,13 @@
 </div>
 
 <!-- Questions Prompt -->
-<p style="margin: 20px 0 16px; color: #4b5563;">
+<p style="margin: 20px 0 16px; color: #4b5563; font-size: 14px;">
 {{ __('ord_email_any_questions') }}
 </p>
 
 <!-- Salutation -->
 <!-- Questions Prompt -->
-<p style="margin: 20px 0 16px; color: #4b5563;">
+<p style="margin: 20px 0 16px; color: #4b5563; font-size: 14px;">
     {{ __('best_regards') }},<br>
     Mgr. Dominik Klimek
 </p>

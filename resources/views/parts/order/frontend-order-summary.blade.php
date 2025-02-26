@@ -33,11 +33,11 @@
             <h3 class="font-semibold text-lg mb-4">{{ $section }}</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 @foreach($fields as $label => $value)
-                    <div class="flex justify-between">
-                        <span class="text-gray-600">{{ $label }}</span>
-                        <span class="text-gray-900 font-medium text-right">
-                        @include('parts.order.frontend-order-summary-value', ['value' => $value])
-                    </span>
+                    <div>
+                        <div class="text-gray-600">{{ $label }}</div>
+                        <div class="text-gray-900 font-medium">
+                            @include('parts.order.frontend-order-summary-value', ['value' => $value])
+                        </div>
                     </div>
                 @endforeach
             </div>

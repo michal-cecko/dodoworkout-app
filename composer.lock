@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "284dd2835f0a0a003e316122b7510b52",
+    "content-hash": "aa2bb528e86339e7db1363c24dcd1164",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -74,16 +74,16 @@
         },
         {
             "name": "awcodes/filament-tiptap-editor",
-            "version": "v3.5.4",
+            "version": "v3.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/awcodes/filament-tiptap-editor.git",
-                "reference": "274444c6574750116bf18579f66c2619137831f5"
+                "reference": "4a7856e67b7f1cb5dcf4d902d7c9ff421e2c01d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awcodes/filament-tiptap-editor/zipball/274444c6574750116bf18579f66c2619137831f5",
-                "reference": "274444c6574750116bf18579f66c2619137831f5",
+                "url": "https://api.github.com/repos/awcodes/filament-tiptap-editor/zipball/4a7856e67b7f1cb5dcf4d902d7c9ff421e2c01d1",
+                "reference": "4a7856e67b7f1cb5dcf4d902d7c9ff421e2c01d1",
                 "shasum": ""
             },
             "require": {
@@ -144,7 +144,7 @@
             ],
             "support": {
                 "issues": "https://github.com/awcodes/filament-tiptap-editor/issues",
-                "source": "https://github.com/awcodes/filament-tiptap-editor/tree/v3.5.4"
+                "source": "https://github.com/awcodes/filament-tiptap-editor/tree/v3.5.6"
             },
             "funding": [
                 {
@@ -152,7 +152,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-22T19:05:03+00:00"
+            "time": "2025-02-01T17:28:46+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",

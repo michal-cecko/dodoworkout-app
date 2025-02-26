@@ -3,22 +3,16 @@
 namespace App\Models;
 
 use App\Contracts\CanCopyLocaleMutations;
-use App\Contracts\Sluggable;
 use App\Enum\FormFieldFormat;
-use App\Enum\Locale;
-use App\Observers\SlugObserver;
-use App\Traits\HasSlug;
 use App\Traits\Translations\HasCopyLocaleMutations;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
-#[ObservedBy(SlugObserver::class)]
-class FormField extends Model implements CanCopyLocaleMutations, Sluggable
+class FormField extends Model implements CanCopyLocaleMutations
 {
-    use HasTranslations, HasCopyLocaleMutations, HasSlug;
+    use HasTranslations, HasCopyLocaleMutations;
 
     protected $fillable = [
         'form_id',
@@ -55,12 +49,6 @@ class FormField extends Model implements CanCopyLocaleMutations, Sluggable
         'help_text',
         'options',
     ];
-
-    public function slugFormat(?Locale $locale = null): string
-    {
-        $translations = $this->getTranslations("name");
-        return Str::slug($translations[strtolower($locale->value)] ?? $translations[strtolower(config('app.fallback_locale') ?? null)]);
-    }
 
     protected static function boot(): void
     {
@@ -105,5 +93,10 @@ class FormField extends Model implements CanCopyLocaleMutations, Sluggable
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function getSlugAttribute(): string
+    {
+        return Str::slug($this->label, "_");
     }
 }

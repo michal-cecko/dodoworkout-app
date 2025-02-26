@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('forms', function (Blueprint $table) {
-            $table->string("slug")->nullable();
-        });
-        Schema::table('form_fields', function (Blueprint $table) {
-            $table->string("slug")->nullable();
+            $table->jsonb("slug")->nullable();
         });
     }
 
@@ -25,10 +22,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('forms', function (Blueprint $table) {
-            $table->dropColumn("slug");
-        });
-
-        Schema::table('form_fields', function (Blueprint $table) {
             $table->dropColumn("slug");
         });
     }

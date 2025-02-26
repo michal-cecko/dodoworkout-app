@@ -36,10 +36,9 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
@@ -91,14 +90,16 @@ class EventRegistrationForm extends Component implements HasForms
     {
         try {
             $data = $this->form->getState();
+            $this->checkEmailUniqueness($data);
             $order = $this->storeOrder($data);
             $formSubmission = $this->storeFormSubmission($data, $order);
             $this->submitted = true;
+            $order->refresh();
             $order->notify(new OrderCreated($this->eventData['id'], $order, $formSubmission));
             Storage::disk("local")->deleteDirectory(self::TEMP_DIR);
         } catch (Exception $e) {
             $this->notifyError($e->getMessage());
-            if(!app()->environment("production")) {
+            if (!app()->environment("production")) {
                 throw $e;
             }
         }
@@ -202,14 +203,9 @@ class EventRegistrationForm extends Component implements HasForms
                 ->inline(false)
                 ->columns(['default' => 4, 'md' => 3, 'sm' => 2, 'xs' => 1]),
             FormFieldFormat::SELECT => Select::make($key)
-                ->options($this->formatOptions($field->options))
-                ->multiple($field->max > 1)
-                ->maxItems((int)$field->max ?: null)
-                ->minItems((int)$field->min ?: null),
+                ->options($this->formatOptions($field->options)),
             FormFieldFormat::CHECKBOX => CheckboxList::make($key)
-                ->options($this->formatOptions($field->options))
-                ->minItems((int)$field->min ?: null)
-                ->maxItems((int)$field->max ?: null),
+                ->options($this->formatOptions($field->options)),
             FormFieldFormat::DATE => DatePicker::make($key)
                 ->native(false)
                 ->minDate($field->min ?: null)
@@ -231,23 +227,29 @@ class EventRegistrationForm extends Component implements HasForms
                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ])
-                ->columnSpan(12)
-                ->multiple($field->max != 1)
-                ->minFiles((int)$field->min ?: null)
-                ->maxFiles((int)$field->max ?: null),
+                ->columnSpan(12),
             default => TextInput::make($key),
         };
+
+        if (($field->max > 1 || $field->min > 1) && in_array($field->format, [FormFieldFormat::SELECT, FormFieldFormat::CHECKBOX, FormFieldFormat::FILE])) {
+            if ($field->format === FormFieldFormat::FILE) {
+                $fieldComponent->minFiles((int)$field->min ?: null)
+                    ->maxFiles((int)$field->max ?: null);
+            } else {
+                $fieldComponent->maxItems((int)$field->max ?: null)
+                    ->minItems((int)$field->min ?: null);
+            }
+
+            if ($field->format === FormFieldFormat::SELECT) {
+                $fieldComponent->multiple();
+            }
+        }
 
         return $fieldComponent
             ->label($field->label)
             ->required($field->is_required)
             ->helperText($field->help_text ?: null)
-            ->columnSpan($field->format !== FormFieldFormat::FILE ? [
-                'default' => 12,
-                'sm' => 3,
-                'md' => 4,
-                'lg' => 3,
-            ] : 12);
+            ->columnSpan('full');
     }
 
     protected function formatOptions(array $options): array
@@ -307,10 +309,6 @@ class EventRegistrationForm extends Component implements HasForms
 
     protected function storeFormSubmission(array $data, Order $order): ?FormSubmission
     {
-        if(!$this->eventData['form_id']) {
-            return null;
-        }
-
         $submission = FormSubmission::create([
             'form_id' => $this->eventData['form_id'],
             'user_id' => auth()->user()?->id,
@@ -319,18 +317,36 @@ class EventRegistrationForm extends Component implements HasForms
             'priceable_type' => OrderableType::EVENT->value,
         ]);
 
+        if (!$this->eventData['form_id']) {
+            return $submission;
+        }
+
         $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
         if ($form) {
             foreach ($form->fields as $field) {
                 if (isset($data[$field->slug])) {
                     $value = $data[$field->slug];
-                    if($value instanceof UploadedFile) {
-                        $value = "binary_value";
+                    if ((is_string($value) && str_contains($value, self::TEMP_DIR . "/")) || (is_array($value) && str_contains(reset($value), self::TEMP_DIR . "/"))) {
+                        $values = is_array($value) ? $value : [$value];
+
                         $field = $submission->fields()->create([
+                            'form_field_id' => $field->id,
+                            'value' => '_binary_',
+                        ]);
+
+                        foreach ($values as $filePath) {
+                            if (str_contains($filePath, self::TEMP_DIR . "/")) {
+                                $randomHash = Str::random();
+                                $field->addMedia(Storage::disk("local")->path($filePath))
+                                    ->usingFileName($randomHash . '.' . pathinfo($filePath, PATHINFO_EXTENSION))
+                                    ->toMediaCollection("media");
+                            }
+                        }
+                    } else {
+                        $submission->fields()->create([
                             'form_field_id' => $field->id,
                             'value' => $value,
                         ]);
-                        $field->addMediaFromUpload($value)->toMediaCollection("media");
                     }
                 }
             }
@@ -339,5 +355,14 @@ class EventRegistrationForm extends Component implements HasForms
         $submission->load("fields.formField");
 
         return $submission;
+    }
+
+    private function checkEmailUniqueness($data)
+    {
+        $orderFromEvent = Order::whereHas('formSubmission', function ($query) {
+            $query->whereHasMorph('priceable', [Event::class], function ($query) {
+                $query->where('id', $this->eventData['id']);
+            });
+        });
     }
 }

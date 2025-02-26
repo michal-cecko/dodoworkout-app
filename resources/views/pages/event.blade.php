@@ -65,9 +65,8 @@
                                     {{__("event_date_from_to_label")}}
                                 </div>
                                 <span class="text-base">
-                                    @if($event->start_at->diffInDays($event->end_at) > 0)
-                                        {{ $event->start_at->translatedFormat("d. F Y") }}
-                                        - {{ $event->end_at->translatedFormat("d. F Y") }}
+                                    @if($event->end_at && $event->start_at->diffInDays($event->end_at) > 0)
+                                        {{ $event->start_at->translatedFormat("d. F Y") }} - {{ $event->end_at?->translatedFormat("d. F Y") }}
                                     @else
                                         {{ $event->start_at->translatedFormat("d. F Y") }}
                                     @endif
@@ -113,7 +112,7 @@
 
                 <div class="flex flex-col gap-12 items-start max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
 
-                    <article class="w-full max-lg:px-6">
+                    <article class="w-full max-lg:px-6 content-builder">
                         @include("parts.builder", ['contents' => $event->content])
                     </article>
 

@@ -45,7 +45,7 @@
         @endif
 
         <div class="container-wrapper mt-12 order-3">
-            <article class="w-full max-w-[697px] mx-auto max-lg:!max-w-full">
+            <article class="w-full max-w-[697px] mx-auto max-lg:!max-w-full content-builder">
 
                 @include("parts.builder", ['contents' => $post->content])
 
