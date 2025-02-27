@@ -163,5 +163,6 @@
     "ord_email_shipping_type": "Spôsob dopravy",
     "ord_email_note": "Poznámka k objednávke",
     "ord_email_any_questions": "Ak máte akékoľvek otázky, neváhajte odpovedať na tento email.",
-    "best_regards": "S pozdravom"
+    "best_regards": "S pozdravom",
+    "err_email_already_registered_for_event": "Zadaný email je už zaregistrovaný na tento event."
 }

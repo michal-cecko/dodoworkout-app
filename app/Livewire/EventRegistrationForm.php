@@ -8,6 +8,7 @@ use App\DataTransferObjects\Order\StoreOrderDTO;
 use App\Enum\FormFieldFormat;
 use App\Enum\Locale;
 use App\Enum\OrderableType;
+use App\Enum\OrderStatus;
 use App\Enum\PaymentTypeEnum;
 use App\Enum\ShippingTypeEnum;
 use App\Forms\FrontendOrderForm;
@@ -90,7 +91,10 @@ class EventRegistrationForm extends Component implements HasForms
     {
         try {
             $data = $this->form->getState();
-            $this->checkEmailUniqueness($data);
+            if(self::checkUniqueEmail($data['email'], $this->eventData['id'])) {
+                $this->notifyError(__("err_email_already_registered_for_event"));
+                return;
+            }
             $order = $this->storeOrder($data);
             $formSubmission = $this->storeFormSubmission($data, $order);
             $this->submitted = true;
@@ -151,7 +155,12 @@ class EventRegistrationForm extends Component implements HasForms
 
     protected function getAdditionalWizardSteps(): array
     {
-        return [[
+        $eventFields = $this->getEventSpecificFormFields();
+        if (empty($eventFields)) {
+            return [];
+        }
+
+        return ['event' => [
             'key' => 'event',
             'label' => __('ord_section_event'),
             'settings' => fn(Step $step) => $step->icon('heroicon-o-document-text'),
@@ -171,11 +180,15 @@ class EventRegistrationForm extends Component implements HasForms
     protected function getEventSpecificFormFields(): array
     {
         $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
-        if (!$form) {
+        if (empty($form)) {
             return [];
         }
 
         $fields = [];
+        if (empty($form->fields)) {
+            return [];
+        }
+
         foreach ($form->fields as $field) {
             $fields[$field->slug] = $this->buildFormField($field);
         }
@@ -357,12 +370,14 @@ class EventRegistrationForm extends Component implements HasForms
         return $submission;
     }
 
-    private function checkEmailUniqueness($data)
+    public static function checkUniqueEmail(string $email, $eventId): bool
     {
-        $orderFromEvent = Order::whereHas('formSubmission', function ($query) {
-            $query->whereHasMorph('priceable', [Event::class], function ($query) {
-                $query->where('id', $this->eventData['id']);
+        $alreadyOrdered = Order::whereHas('formSubmission', function ($query) use ($eventId) {
+            $query->whereHasMorph('priceable', [Event::class], function ($query) use ($eventId) {
+                $query->where('id', $eventId);
             });
-        });
+        })->where("email", $email)->where("order_status", "!=", OrderStatus::CANCELED)->exists();
+
+        return !$alreadyOrdered;
     }
 }

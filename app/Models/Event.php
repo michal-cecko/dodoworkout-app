@@ -117,8 +117,7 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
     {
         return $this->order_item_name;
     }
-    public function getPermalinkAttribute(): string
-    {
+    public function getPermalinkAttribute(): string {
         return LocaleService::getLocalizedRoutePathByName(name: "event", changeToLocale: $this->locale_scope?->value, parameters: ['event' => $this->slug]);
     }
 
