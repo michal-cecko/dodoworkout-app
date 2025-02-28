@@ -17,24 +17,24 @@
         <nav class="max-lg:hidden">
             <ul class="uppercase flex gap-12">
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("homepage") }}">{{__("header_about")}}</a></li>--}}
-                <li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>
+                {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>--}}
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("trainings") }}">{{__("header_trainings")}}</a></li>--}}
-                <li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>
+                {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>--}}
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("shop") }}">{{__("header_shop")}}</a></li>--}}
                 {{--<li><a class="hover:text-primary" href="{{ LocaleService::getLocalizedRoutePathByName("contact") }}">{{__("header_contact")}}</a></li>--}}
             </ul>
         </nav>
 
         <div class="icons-container flex items-center gap-6 max-lg:gap-3 ml-auto text-[var(--icons-color)] max-lg:ml-0">
-            <div class="icon-container max-lg:hidden">
+            {{--<div class="icon-container max-lg:hidden">
                 <a href="#">{!! svgIcon("icon/icon-search.svg", ['class' => ['search-icon']]) !!}</a>
-            </div>
+            </div>--}}
             {{--<div class="icon-container" data-cart-items="5">
                 <a href="#">{!! svgIcon("icon/icon-cart.svg", ['class' => ['cart-icon']]) !!}</a>
             </div>--}}
-            <div class="icon-container">
+            {{--<div class="icon-container">
                 <a href="{{route("filament.dashboard.auth.login")}}">{!! svgIcon("icon/icon-profile.svg", ['class' => ['profile-icon']]) !!}</a>
-            </div>
+            </div>--}}
             <div class="icon-container max-lg:hidden font-bold">
                 <a href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk", request()->route()->parameters()) }}">
                     {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
@@ -47,18 +47,18 @@
 <!-- Mobilne menu ktore sa ukaze ak je input:checkbox s id #menu-toggle checked, smart 😎 -->
 <aside id="mobile-menu"
        class="fixed flex-col hidden max-lg:flex bg-[#DBDBDB] inset-0 z-[99] translate-x-[-100%] transition-all duration-300 ease-in-out pt-[var(--header-height)] px-6 pb-16">
-    <div
+    {{--<div
         class="mt-2 rounded-full overflow-hidden flex pl-5 h-12 bg-white items-center focus-within:ring-2 focus-within:ring-primary mb-12">
         {!! svgIcon("icon/icon-search.svg") !!}
 
         <input type="search" class="w-full bg-tranparent border-none outline-none pl-4" placeholder="{{__("search")}}"/>
-    </div>
+    </div>--}}
 
     <ul class="flex flex-col uppercase text-3xl font-black hfont px-2">
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("homepage") }}">{{__("header_about")}}</a></li>--}}
-        <li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>
+        {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("trainings") }}">{{__("header_trainings")}}</a></li>--}}
-        <li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>
+        {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("events") }}">{{__("header_events")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("shop") }}">{{__("header_shop")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("contact") }}">{{__("header_contact")}}</a></li>--}}
         <li>

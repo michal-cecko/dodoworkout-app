@@ -82,11 +82,11 @@
             <div class="flex gap-[141px] max-lg:flex-col-reverse max-lg:gap-12">
                 <div class="max-lg:mx-auto"
                      style="padding-left: max(calc((100vw - var(--max-container-width)) / 2), var(--container-padding));">
-                    <a href="{{LocaleService::getLocalizedRoutePathByName("blog")}}"
+                    {{--<a href="{{LocaleService::getLocalizedRoutePathByName("blog")}}"
                        class="btn self-start whitespace-nowrap" data-variant="primary">
                         {{__("view_all")}}
                         {!! svgIcon("icon/icon-arrow.svg", ['class' => ['rotate-180']]) !!}
-                    </a>
+                    </a>--}}
                 </div>
 
                 <div id="workshops-swiper" class="overflow-hidden w-full">

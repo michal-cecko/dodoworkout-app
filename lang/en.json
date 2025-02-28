@@ -163,6 +163,8 @@
     "ord_email_note": "Order Note",
     "ord_email_any_questions": "If you have any questions, feel free to reply to this email.",
     "best_regards": "Best regards",
-    "err_email_already_registered_for_event": "This email is already registered for this event."
-
+    "err_email_already_registered_for_event": "This email is already registered for this event.",
+    "all_rights_reserved": "All rights reserved",
+    "article_related_subheading": "Read more",
+    "article_related_heading": "Related articles"
 }

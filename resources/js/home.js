@@ -9,9 +9,7 @@ const heroSwiper = new Swiper('#hero-swiper', {
     },
     allowTouchMove: false,
     speed: 800,
-    autoplay: {
-        delay: 7000
-    },
+    autoplay: false,
     on: {
         init: function () {
             document.getElementById('hero-swiper-total-pages').textContent =

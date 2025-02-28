@@ -1,16 +1,15 @@
-@php use App\Services\LocaleService; @endphp
 <footer class="border-t border-[#EEE5E5] pt-20 mt-auto bg-white max-lg:pt-10">
     <div class="container-wrapper flex gap-24 mb-10 max-lg:flex-col max-lg:gap-10">
         <div class="relative">
             <div
                 class="logo-container mb-7">{!! svgIcon("logo/logo-black-red.svg", ['class' => ['h-[46px] w-[110px] max-lg:h-[34px] max-lg:w-[81px]']]) !!}</div>
-            <a class="flex items-center gap-3 mb-4" href="mailto:me@dodoworkout.com">
+            <a class="flex items-center gap-3 mb-4" href="mailto:dominikklimek07@gmail.com">
                 {!! svgIcon("icon/mail.svg") !!}
-                me@dodoworkout.com
+                dominikklimek07@gmail.com
             </a>
             <a class="flex items-center gap-3 mb-8" href="tel:+421 911 266 631">
                 {!! svgIcon("icon/phone.svg", ['class' => ['text-primary']]) !!}
-                +421 911 266 631
+                +421 950 451 310
             </a>
             <div class="flex gap-6 items-center text-[#373737]">
                 @include('parts.socials')
@@ -22,23 +21,23 @@
                 <h5 class="mb-5 uppercase text-primary font-bold">{{__("footer_about_heading")}}</h5>
                 <p class="max-w-[181px]">
                     {{__("footer_about_content")}}
-                    <a href="#" class="block font-bold text-primary">{{__("read_more")}}</a>
-                    <br/>
+                    <a href="{{\App\Models\Post::find(12)->permalink}}" class="block font-bold text-primary">{{__("read_more")}}</a>
+                    {{--<br/>
                     {{__("business_id")}}: 36396885</br>
-                    {{__("tax_id")}}: SK11111111
+                    {{__("tax_id")}}: SK11111111--}}
                 </p>
             </div>
-            <div>
+           {{-- <div>
                 <h5 class="mb-5 uppercase text-primary font-bold">{{__("footer_links_heading")}}</h5>
                 <ul class="flex flex-col gap-3">
                     <li><a href="{{ LocaleService::localizePath("/blog") }}">{{__("header_blog")}}</a></li>
-                    {{--<li><a href="#">Personal / online training</a></li>--}}
+                    --}}{{--<li><a href="#">Personal / online training</a></li>--}}{{--
                     <li><a href="{{ LocaleService::localizePath("/events") }}">{{__("header_events")}}</a></li>
-                    {{--<li><a href="#">Shop</a></li>--}}
-                    {{--<li><a href="#">About</a></li>--}}
-                    {{--<li><a href="#">Contact</a></li>--}}
+                    --}}{{--<li><a href="#">Shop</a></li>--}}{{--
+                    --}}{{--<li><a href="#">About</a></li>--}}{{--
+                    --}}{{--<li><a href="#">Contact</a></li>--}}{{--
                 </ul>
-            </div>
+            </div>--}}
             {{--<div>
                 <h5 class="mb-5 uppercase text-primary font-bold">{{__("footer_info_heading")}}</h5>
                 <ul class="flex flex-col gap-3">
@@ -49,7 +48,7 @@
             </div>--}}
         </div>
     </div>
-    <div class="bg-[#F8F8F8] border-t border-[#EEE5E5] h-12 flex items-center justify-center text-sm">
-        Copyright © 2024 | DODOWORKOUT | All rights reserved
+    <div class="bg-[#F8F8F8] border-t border-[#EEE5E5] h-16 flex items-center justify-center text-sm px-sm-0 px-6 text-center">
+        Copyright © 2025 - {{now()->year}} | DODOWORKOUT | {{__("all_rights_reserved")}}
     </div>
 </footer>
