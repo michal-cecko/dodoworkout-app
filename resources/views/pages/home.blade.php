@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg] z-10" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
+            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
             </div>
         </section>
     @endif
