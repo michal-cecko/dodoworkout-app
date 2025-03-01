@@ -1,3 +1,3 @@
 @if(!empty($content = $content['data']['content']))
-    {!! $content !!}
+    {!! tiptap_converter()->asHTML($content) !!}
 @endif
