@@ -62,7 +62,7 @@
     </section>
 
     @if($relatedPosts->isNotEmpty())
-        <div class="bg-white py-20 card-holder gray relative">
+        <div class="bg-white py-20 card-holder gray relative overflow-hidden">
             <div class="container-wrapper mb-12">
                 <h4 class="text-primary font-semibold mb-7 max-lg:mb-6">{{__("article_related_subheading")}}</h4>
                 <div class="flex gap-4 max-lg:flex-col">
