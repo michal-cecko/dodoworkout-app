@@ -52,13 +52,13 @@ class FormResource extends CommonResource
                 'lg' => 12,
             ])->schema([
                 self::getCreatedAtField()->columnSpan([
-                    'default' => 6,
+                    'default' => 12,
                     'sm' => 3,
                     'md' => 3,
                     'lg' => 4,
                 ]),
                 self::getUpdatedAtField()->columnSpan([
-                    'default' => 6,
+                    'default' => 12,
                     'sm' => 3,
                     'md' => 3,
                     'lg' => 4,
@@ -89,7 +89,7 @@ class FormResource extends CommonResource
     {
         $columns = [];
 
-        $columns['name'] = TextColumn::make('name')->label('Názov')->sortable()->searchable();
+        $columns['name'] = TextColumn::make('full_billing_name')->label('Objednávateľ')->sortable(['billing_last_name', 'billing_first_name'])->searchable(['billing_last_name', 'billing_first_name']);
 
         return $columns;
     }
@@ -109,7 +109,7 @@ class FormResource extends CommonResource
 
         $fields['label'] = TextInput::make('label')->label("Názov poľa")
             ->required()->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -123,14 +123,14 @@ class FormResource extends CommonResource
             ->options(FormFieldFormat::translations())
             ->required()
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
             ]);
 
         $fields['help_text'] = TextInput::make('help_text')->label("Popis")->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -139,7 +139,7 @@ class FormResource extends CommonResource
         $fields['is_required'] = Checkbox::make('is_required')->label("Je povinné?")
             ->inline(false)
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -151,7 +151,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('min_select', !empty($record->min) ? (int) $record->min : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::SELECT->value, FormFieldFormat::CHECKBOX->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -163,7 +163,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('max_select', !empty($record->max) ? (int) $record->max : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::SELECT->value, FormFieldFormat::CHECKBOX->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -175,7 +175,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('min_number', !empty($record->min) ? (int) $record->min : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::NUMBER->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -187,7 +187,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('max_number', !empty($record->max) ? (int) $record->max : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::NUMBER->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -199,7 +199,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('min_file_count', !empty($record->min) ? (int) $record->min : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::FILE->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -211,7 +211,7 @@ class FormResource extends CommonResource
             ->afterStateHydrated(fn(?Model $record, callable $set) => $set('max_file_count', !empty($record->max) ? (int) $record->max : null))
             ->visible(fn($get) => in_array($get('format'), [FormFieldFormat::FILE->value]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -226,7 +226,7 @@ class FormResource extends CommonResource
                 FormFieldFormat::DATETIME->value,
             ]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -241,14 +241,14 @@ class FormResource extends CommonResource
                 FormFieldFormat::DATETIME->value,
             ]))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
             ]);
 
         $fields['options'] = Repeater::make('options')->label("Možnosti")
-            ->columnSpan('full')
+            ->columnSpan(12)
             ->addActionLabel('Pridať možnosť')
             ->grid(4)
             ->cloneable()
@@ -265,7 +265,7 @@ class FormResource extends CommonResource
         return Repeater::make('fields')
             ->label("Polia formuláru")
             ->relationship()
-            ->columnSpan('full')
+            ->columnSpan(12)
             ->addActionLabel('Pridať nové pole')
             ->cloneable()
             ->hint(function($operation) {

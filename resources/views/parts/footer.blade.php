@@ -1,4 +1,4 @@
-<footer class="border-t border-[#EEE5E5] pt-20 mt-auto bg-white max-lg:pt-10">
+<footer class="border-t border-[#EEE5E5] pt-14 mt-auto bg-white max-lg:pt-10">
     <div class="container-wrapper flex gap-24 mb-10 max-lg:flex-col max-lg:gap-10">
         <div class="relative">
             <div
@@ -22,9 +22,9 @@
                 <p class="max-w-[181px]">
                     {{__("footer_about_content")}}
                     <a href="{{\App\Models\Post::find(12)->permalink}}" class="block font-bold text-primary">{{__("read_more")}}</a>
-                    {{--<br/>
+                    <br/>
                     {{__("business_id")}}: 36396885</br>
-                    {{__("tax_id")}}: SK11111111--}}
+                    {{__("tax_id")}}: SK11111111
                 </p>
             </div>
            {{-- <div>

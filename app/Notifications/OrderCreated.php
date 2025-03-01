@@ -43,8 +43,7 @@ class OrderCreated extends Notification
     public function toMail(): MailMessage
     {
         $message = (new MailMessage)
-            ->subject(__('Event registration') . " - " . $this->order->fullOrderNumber)
-            ->greeting(__('Hello, ') . $this->order->fullBillingName . '!')
+            ->subject(__('ord_email_subject') . " - " . $this->order->fullOrderNumber)
             ->markdown("email.order.order-details", [
                 'order' => $this->order,
                 'event' => $this->event,

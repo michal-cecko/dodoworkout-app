@@ -93,6 +93,7 @@ class EventResource extends CommonResource
         $fields['excerpt'] = Textarea::make('excerpt')
             ->label("Popis")
             ->hint("Zobrazuje sa na kartách na domovskej stránke.")
+            ->rows(4)
             ->columnSpan([
                 'default' => 12,
             ]);
@@ -119,7 +120,7 @@ class EventResource extends CommonResource
             ->inline(false)
             ->live()
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -131,7 +132,7 @@ class EventResource extends CommonResource
             ->weekStartsOnMonday()
             ->required()
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 3,
                 'lg' => 4,
@@ -142,7 +143,7 @@ class EventResource extends CommonResource
             ->native(false)
             ->weekStartsOnMonday()
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 3,
                 'lg' => 4,
@@ -213,7 +214,7 @@ class EventResource extends CommonResource
 
         $fields['confirmation_email_content'] = RichEditor::make('confirmation_email_content')
             ->label("Text k potvrdzovaciemu emailu")
-            ->columnSpan("full")
+            ->columnSpan(12)
             ->toolbarButtons(['bold', 'bulletList', 'h1', 'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'underline', 'undo']);
 
         $fields['confirmation_email_attachments'] = SpatieMediaLibraryFileUpload::make('confirmation_email_attachments')

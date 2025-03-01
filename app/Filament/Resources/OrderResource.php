@@ -18,6 +18,7 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
@@ -180,6 +181,20 @@ class OrderResource extends CommonResource
                             ->content(fn ($record) => $record->total_with_vat),
                     ]),
             ]);
+    }
+
+    public static function getTableColumns(): array
+    {
+        $columns = [];
+
+        $columns['name'] = TextColumn::make('name')->label('Názov')->sortable()->searchable();
+
+        $columns['status'] = TextColumn::make('status')
+            ->label('Stav')
+            ->badge()
+            ->color(fn(string $state): string => OrderStatus::colors()[$state]);
+
+        return $columns;
     }
 
     public static function getPages(): array

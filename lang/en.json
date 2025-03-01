@@ -142,6 +142,7 @@
     "ord_success_title": "Thank you for your order!",
     "ord_success_message": "We have sent a confirmation of your order to your email address.",
     "ord_email_thank_you": "Thank you for your order",
+    "ord_email_thank_you_event": "Thank you for your registration for event ",
     "ord_email_detail_heading": "Order Details",
     "ord_email_order_number": "Order Number",
     "ord_email_date": "Ordered on",
@@ -166,5 +167,6 @@
     "err_email_already_registered_for_event": "This email is already registered for this event.",
     "all_rights_reserved": "All rights reserved",
     "article_related_subheading": "Read more",
-    "article_related_heading": "Related articles"
+    "article_related_heading": "Related articles",
+    "ord_email_subject": "Event registration confirmation",
 }

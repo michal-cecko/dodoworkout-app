@@ -122,7 +122,7 @@ class PostResource extends CommonResource
             ->inline(false)
             ->live()
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -134,7 +134,7 @@ class PostResource extends CommonResource
             ->placeholder("Všetky jazyky")
             ->options($locales)
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 2,
                 'lg' => 3,
@@ -148,7 +148,7 @@ class PostResource extends CommonResource
             ->required()
             ->visible(fn($get) => !$get('is_draft'))
             ->columnSpan([
-                'default' => 6,
+                'default' => 12,
                 'sm' => 3,
                 'md' => 3,
                 'lg' => 4,

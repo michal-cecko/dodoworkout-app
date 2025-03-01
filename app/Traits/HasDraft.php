@@ -11,7 +11,7 @@ trait HasDraft
         return $query->where("is_draft", false);
     }
 
-    public function getrIsPublishedAttribute(): bool
+    public function getIsPublishedAttribute(): bool
     {
         return !$this->is_draft;
     }
