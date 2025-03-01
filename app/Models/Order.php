@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enum\OrderCountry;
 use App\Enum\OrderStatus;
+use App\Enum\OrderType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,7 @@ class Order extends Model
     use Notifiable;
 
     protected $fillable = [
+        'type',
         'email',
 
         'company_name',
@@ -68,6 +70,7 @@ class Order extends Model
     ];
 
     protected $casts = [
+        'type' => OrderType::class,
         'status' => OrderStatus::class,
         'billing_country' => OrderCountry::class,
         'shipping_country' => OrderCountry::class,
@@ -83,9 +86,9 @@ class Order extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
-    public function formSubmission(): HasOne
+    public function formSubmissions(): HasMany
     {
-        return $this->hasOne(FormSubmission::class, 'order_id');
+        return $this->hasMany(FormSubmission::class, 'order_id');
     }
 
     public function user(): BelongsTo

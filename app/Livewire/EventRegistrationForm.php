@@ -91,7 +91,7 @@ class EventRegistrationForm extends Component implements HasForms
     {
         try {
             $data = $this->form->getState();
-            if(self::checkUniqueEmail($data['email'], $this->eventData['id'])) {
+            if (!self::canRegisterEmail($data['email'], $this->eventData['id'])) {
                 $this->notifyError(__("err_email_already_registered_for_event"));
                 return;
             }
@@ -120,7 +120,7 @@ class EventRegistrationForm extends Component implements HasForms
     protected function notifyError(string $message): void
     {
         Notification::make()
-            ->title(__('An error occurred'))
+            ->title(__('error_occurred'))
             ->body($message)
             ->danger()
             ->send();
@@ -137,6 +137,8 @@ class EventRegistrationForm extends Component implements HasForms
         ];
 
         if (!empty($this->event->last_price)) {
+            $cartItem['price'] = $this->event->last_price;
+            $cartItem['discount'] = (float)$this->event->last_price - (float)$this->event->price;
             $cartItem['last_price'] = $this->event->last_price;
         }
 
@@ -179,18 +181,14 @@ class EventRegistrationForm extends Component implements HasForms
 
     protected function getEventSpecificFormFields(): array
     {
-        $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
+        $form = Form::with(['formFields'])->find($this->eventData['form']['id'] ?? null);
+
         if (empty($form)) {
             return [];
         }
 
-        $fields = [];
-        if (empty($form->fields)) {
+        if (empty($form->formFields)) {
             return [];
-        }
-
-        foreach ($form->fields as $field) {
-            $fields[$field->slug] = $this->buildFormField($field);
         }
 
         return [Grid::make([
@@ -198,10 +196,25 @@ class EventRegistrationForm extends Component implements HasForms
             'sm' => 3,
             'md' => 6,
             'lg' => 12,
-        ])->schema($fields)];
+        ])->schema(self::buildFormFields($form->formFields))];
     }
 
-    protected function buildFormField($field): mixed
+    public static function buildFormFields($fields): array
+    {
+        if (empty($fields)) {
+            return [];
+        }
+
+        $finalFields = [];
+
+        foreach ($fields as $field) {
+            $finalFields[$field->slug] = self::buildFormField($field);
+        }
+
+        return $finalFields;
+    }
+
+    public static function buildFormField($field): mixed
     {
         $key = $field->slug;
         $fieldComponent = match ($field->format) {
@@ -216,9 +229,9 @@ class EventRegistrationForm extends Component implements HasForms
                 ->inline(false)
                 ->columns(['default' => 4, 'md' => 3, 'sm' => 2, 'xs' => 1]),
             FormFieldFormat::SELECT => Select::make($key)
-                ->options($this->formatOptions($field->options)),
+                ->options(self::formatOptions($field->options)),
             FormFieldFormat::CHECKBOX => CheckboxList::make($key)
-                ->options($this->formatOptions($field->options)),
+                ->options(self::formatOptions($field->options)),
             FormFieldFormat::DATE => DatePicker::make($key)
                 ->native(false)
                 ->minDate($field->min ?: null)
@@ -232,14 +245,6 @@ class EventRegistrationForm extends Component implements HasForms
                 ->preserveFilenames()
                 ->disk("local")
                 ->directory(self::TEMP_DIR)
-                ->acceptedFileTypes([
-                    'image/jpeg',
-                    'image/png',
-                    'image/gif',
-                    'application/pdf',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                ])
                 ->columnSpan(12),
             default => TextInput::make($key),
         };
@@ -265,7 +270,7 @@ class EventRegistrationForm extends Component implements HasForms
             ->columnSpan('full');
     }
 
-    protected function formatOptions(array $options): array
+    public static function formatOptions(array $options): array
     {
         return array_combine(
             array_column($options, 'value'),
@@ -326,6 +331,7 @@ class EventRegistrationForm extends Component implements HasForms
             'form_id' => $this->eventData['form_id'],
             'user_id' => auth()->user()?->id,
             'order_id' => $order->id,
+            'order_item_id' => $order->orderItems->first()->id,
             'priceable_id' => $this->eventData['id'],
             'priceable_type' => OrderableType::EVENT->value,
         ]);
@@ -334,49 +340,56 @@ class EventRegistrationForm extends Component implements HasForms
             return $submission;
         }
 
-        $form = Form::with('fields')->find($this->eventData['form']['id'] ?? null);
+        $form = Form::with(['formFields'])->find($this->eventData['form']['id'] ?? null);
         if ($form) {
-            foreach ($form->fields as $field) {
-                if (isset($data[$field->slug])) {
-                    $value = $data[$field->slug];
-                    if ((is_string($value) && str_contains($value, self::TEMP_DIR . "/")) || (is_array($value) && str_contains(reset($value), self::TEMP_DIR . "/"))) {
-                        $values = is_array($value) ? $value : [$value];
+            foreach ($form->formFields as $field) {
+                if (!isset($data[$field->slug])) continue;
 
-                        $field = $submission->fields()->create([
-                            'form_field_id' => $field->id,
-                            'value' => '_binary_',
-                        ]);
+                $value = $data[$field->slug];
+                if ((is_string($value) && str_contains($value, self::TEMP_DIR . "/")) || (is_array($value) && str_contains(reset($value), self::TEMP_DIR . "/"))) {
+                    $values = is_array($value) ? $value : [$value];
 
-                        foreach ($values as $filePath) {
-                            if (str_contains($filePath, self::TEMP_DIR . "/")) {
-                                $randomHash = Str::random();
-                                $field->addMedia(Storage::disk("local")->path($filePath))
-                                    ->usingFileName($randomHash . '.' . pathinfo($filePath, PATHINFO_EXTENSION))
-                                    ->toMediaCollection("media");
-                            }
+                    $submittedField = $submission->formFields()->create([
+                        'form_field_id' => $field->id,
+                        'format' => $field->format,
+                        'value' => '_binary_',
+                    ]);
+
+                    foreach ($values as $filePath) {
+                        if (str_contains($filePath, self::TEMP_DIR . "/")) {
+                            $randomHash = Str::random();
+                            $submittedField->addMedia(Storage::disk("local")->path($filePath))
+                                ->usingFileName($randomHash . '.' . pathinfo($filePath, PATHINFO_EXTENSION))
+                                ->toMediaCollection("media");
                         }
-                    } else {
-                        $submission->fields()->create([
-                            'form_field_id' => $field->id,
-                            'value' => $value,
-                        ]);
                     }
+                } else {
+                    $submittedField = $submission->formFields()->create([
+                        'form_field_id' => $field->id,
+                        'format' => $field->format,
+                        'value' => $value,
+                    ]);
                 }
+
+                $submittedField->setTranslations("label", $field->getTranslations("label"));
+
+                $submittedField->save();
+
             }
         }
 
-        $submission->load("fields.formField");
+        $submission->load("formFields.formField");
 
         return $submission;
     }
 
-    public static function checkUniqueEmail(string $email, $eventId): bool
+    public static function canRegisterEmail(string $email, $eventId): bool
     {
-        $alreadyOrdered = Order::whereHas('formSubmission', function ($query) use ($eventId) {
+        $alreadyOrdered = Order::whereHas('formSubmissions', function ($query) use ($eventId) {
             $query->whereHasMorph('priceable', [Event::class], function ($query) use ($eventId) {
                 $query->where('id', $eventId);
             });
-        })->where("email", $email)->where("order_status", "!=", OrderStatus::CANCELED)->exists();
+        })->where("email", $email)->where("status", "!=", OrderStatus::CANCELED)->exists();
 
         return !$alreadyOrdered;
     }

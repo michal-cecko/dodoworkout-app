@@ -27,7 +27,7 @@ class OrderService
         $subtotal = 0;
         $orderProductsData = collect();
 
-        $order->vat_percentage = $this->getVatPercentageForSpecificCountry($order->billing_country);
+        $order->vat_percentage = self::getVatPercentageForSpecificCountry($order->billing_country);
 
         foreach ($groupedProductData as $morphKey => $productsData) {
             $orderableModel = MorphMap::getModelByKey($morphKey);
@@ -54,8 +54,8 @@ class OrderService
                     'orderable_type' => $morphKey,
                     'quantity' => $productData['quantity'],
                     'name' => $product->order_name,
-                    'price_per_unit' => $product->price,
-                    'discount_amount_per_unit' => 0,
+                    'price_per_unit' => $productData['price'],
+                    'discount_amount_per_unit' => $productData['discount'],
                     'total_no_vat' => $productTotalNoVat,
                     'vat_percentage' => $order->vat_percentage,
                     'vat_amount' => $productVat,
@@ -90,10 +90,12 @@ class OrderService
             $order->orderItems()->create($orderProductData);
         }
 
+        $order->load("orderItems");
+
         return $order;
     }
 
-    public function getVatPercentageForSpecificCountry(OrderCountry $billingCountry): int
+    public static function getVatPercentageForSpecificCountry(OrderCountry $billingCountry): int
     {
         $baseBillingCountry = config("order.base_billing_country");
         $baseCountryVAT = config("order.vat_percentages." . $baseBillingCountry->value);

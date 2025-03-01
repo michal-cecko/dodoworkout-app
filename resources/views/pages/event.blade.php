@@ -18,7 +18,7 @@
             style="background: {{$event->getFirstMediaUrl("image") ? "url('{$event->getFirstMediaUrl("image")}')" : "#fff"}} 50% / cover no-repeat;">
         </div>
 
-        <div class="pb-24">
+        <div class="pb-12 pb-sm-24">
             <div class="-mt-[100px] max-w-[1027px] mx-auto">
                 <div
                     class="bg-white relative px-11 rounded-[30px] border border-[#EDEDED] grid grid-cols-3 mb-14 max-lg:grid-cols-1 max-lg:px-0">
@@ -119,7 +119,7 @@
                     @if($event->participants_available !== 0)
                         <aside id="register-form"
                                class="w-full pt-10 pb-8 flex flex-col">
-                            <h2 class="font-black text-3xl hfont mb-6">{{__("registration_form")}}</h2>
+                            <h2 class="font-black text-3xl hfont mb-6 px-sm-0 px-6">{{__("registration_form")}}</h2>
                             @livewire('event-registration-form', ['event' => $event])
                         </aside>
                     @endif

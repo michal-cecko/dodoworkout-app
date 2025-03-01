@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
+            <div class="max-md:hidden absolute top-[40%] rotate-[-7deg] bg-progress-curve" style="background: url('/svg/progress.svg') repeat-x center;"></div>
             </div>
         </section>
     @endif

@@ -53,10 +53,12 @@ class OrderCreated extends Notification
         $attachments = $this->event->getMedia("confirmation_email_attachments");
         if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
-                $message->attach($attachment->getPath(), [
-                    'as' => $attachment->file_name,
-                    'mime' => $attachment->mime_type,
-                ]);
+                if (file_exists($attachment->getPath())) {
+                    $message->attach($attachment->getPath(), [
+                        'as' => $attachment->file_name,
+                        'mime' => $attachment->mime_type,
+                    ]);
+                }
             }
         }
 

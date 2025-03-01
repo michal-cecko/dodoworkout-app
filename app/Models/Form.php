@@ -8,12 +8,13 @@ use App\Enum\Locale;
 use App\Observers\SlugObserver;
 use App\Traits\HasSlug;
 use App\Traits\Translations\HasCopyLocaleMutations;
+use App\Traits\Translations\HasTranslations;
+use Exception;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
-use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(SlugObserver::class)]
 class Form extends Model implements CanCopyLocaleMutations, Sluggable
@@ -32,7 +33,7 @@ class Form extends Model implements CanCopyLocaleMutations, Sluggable
     protected $translatable = [
         'name',
         'slug',
-        'fields',
+        'formFields',
     ];
 
     public function slugFormat(?Locale $locale = null): string
@@ -46,14 +47,14 @@ class Form extends Model implements CanCopyLocaleMutations, Sluggable
         parent::boot();
 
         static::saving(function (Form $model) {
-            if($model->getAttribute("fields") !== null) {
-                unset($model->fields);
+            if($model->getAttribute("formFields") !== null) {
+                unset($model->formFields);
             }
         });
     }
 
-    public function fields(): HasMany
+    public function formFields(): HasMany
     {
-        return $this->hasMany(FormField::class);
+        return $this->hasMany(FormField::class, "form_id");
     }
 }

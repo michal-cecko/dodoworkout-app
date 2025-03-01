@@ -78,7 +78,7 @@ class FrontendOrderForm extends Form
                 ->icon('heroicon-o-document-check')
                 ->schema([
                     Placeholder::make('summary')
-                        ->label(__("ord_section_summary_heading"))
+                        ->hiddenLabel()
                         ->content(function ($get) {
                             $data = [];
 
@@ -136,7 +136,6 @@ class FrontendOrderForm extends Form
                                         foreach ($field->getChildComponents() as $subfield) {
                                             $key = explode(".", $subfield->getKey());
                                             $key = end($key);
-
                                             $data[$step['label']][$subfield->getLabel()] = $get($key);
                                         }
                                     } else {

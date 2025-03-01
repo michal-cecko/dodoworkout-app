@@ -132,7 +132,6 @@
     "OrderStatus.CANCELED": "Canceled",
     "OrderStatus.PAID": "Paid",
     "OrderStatus.FREE": "Free",
-    "ord_section_summary_heading": "Summary of Your Order",
     "ord_section_summary_order_items_heading": "Items",
     "ord_section_summary_order_items_quantity": "Quantity",
     "ord_section_summary_order_items_price": "Price",
@@ -169,4 +168,5 @@
     "article_related_subheading": "Read more",
     "article_related_heading": "Related articles",
     "ord_email_subject": "Event registration confirmation",
+    "error_occurred": "An error occurred"
 }

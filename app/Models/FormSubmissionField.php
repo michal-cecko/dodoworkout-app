@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\FormFieldFormat;
+use App\Traits\Translations\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
@@ -9,16 +11,24 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class FormSubmissionField extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, HasTranslations;
 
     protected $fillable = [
         'form_submission_id',
         'form_field_id',
+        'format',
+        'label',
         'value',
     ];
 
     protected $casts = [
+        'format' => FormFieldFormat::class,
+        'label' => 'array',
         'value' => 'json',
+    ];
+
+    protected $translatable = [
+        'label',
     ];
 
     public function formSubmission(): BelongsTo

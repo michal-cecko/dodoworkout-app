@@ -62,7 +62,7 @@ class PageController extends Controller
     public function event(string $slug): View
     {
         $event = Event::whereRaw("slug->> ? = ?", [App::currentLocale(), $slug])
-            ->with(['media', 'category', 'form.fields'])
+            ->with(['media', 'category', 'form.formFields'])
             ->visible()
             ->firstOrFail();
 

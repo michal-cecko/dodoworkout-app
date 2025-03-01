@@ -1,7 +1,7 @@
 @extends('layouts.web')
 
 @section('body')
-<section id="blog" class="container-wrapper pt-10 pb-24 relative">
+<section id="blog" class="container-wrapper pt-10 pb-12 pb-sm-24 relative">
   <span class="block text-primary font-semibold mx-auto w-fit mb-7 uppercase">blog</span>
   <h1 class="hfont text-4xl font-black mb-7 text-center uppercase">Articles for Every Athlete</h1>
   <p class="text-textSecondary text-xl mb-7 text-center mx-auto max-w-[640px] mb-28">
@@ -18,7 +18,7 @@
 
         <div class="w-full max-lg:mb-0 border border-[#DDDDDDEE] rounded-lg text-sm overflow-hidden flex pl-3 h-[36px] bg-white items-center focus-within:ring-2 focus-within:ring-primary mb-8">
           {!! svgIcon("icon/icon-search.svg", ['class' => ['text-[#AAAAAAEE]']]) !!}
-  
+
           <input type="search" class="w-full bg-tranparent border-none outline-none pl-3" placeholder="Vyhľadať" />
         </div>
       </div>
@@ -32,21 +32,21 @@
         <div class="filter-container-wrapper">
           <div class="filter-container">
             <h5 class="filter-heading">Availability</h5>
-    
+
             <label class="filter-label">
               <input type="checkbox" class="filter-checkbox" name="availability" checked value="free">
               Free
             </label>
-    
+
             <label class="filter-label">
               <input type="checkbox" class="filter-checkbox" name="availability" value="premium">
               Premium
             </label>
           </div>
-    
+
           <div class="filter-container">
             <h5 class="filter-heading">Tags</h5>
-    
+
             <label class="filter-label">
               <input type="checkbox" class="filter-checkbox" name="tags" checked value="achievements">
               Achievements
@@ -99,7 +99,7 @@
           <div class="bg-primary text-white flex items-center gap-2 px-3 py-2 leading-0 rounded-xl">
             Free
             <span>&times;</span>
-          </div> 
+          </div>
         </div>
         <button class="text-textSecondary bg-white border border-[#EDEDED] rounded-lg px-2 py-1 font-medium">Reset filters</button>
       </div>

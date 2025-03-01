@@ -22,7 +22,7 @@ trait HasCopyLocaleMutations
                     )
                 );
             } else if (method_exists($this, $translatableProperty)) {
-                $relationRecords = $this->$translatableProperty;
+                $relationRecords = $translatableProperty;
                 foreach ($relationRecords as $relationRecord) {
                     $relationRecord->copyMutation($sourceLocale, $targetLocale);
                 }

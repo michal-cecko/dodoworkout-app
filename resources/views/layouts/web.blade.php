@@ -44,5 +44,7 @@
         @hasSection("scripts")
             @yield('scripts')
         @endif
+
+        @include('parts.scripts')
     </body>
 </html>

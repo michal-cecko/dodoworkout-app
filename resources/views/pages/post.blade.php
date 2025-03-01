@@ -2,7 +2,7 @@
 @extends('layouts.web')
 
 @section('body')
-    <section id="blog" class="pt-10 pb-24 relative flex flex-col max-lg:pt-0">
+    <section id="blog" class="pt-10 pb-12 pb-sm-24 relative flex flex-col max-lg:pt-0">
         <div
             class="container-wrapper relative max-lg:order-2 max-lg:pt-6 max-lg:-mt-6 z-[20] max-lg:rounded-3xl bg-white max-lg:px-6 max-lg:!max-w-full">
             <span
@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
+            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/svg/progress.svg') repeat center; background-size:contain"></div>
             </div>
 
             <script type="module" defer>

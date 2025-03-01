@@ -12,6 +12,7 @@ class FormSubmission extends Model
     protected $fillable = [
         'form_id',
         'order_id',
+        'order_item_id',
         'priceable_id',
         'priceable_type',
     ];
@@ -26,6 +27,11 @@ class FormSubmission extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function orderItem(): BelongsTo
+    {
+        return $this->belongsTo(OrderItem::class);
+    }
+
     public function priceable(): MorphTo
     {
         return $this->morphTo();
@@ -36,7 +42,7 @@ class FormSubmission extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function fields(): HasMany
+    public function formFields(): HasMany
     {
         return $this->hasMany(FormSubmissionField::class);
     }

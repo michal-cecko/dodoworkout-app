@@ -4,7 +4,7 @@
 @section("body")
 <!-- Thank You Message -->
 <p style="margin: 0 0 16px">
-    @if($formSubmission?->fields->isNotEmpty())
+    @if($formSubmission?->formFields->isNotEmpty())
         {{ __('ord_email_thank_you_event') . " " . $event->order_item_name . '.' }}
     @else
         {{ __('ord_email_thank_you') . '.' }}
@@ -98,10 +98,10 @@
 @endif
 
 <!-- Event-Specific Form Submission Fields -->
-@if ($formSubmission?->fields->isNotEmpty())
+@if ($formSubmission?->formFields->isNotEmpty())
 <div style="margin-bottom: 20px;">
 <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-bottom: 12px;">{{ __('ord_email_event_heading') }}</h3>
-@foreach ($formSubmission->fields as $field)
+@foreach ($formSubmission->formFields as $field)
 <p style="margin: 0 0 8px; color: #4b5563; font-size: 14px">
 <span style="font-weight: bold;">{{ $field->formField->label ?? "N/A" }}:</span>
 @if (is_array($field->value))

@@ -22,4 +22,24 @@ enum OrderStatus: string
             self::FREE->value => 'info',
         ];
     }
+
+    public static function icons(): array
+    {
+        return [
+            self::ACCEPTED->value => 'heroicon-s-arrow-path',
+            self::CANCELED->value => 'heroicon-m-x-circle',
+            self::PAID->value => 'heroicon-s-check-badge',
+            self::FREE->value => 'heroicon-s-hand-thumb-up',
+        ];
+    }
+
+    public function color(): ?string
+    {
+        return self::colors()[$this->value] ?? null;
+    }
+
+    public function icon(): ?string
+    {
+        return self::icons()[$this->value] ?? null;
+    }
 }

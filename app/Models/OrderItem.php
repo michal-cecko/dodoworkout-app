@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class OrderItem extends Model
@@ -29,5 +31,10 @@ class OrderItem extends Model
 
     public function orderable(): MorphTo {
         return $this->morphTo();
+    }
+
+    public function formSubmission(): HasOne
+    {
+        return $this->hasOne(FormSubmission::class, 'order_item_id');
     }
 }

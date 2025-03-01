@@ -1,5 +1,4 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
@@ -9,7 +8,7 @@
         "php": "^8.2",
         "awcodes/filament-tiptap-editor": "^3.5",
         "dotswan/filament-map-picker": "^1.7",
-        "filament/filament": "^3.2",
+        "filament/filament": "^3.2.0",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "filament/spatie-laravel-translatable-plugin": "^3.2",
         "jaocero/radio-deck": "^1.2",

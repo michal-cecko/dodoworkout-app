@@ -36,7 +36,7 @@
                 <a href="{{route("filament.dashboard.auth.login")}}">{!! svgIcon("icon/icon-profile.svg", ['class' => ['profile-icon']]) !!}</a>
             </div>--}}
             <div class="icon-container max-lg:hidden font-bold">
-                <a href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk", request()->route()->parameters()) }}">
+                <a href="{{LocaleService::getLocalizedRoutePathByName("homepage", app()->currentLocale() === "sk" ? "en" : "sk") }}">
                     {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
                 </a>
             </div>
@@ -63,7 +63,7 @@
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("contact") }}">{{__("header_contact")}}</a></li>--}}
         <li>
             <a class="py-4 block text-primary font-bold"
-               href="{{LocaleService::getLocalizedRoutePathByName(request()->route()->getName(), app()->currentLocale() === "sk" ? "en" : "sk", request()->route()->parameters()) }}">
+               href="{{LocaleService::getLocalizedRoutePathByName("homepage", app()->currentLocale() === "sk" ? "en" : "sk") }}">
                 {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
             </a>
         </li>

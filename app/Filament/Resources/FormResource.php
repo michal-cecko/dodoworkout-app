@@ -89,7 +89,7 @@ class FormResource extends CommonResource
     {
         $columns = [];
 
-        $columns['name'] = TextColumn::make('full_billing_name')->label('Objednávateľ')->sortable(['billing_last_name', 'billing_first_name'])->searchable(['billing_last_name', 'billing_first_name']);
+        $columns['name'] = TextColumn::make('name')->label('Názov')->sortable()->searchable();
 
         return $columns;
     }
@@ -262,7 +262,7 @@ class FormResource extends CommonResource
                 TextInput::make('value')->label("Hodnota")->required()->columnSpan("full")
             ]);
 
-        return Repeater::make('fields')
+        return Repeater::make('formFields')
             ->label("Polia formuláru")
             ->relationship()
             ->columnSpan(12)

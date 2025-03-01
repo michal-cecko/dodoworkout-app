@@ -16,7 +16,7 @@ class TestCommand extends Command
     public function handle()
     {
         $order = Order::find(16);
-        $formSubmission = $order->formSubmission()->with("fields.formField")->first();
+        $formSubmission = $order->formSubmission()->with("formFields.formField")->first();
         $event = Event::find(6);
 
         $order->notify(new OrderCreated($event, $order, $formSubmission));
