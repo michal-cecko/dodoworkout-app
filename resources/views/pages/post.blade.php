@@ -100,7 +100,8 @@
                 </div>
             </div>
 
-            {!! svgIcon("svg/progress.svg", ['class' => ['max-lg:hidden absolute top-[50%] w-[calc(100vw * 2)]']]) !!}
+            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
+            </div>
 
             <script type="module" defer>
                 import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'

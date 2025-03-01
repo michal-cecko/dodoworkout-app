@@ -123,7 +123,7 @@
     </section>
 
     @if($posts->isNotEmpty())
-        <section class="card-holder gray py-20 relative">
+        <section class="card-holder gray py-20 relative overflow-hidden">
             <div class="container-wrapper mb-12">
                 <h4 class="text-primary font-semibold mb-1">{{__("home_blog_subheading")}}</h4>
                 <div class="flex gap-4 max-lg:flex-col">
@@ -161,7 +161,8 @@
                 </div>
             </div>
 
-            {!! svgIcon("svg/progress.svg", ['class' => ['max-lg:hidden absolute top-[50%] w-[calc(100vw * 2)]']]) !!}
+            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg] z-10" style="background: url('/image/progress.svg') repeat center; background-size:contain"></div>
+            </div>
         </section>
     @endif
 
