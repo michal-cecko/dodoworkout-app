@@ -102,7 +102,6 @@ class PostResource extends CommonResource
         $fields['image'] = SpatieMediaLibraryFileUpload::make('image')
             ->label("Obrázok")
             ->preserveFilenames()
-            ->image()
             ->required()
             ->imageEditor()
             ->collection('image')

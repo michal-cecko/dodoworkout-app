@@ -126,6 +126,11 @@
         margin-bottom: 2rem;
     }
 
+    [data-youtube-video] {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+    }
+
     .filament-tiptap-grid-builder__column {
         min-width: 0; /* Prevents overflow of columns */
     }
@@ -147,8 +152,10 @@
     h4,
     h5,
     h6 {
+        margin-bottom: 1rem;
+        margin-top: 3rem;
         font-family: 'Lato', sans-serif;
-        @apply font-black mb-4;
+        @apply font-black;
     }
 
     h1 {

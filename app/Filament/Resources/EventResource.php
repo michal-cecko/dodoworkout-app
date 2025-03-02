@@ -102,7 +102,6 @@ class EventResource extends CommonResource
             ->label("Obrázok")
             ->preserveFilenames()
             ->required()
-            ->image()
             ->imageEditor()
             ->collection('image')
             ->columnSpan(12);

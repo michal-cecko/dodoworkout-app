@@ -32,9 +32,9 @@
             {{--<div class="icon-container" data-cart-items="5">
                 <a href="#">{!! svgIcon("icon/icon-cart.svg", ['class' => ['cart-icon']]) !!}</a>
             </div>--}}
-            {{--<div class="icon-container">
+            <div class="icon-container">
                 <a href="{{route("filament.dashboard.auth.login")}}">{!! svgIcon("icon/icon-profile.svg", ['class' => ['profile-icon']]) !!}</a>
-            </div>--}}
+            </div>
             <div class="icon-container max-lg:hidden font-bold">
                 <a href="{{LocaleService::getLocalizedRoutePathByName("homepage", app()->currentLocale() === "sk" ? "en" : "sk") }}">
                     {{app()->currentLocale() === "sk" ? "EN" : "SK"}}
