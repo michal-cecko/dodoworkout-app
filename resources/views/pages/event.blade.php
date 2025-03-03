@@ -1,7 +1,33 @@
-@php use App\Services\LocaleService; @endphp
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('layouts.web')
 
-@section("head")
+@php
+    $image = $event->getFirstMedia("image");
+    $excerpt = Str::limit($event->excerpt, 155, '...');
+@endphp
+
+@section('title')
+    {{ $event->title }} | Dodoworkout
+@endsection
+
+@section('head')
+    <meta property="og:title" content="{{ $event->title }}"/>
+    <meta property="og:description" content="{{ $excerpt }}"/>
+    @if($image)
+        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
+    @endif
+    <meta property="og:url" content="{{ $event->permalink }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="DODOWORKOUT}}"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="{{ $event->title }}"/>
+    <meta name="twitter:description" content="{{ $excerpt }}"/>
+    @if($image)
+        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
+    @endif
+
     @vite(['resources/css/filament/dashboard/theme.css'])
     @filamentStyles
 @endsection
@@ -15,7 +41,7 @@
     <section id="bootcamp">
         <div
             class="h-[512px] bg-primary"
-            style="background: {{$event->getFirstMediaUrl("image") ? "url('{$event->getFirstMediaUrl("image")}')" : "#fff"}} 50% / cover no-repeat;">
+            style="background: {{$image ? "url('{$image->getFullUrl()}')" : "var(--primary-color)"}} 50% / cover no-repeat;">
         </div>
 
         <div class="pb-12 pb-sm-24">
@@ -66,7 +92,8 @@
                                 </div>
                                 <span class="text-base">
                                     @if($event->end_at && $event->start_at->diffInDays($event->end_at) > 0)
-                                        {{ $event->start_at->translatedFormat("d. F Y") }} - {{ $event->end_at?->translatedFormat("d. F Y") }}
+                                        {{ $event->start_at->translatedFormat("d. F Y") }}
+                                        - {{ $event->end_at?->translatedFormat("d. F Y") }}
                                     @else
                                         {{ $event->start_at->translatedFormat("d. F Y") }}
                                     @endif

@@ -5,7 +5,7 @@
                 class="logo-container mb-7">{!! svgIcon("logo/logo-black-red.svg", ['class' => ['h-[46px] w-[110px] max-lg:h-[34px] max-lg:w-[81px]']]) !!}</div>
             <a class="flex items-center gap-3 mb-4" href="mailto:dominikklimek07@gmail.com">
                 {!! svgIcon("icon/mail.svg") !!}
-                dominikklimek07@gmail.com
+                info@dodoworkout.com
             </a>
             <a class="flex items-center gap-3 mb-8" href="tel:+421 911 266 631">
                 {!! svgIcon("icon/phone.svg", ['class' => ['text-primary']]) !!}

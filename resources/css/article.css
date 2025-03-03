@@ -202,7 +202,8 @@
         @apply mb-6;
 
         li {
-            @apply text-sm text-textSecondary gap-4 flex items-start mb-3 last:mb-0;
+            font-size: 1.125rem;
+            @apply text-textSecondary gap-4 flex items-start mb-3 last:mb-0;
 
             &::before {
                 content: url('data:image/svg+xml,<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="4" fill="%23EF4444"/></svg>');
@@ -212,7 +213,8 @@
 
 
     p {
-        @apply mb-4 text-base text-textSecondary;
+        font-size: 1.125rem;
+        @apply mb-4 text-textSecondary;
     }
 
     .quote {
@@ -225,11 +227,11 @@
         }
 
         .quote-author-name {
-            @apply text-primary font-bold text-sm block;
+            @apply text-primary font-bold text-base block;
         }
 
         .quote-author-title {
-            @apply text-sm;
+            @apply text-base;
         }
     }
 
