@@ -1,5 +1,31 @@
-@php use App\Services\LocaleService; @endphp
+@php use Illuminate\Support\Str; @endphp
 @extends('layouts.web')
+
+@php
+    $image = $post->getFirstMedia("image");
+    $excerpt = Str::limit($post->excerpt, 155, '...');
+@endphp
+
+@section('title')
+    {{ $post->title }} | Dodoworkout
+@endsection
+
+@section('head')
+    <meta property="og:title" content="{{ $post->title }}"/>
+    <meta property="og:description" content="{{ $excerpt }}"/>
+    @if($image)
+        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
+    @endif
+    <meta property="og:url" content="{{ $post->permalink }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:site_name" content="DODOWORKOUT}}"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="{{ $post->title }}"/>
+    <meta name="twitter:description" content="{{ $excerpt }}"/>
+    @if($image)
+        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
+    @endif
+@endsection
 
 @section('body')
     <section id="blog" class="pt-10 pb-12 pb-sm-24 relative flex flex-col max-lg:pt-0">
@@ -32,14 +58,12 @@
 
         </div>
 
-        @if($image = $post->getFirstMedia("image"))
+        @if($image)
             <div class="relative isolate max-lg:order-1">
                 <div
-                    class="absolute max-h-[240px] top-1/2 -translate-y-1/2 left-0 w-full h-full bg-primary z-[-1] max-lg:hidden"></div>
-                <div class="h-[414px] max-w-[1098px] mx-auto rounded-3xl overflow-hidden max-lg:rounded-none">
-                    <img class="w-full h-full object-cover"
-                         src="{{$image->getFullUrl()}}"
-                         alt="{{$post->title}}">
+                    class="absolute max-h-[360px] top-1/2 -translate-y-1/2 left-0 w-full h-full bg-primary z-[-1] max-lg:hidden"></div>
+                <div class="h-[512px] max-w-[1098px] mx-auto rounded-3xl overflow-hidden max-lg:rounded-none">
+                    <img class="w-full h-full object-cover" src="{{$image->getFullUrl()}}" alt="{{$post->title}}">
                 </div>
             </div>
         @endif
@@ -100,29 +124,30 @@
                 </div>
             </div>
 
-            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]" style="background: url('/svg/progress.svg') repeat center; background-size:contain"></div>
-            </div>
+            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]"
+                 style="background: url('/svg/progress.svg') repeat center; background-size:contain"></div>
+        </div>
 
-            <script type="module" defer>
-                import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
+        <script type="module" defer>
+            import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
 
-                const swiper = new Swiper('#workshops-swiper', {
-                    slidesPerView: 1,
-                    loop: true,
-                    navigation: {
-                        nextEl: '#workshop-swiper-next',
-                        prevEl: '#workshop-swiper-prev'
+            const swiper = new Swiper('#workshops-swiper', {
+                slidesPerView: 1,
+                loop: true,
+                navigation: {
+                    nextEl: '#workshop-swiper-next',
+                    prevEl: '#workshop-swiper-prev'
+                },
+                breakpoints: {
+                    '768': {
+                        slidesPerView: 2,
                     },
-                    breakpoints: {
-                        '768': {
-                            slidesPerView: 2,
-                        },
-                        '1280': {
-                            slidesPerView: 3,
-                        }
+                    '1280': {
+                        slidesPerView: 3,
                     }
-                })
-            </script>
+                }
+            })
+        </script>
         </div>
     @endif
 @endsection

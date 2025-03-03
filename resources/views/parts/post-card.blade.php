@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Str; @endphp
 <a href="{{$post->permalink}}">
     <div class="card">
         <div class="image-container">
@@ -15,8 +16,8 @@
 
         <h3 class="title">{{$post->title}}</h3>
 
-        @if(!empty($post->description))
-            <p class="description"> {{$post->description}} </p>
+        @if(!empty($post->excerpt))
+            <p class="description">{{Str::words($post->excerpt, 20)}} </p>
         @endif
 
         <div class="price-cta-container">
