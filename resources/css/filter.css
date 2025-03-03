@@ -2,11 +2,11 @@
   @apply transition-transform max-lg:fixed max-lg:translate-x-[-100%] flex flex-col max-lg:h-screen max-lg:z-[101] max-lg:top-0 max-lg:left-0 max-lg:bottom-0 w-2/3 max-lg:bg-white;
 
   .filter-header {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     @apply hidden max-lg:px-4 max-lg:py-4 max-lg:text-sm max-lg:uppercase max-lg:flex max-lg:gap-4 max-lg:items-center max-lg:border-b max-lg:border-[#EDEDED];
 
     .title {
-      @apply font-black;
+      @apply font-bold;
     }
 
     .reset-button {

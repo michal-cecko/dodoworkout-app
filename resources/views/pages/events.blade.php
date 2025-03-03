@@ -3,7 +3,7 @@
 @section('body')
 <section id="bootcamps" class="container-wrapper pt-10 pb-12 pb-sm-24 relative">
   <span class="block text-primary font-semibold mx-auto w-fit mb-7">BOOTCAMPS & CERTIFICATIONS</span>
-  <h1 class="hfont text-4xl font-black mb-7 text-center uppercase">UPCOMING BOOTCAMPS</h1>
+  <h1 class="hfont text-4xl font-bold mb-7 text-center uppercase">UPCOMING BOOTCAMPS</h1>
   <p class="text-textSecondary text-xl text-center mx-auto max-w-[640px] mb-24">
     Explore our workshops, seminars, and bootcamps to elevate your fitness, mindset, and skills.
     Expert-led sessions for all levels to push your limits.

@@ -65,10 +65,10 @@ class EventRegistrationForm extends Component implements HasForms
 
     public function mount(Event $event): void
     {
+        $this->form->fill();
         $this->event = $event;
         $this->eventData = $event->toArray();
         $this->initializeCartItems();
-        $this->form->fill();
     }
 
     public function form(\Filament\Forms\Form $form): \Filament\Forms\Form
@@ -243,7 +243,12 @@ class EventRegistrationForm extends Component implements HasForms
                 ->maxDate($field->max ?: null),
             FormFieldFormat::FILE => FileUpload::make($key)
                 ->preserveFilenames()
+                ->openable()
+                ->downloadable()
+                ->uploadingMessage(__("uploading_message"))
+                ->panelLayout('integrated')
                 ->disk("local")
+                ->maxParallelUploads(1)
                 ->directory(self::TEMP_DIR)
                 ->columnSpan(12),
             default => TextInput::make($key),

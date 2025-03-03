@@ -168,5 +168,6 @@
     "article_related_subheading": "Read more",
     "article_related_heading": "Related articles",
     "ord_email_subject": "Event registration confirmation",
-    "error_occurred": "An error occurred"
+    "error_occurred": "An error occurred",
+    "uploading_message": "Uploading..."
 }

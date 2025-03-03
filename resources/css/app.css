@@ -74,7 +74,7 @@ body {
 }
 
 .hfont {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .btn {
@@ -85,7 +85,7 @@ body {
     padding: 12px 28px;
     border-radius: 10px;
     line-height: 1;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     display: inline-flex;
     gap: 8px;
     align-items: center;

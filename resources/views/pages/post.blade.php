@@ -33,7 +33,7 @@
             class="container-wrapper relative max-lg:order-2 max-lg:pt-6 max-lg:-mt-6 z-[20] max-lg:rounded-3xl bg-white max-lg:px-6 max-lg:!max-w-full">
             <span
                 class="block text-primary font-semibold mx-auto w-fit mb-3 uppercase max-lg:mx-0 max-lg:text-sm max-lg:mt-6">BLOG</span>
-            <h1 class="hfont text-4xl font-black mb-7 text-center max-lg:text-2xl max-lg:text-left">
+            <h1 class="hfont text-4xl font-bold mb-7 text-center max-lg:text-2xl max-lg:text-left">
                 {{$post->title}}
             </h1>
             <div class="flex gap-2 items-center mb-11 justify-center max-lg:justify-start max-lg:mb-0">
@@ -124,8 +124,7 @@
                 </div>
             </div>
 
-            <div class="max-lg:hidden absolute top-[50%] !w-full h-[200px] rotate-[-7deg]"
-                 style="background: url('/svg/progress.svg') repeat center; background-size:contain"></div>
+            <div class="max-md:hidden absolute top-[40%] rotate-[-7deg] bg-progress-curve" style="background: url('/svg/progress.svg') repeat-x center;"></div>
         </div>
 
         <script type="module" defer>

@@ -54,7 +54,7 @@
         <input type="search" class="w-full bg-tranparent border-none outline-none pl-4" placeholder="{{__("search")}}"/>
     </div>--}}
 
-    <ul class="flex flex-col uppercase text-3xl font-black hfont px-2">
+    <ul class="flex flex-col uppercase text-3xl font-bold hfont px-2">
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("homepage") }}">{{__("header_about")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("blog") }}">{{__("header_blog")}}</a></li>--}}
         {{--<li><a class="py-4 block" href="{{ LocaleService::getLocalizedRoutePathByName("trainings") }}">{{__("header_trainings")}}</a></li>--}}

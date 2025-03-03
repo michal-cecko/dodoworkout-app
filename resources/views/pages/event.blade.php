@@ -63,7 +63,7 @@
                                     <span
                                         class="uppercase text-base text-textSecondary mb-3">{{ $event->category->name }}</span>
                                 @endif
-                                <h2 class="hfont text-3xl font-black max-lg:text-2xl">{{ $event->title }}</h2>
+                                <h2 class="hfont text-3xl font-bold max-lg:text-2xl">{{ $event->title }}</h2>
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@
                             <span
                                 class="sale-tag mb-5 max-lg:absolute top-0 left-6 -translate-y-1/2">{{__("sale_tag")}}</span>
                         @endif
-                        <h3 class="font-black text-2xl hfont max-lg:text-2xl max-lg:mb-8">
+                        <h3 class="font-bold text-2xl hfont max-lg:text-2xl max-lg:mb-8">
                             @if($event->last_few_left)
                                 <span class="highlight">{{__("event_register_cta_partial")}},</span><br
                                     class="max-lg:hidden"/>{{__("still_places_left", ["count" => $event->participants_available])}}
@@ -146,7 +146,7 @@
                     @if($event->participants_available !== 0)
                         <aside id="register-form"
                                class="w-full pt-10 pb-8 flex flex-col">
-                            <h2 class="font-black text-3xl hfont mb-6 px-sm-0 px-6">{{__("registration_form")}}</h2>
+                            <h2 class="font-bold text-3xl hfont mb-6 px-sm-0 px-6">{{__("registration_form")}}</h2>
                             @livewire('event-registration-form', ['event' => $event])
                         </aside>
                     @endif
