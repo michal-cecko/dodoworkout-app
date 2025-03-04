@@ -183,7 +183,7 @@
     }
 
     .image-container {
-        @apply my-6;
+        @apply my-9;
 
         .image-container-image {
             @apply rounded-3xl overflow-hidden mb-4;
@@ -235,7 +235,7 @@
         }
     }
 
-    a {
+    a:not([data-fslightbox]) {
         @apply text-primary font-bold underline inline-flex items-center gap-1;
 
         &::after {
@@ -252,7 +252,7 @@
     }
 
     .gallery {
-        @apply my-6 columns-3 max-lg:columns-2 max-sm:columns-1;
+        @apply my-9 columns-3 max-lg:columns-2 max-sm:columns-1;
 
         .gallery-item {
             @apply mb-3;

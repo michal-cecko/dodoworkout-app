@@ -144,15 +144,21 @@ trait UseContentBuilder
             $files = Storage::disk('public')->files($directory);
             $content = $record->content;
 
+            $submittedFiles = [];
             foreach ($content as $block => $data) {
-                if($data['type'] !== 'gallery') {
-                    continue;
-                }
-
-                foreach ($files as $file) {
-                    if (!in_array($file, $data['data']['images'])) {
-                        Storage::disk('public')->delete($file);
+                if ($data['type'] === 'gallery') {
+                    foreach ($data['data']['images'] as $image) {
+                        $submittedFiles[] = $image;
                     }
+                } else if($data['type'] === 'media') {
+                    $submittedFiles[] = $data['media'];
+                }
+            }
+
+            // delete files that are not in the submitted content
+            foreach ($files as $file) {
+                if (!in_array($file, $submittedFiles)) {
+                    Storage::disk('public')->delete($file);
                 }
             }
         }

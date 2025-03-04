@@ -64,13 +64,15 @@
                 <div
                     class="absolute max-h-[360px] top-1/2 -translate-y-1/2 left-0 w-full h-full bg-primary z-[-1] max-lg:hidden"></div>
                 <div class="h-[512px] max-w-[1098px] mx-auto rounded-3xl overflow-hidden max-lg:rounded-none">
-                    <img class="w-full h-full object-cover" src="{{$image->getFullUrl()}}" alt="{{$post->title}}">
+                    <a data-fslightbox href="{{$image->getFullUrl()}}">
+                        <img class="w-full h-full object-cover" src="{{$image->getFullUrl()}}" alt="{{$post->title}}">
+                    </a>
                 </div>
             </div>
         @endif
 
         <div class="container-wrapper mt-12 order-3">
-            <article class="w-full max-w-[697px] mx-auto max-lg:!max-w-full content-builder">
+            <article class="w-full max-w-[900px] mx-auto max-lg:!max-w-full content-builder">
 
                 @include("parts.builder", ['contents' => $post->content, 'resource' => $post])
 

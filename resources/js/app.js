@@ -1,3 +1,5 @@
+import fsLightbox from 'fslightbox';
+
 document.addEventListener('DOMContentLoaded', function() {
     // Select all anchor links with href starting with #
     const anchorLinks = document.querySelectorAll('a[href^="#"]');

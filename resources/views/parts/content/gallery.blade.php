@@ -2,7 +2,9 @@
     <div class="gallery">
         @foreach($images as $image)
             <div class="gallery-item">
-                <img src="/storage/{{$image}}" alt="">
+                <a data-fslightbox href="/storage/{{$image}}">
+                    <img src="/storage/{{$image}}" alt="">
+                </a>
             </div>
         @endforeach
     </div>
