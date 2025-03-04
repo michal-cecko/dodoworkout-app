@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -57,6 +58,16 @@ class Post extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocale
         'slug',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleted(function ($model) {
+            $model->media()->delete();
+            Storage::disk("public")->deleteDirectory($model->storage_base_path);
+        });
+    }
+
     public function slugFormat(?Locale $locale = null): string
     {
         $translations = $this->getTranslations("title");
@@ -73,9 +84,18 @@ class Post extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocale
         return LocaleService::getLocalizedRoutePathByName(name: "post", changeToLocale: $this->locale_scope?->value, parameters: ['post' => $this->slug]);
     }
 
+    public function getStorageBasePathAttribute(): string
+    {
+        return "clanky/{$this->getTranslations("slug")['sk']}";
+    }
+
+    public function getBuilderImagesPathAttribute(): string
+    {
+        return "{$this->storage_base_path}/builder";
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')->singleFile();
-        $this->addMediaCollection('content_media');
     }
 }

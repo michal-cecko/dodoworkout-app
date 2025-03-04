@@ -3,13 +3,14 @@
 namespace App\Filament\Resources\PostResource\Pages;
 
 use App\Filament\Resources\PostResource;
+use App\Filament\Trait\UseContentBuilder;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\CreateRecord\Concerns\Translatable;
 
 class CreatePost extends CreateRecord
 {
-    use Translatable;
+    use Translatable, UseContentBuilder;
 
     protected static string $resource = PostResource::class;
 
@@ -18,10 +19,5 @@ class CreatePost extends CreateRecord
         return [
             Actions\LocaleSwitcher::make(),
         ];
-    }
-
-    protected function afterSave(): void
-    {
-        $this->syncPostTags($this->record, $this->data['tags'] ?? []);
     }
 }

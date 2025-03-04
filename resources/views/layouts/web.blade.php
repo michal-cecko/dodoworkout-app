@@ -11,6 +11,13 @@
 
         @include('parts.meta')
 
+        @hasSection('meta-images')
+            @yield('meta-images')
+        @else
+            <meta property="og:image" content="{{ asset('image/og-image.jpg') }}">
+            <meta property="twitter:image" content="{{ asset('image/og-image.jpg') }}">
+        @endif
+
         <title>
             @hasSection('title')
                 @yield('title')

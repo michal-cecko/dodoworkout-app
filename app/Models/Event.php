@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -85,6 +86,11 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
                 $model->longitude = null;
             }
         });
+
+        static::deleted(function ($model) {
+            $model->media()->delete();
+            Storage::disk("public")->deleteDirectory($model->storage_base_path);
+        });
     }
 
     public function slugFormat(?Locale $locale = null): string
@@ -140,10 +146,19 @@ class Event extends Model implements Sluggable, HasMedia, Viewable, CanCopyLocal
         return $this->participants_available <= ($this->participants_count * 0.15);
     }
 
+    public function getStorageBasePathAttribute(): string
+    {
+        return "eventy/{$this->getTranslations("slug")['sk']}";
+    }
+
+    public function getBuilderImagesPathAttribute(): string
+    {
+        return "{$this->storage_base_path}/builder";
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')->singleFile();
-        $this->addMediaCollection('content_media');
         $this->addMediaCollection('confirmation_email_attachments');
     }
 }

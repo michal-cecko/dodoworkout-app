@@ -10,21 +10,22 @@
     {{ $post->title }} | Dodoworkout
 @endsection
 
+@if($image)
+    @section('meta-images')
+        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
+        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
+    @endsection
+@endif
+
 @section('head')
     <meta property="og:title" content="{{ $post->title }}"/>
     <meta property="og:description" content="{{ $excerpt }}"/>
-    @if($image)
-        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
-    @endif
     <meta property="og:url" content="{{ $post->permalink }}"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:site_name" content="DODOWORKOUT}}"/>
+    <meta property="og:site_name" content="DODOWORKOUT"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="{{ $post->title }}"/>
     <meta name="twitter:description" content="{{ $excerpt }}"/>
-    @if($image)
-        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
-    @endif
 @endsection
 
 @section('body')
@@ -71,7 +72,7 @@
         <div class="container-wrapper mt-12 order-3">
             <article class="w-full max-w-[697px] mx-auto max-lg:!max-w-full content-builder">
 
-                @include("parts.builder", ['contents' => $post->content])
+                @include("parts.builder", ['contents' => $post->content, 'resource' => $post])
 
                 @if($post->tags->isNotEmpty())
                     <div class="tags">

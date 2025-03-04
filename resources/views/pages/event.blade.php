@@ -12,22 +12,22 @@
     {{ $event->title }} | Dodoworkout
 @endsection
 
+@if($image)
+    @section('meta-images')
+        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
+        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
+    @endsection
+@endif
+
 @section('head')
     <meta property="og:title" content="{{ $event->title }}"/>
     <meta property="og:description" content="{{ $excerpt }}"/>
-    @if($image)
-        <meta property="og:image" content="{{ $image->getFullUrl() }}"/>
-    @endif
     <meta property="og:url" content="{{ $event->permalink }}"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:site_name" content="DODOWORKOUT}}"/>
+    <meta property="og:site_name" content="DODOWORKOUT"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="{{ $event->title }}"/>
     <meta name="twitter:description" content="{{ $excerpt }}"/>
-    @if($image)
-        <meta name="twitter:image" content="{{ $image->getFullUrl() }}"/>
-    @endif
-
     @vite(['resources/css/filament/dashboard/theme.css'])
     @filamentStyles
 @endsection
@@ -140,7 +140,7 @@
                 <div class="flex flex-col gap-12 items-start max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
 
                     <article class="w-full max-lg:px-6 content-builder">
-                        @include("parts.builder", ['contents' => $event->content])
+                        @include("parts.builder", ['contents' => $event->content, 'resource' => $post])
                     </article>
 
                     @if($event->participants_available !== 0)

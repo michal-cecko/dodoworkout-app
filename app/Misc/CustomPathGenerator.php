@@ -17,19 +17,18 @@ class CustomPathGenerator implements PathGenerator
     public function getPath(Media $media): string
     {
         $media->loadMissing("model");
-        $x = DIRECTORY_SEPARATOR;
         $mod = $media->model;
         $modelClass = class_basename($mod);
         $modID = $mod->id;
 
         return match ($media->model_type) {
-            MorphMap::getKeyByModel(Post::class) => "clanky{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
-            MorphMap::getKeyByModel(Event::class) => "eventy{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
-            MorphMap::getKeyByModel(Form::class) => "formulare{$x}{$mod->getTranslations("slug")['sk']}{$x}{$media->collection_name}{$x}",
-            MorphMap::getKeyByModel(Order::class) => "objednavky{$x}{$mod->fullOrderNumber}{$x}{$media->collection_name}{$x}",
-            MorphMap::getKeyByModel(FormSubmissionField::class) => "objednavky{$x}{$mod->formSubmission->order->fullOrderNumber}{$x}formulare{$x}{$mod->formSubmission->form->getTranslations("slug")['sk']}{$x}",
+            MorphMap::getKeyByModel(Post::class) => "{$mod->storage_base_path}/{$media->collection_name}/",
+            MorphMap::getKeyByModel(Event::class) => "{$mod->storage_base_path}/{$media->collection_name}/",
+            MorphMap::getKeyByModel(Form::class) => "formulare/{$mod->getTranslations("slug")['sk']}/{$media->collection_name}/",
+            MorphMap::getKeyByModel(Order::class) => "objednavky/{$mod->fullOrderNumber}/{$media->collection_name}/",
+            MorphMap::getKeyByModel(FormSubmissionField::class) => "objednavky/{$mod->formSubmission->order->fullOrderNumber}/formulare/{$mod->formSubmission->form->getTranslations("slug")['sk']}/",
 
-            default => "nezaradene{$x}" . Str::snake($modelClass) . "{$x}{$modID}{$x}{$media->collection_name}{$x}",
+            default => "nezaradene/" . Str::snake($modelClass) . "/{$modID}/{$media->collection_name}/",
         };
     }
 

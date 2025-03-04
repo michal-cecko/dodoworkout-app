@@ -5,13 +5,14 @@ namespace App\Filament\Resources\EventResource\Pages;
 use App\Filament\Actions\CopyLocaleFieldsAction;
 use App\Filament\Actions\FrontendViewAction;
 use App\Filament\Resources\EventResource;
+use App\Filament\Trait\UseContentBuilder;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\EditRecord\Concerns\Translatable;
 
 class EditEvent extends EditRecord
 {
-    use Translatable;
+    use Translatable, UseContentBuilder;
 
     protected static string $resource = EventResource::class;
 
