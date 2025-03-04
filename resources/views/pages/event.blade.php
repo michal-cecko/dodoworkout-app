@@ -140,7 +140,7 @@
                 <div class="flex flex-col gap-12 items-start max-lg:gap-3 max-lg:px-0 max-lg:flex-col">
 
                     <article class="w-full max-lg:px-6 content-builder">
-                        @include("parts.builder", ['contents' => $event->content, 'resource' => $post])
+                        @include("parts.builder", ['contents' => $event->content, 'resource' => $event])
                     </article>
 
                     @if($event->participants_available !== 0)

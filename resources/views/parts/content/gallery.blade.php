@@ -2,7 +2,7 @@
     <div class="gallery">
         @foreach($images as $image)
             <div class="gallery-item">
-                <img src="{{$image}}" alt="">
+                <img src="/storage/{{$image}}" alt="">
             </div>
         @endforeach
     </div>
