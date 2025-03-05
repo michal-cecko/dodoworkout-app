@@ -22,7 +22,7 @@
     "read_article": "Read Article",
     "learn_more": "Learn More",
     "footer_about_heading": "About Me",
-    "footer_about_content": "Mgr. Dominik Klimek, professional calisthenics athlete and trainer.",
+    "footer_about_content": "Dominik Klimek, Master Calisthenics and S&C coach.",
     "footer_links_heading": "Links",
     "footer_info_heading": "Information",
     "business_id": "Business ID",
@@ -169,5 +169,7 @@
     "article_related_heading": "Related articles",
     "ord_email_subject": "Event registration confirmation",
     "error_occurred": "An error occurred",
-    "uploading_message": "Uploading..."
+    "uploading_message": "Uploading...",
+    "phone_short": "Phone",
+    "email": "Email"
 }

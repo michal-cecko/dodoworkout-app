@@ -23,8 +23,7 @@
                     {{__("footer_about_content")}}
                     <a href="{{\App\Models\Post::find(12)->permalink}}" class="block font-bold text-primary">{{__("read_more")}}</a>
                     <br/>
-                    {{__("business_id")}}: 36396885</br>
-                    {{__("tax_id")}}: SK11111111
+                    {{__("business_id")}}: 56841337
                 </p>
             </div>
            {{-- <div>

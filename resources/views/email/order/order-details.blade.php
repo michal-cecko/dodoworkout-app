@@ -2,20 +2,21 @@
 @extends('email.layouts.default-markdown-email')
 
 @section("body")
-<!-- Thank You Message -->
-<p style="margin: 0 0 16px">
-    @if($formSubmission?->formFields->isNotEmpty())
-        {{ __('ord_email_thank_you_event') . " " . $event->order_item_name . '.' }}
-    @else
-        {{ __('ord_email_thank_you') . '.' }}
-    @endif
-</p>
 
 <!-- Custom Confirmation Content -->
-@if(!empty($content = $event->confirmation_email_content))
+@if(!empty($content = $event?->confirmation_email_content))
 <p style="margin: 0 0 16px">
 {!! $content !!}
 </p>
+@else
+    <!-- Thank You Message -->
+    <p style="margin: 0 0 16px">
+        @if($formSubmission?->formFields->isNotEmpty())
+            {{ __('ord_email_thank_you_event') . " " . $event->order_item_name . '.' }}
+        @else
+            {{ __('ord_email_thank_you') . '.' }}
+        @endif
+    </p>
 @endif
 
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; background-color: #f9fafb; border-radius: 8px">
@@ -222,7 +223,9 @@
 <!-- Questions Prompt -->
 <p style="margin: 20px 0 16px; color: #4b5563; font-size: 14px;">
     {{ __('best_regards') }},<br>
-    Mgr. Dominik Klimek
+    Dominik Klimek <br>
+    {{strtolower(__("email"))}}: <a href="mailto:info@dodoworkout.com">info@dodoworkout.com</a>
+    {{strtolower(__("phone_short"))}}: <a href="tel:+421 950 451 310">+421 950 451 310</a>
 </p>
 @endsection
 {{-- @formatter:on --}}
