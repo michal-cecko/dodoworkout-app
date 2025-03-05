@@ -224,8 +224,9 @@
 <p style="margin: 20px 0 16px; color: #4b5563; font-size: 14px;">
     {{ __('best_regards') }},<br>
     Dominik Klimek <br>
-    {{strtolower(__("email"))}}: <a href="mailto:info@dodoworkout.com">info@dodoworkout.com</a>
-    {{strtolower(__("phone_short"))}}: <a href="tel:+421 950 451 310">+421 950 451 310</a>
+    {{strtolower(__("email"))}}: <a href="mailto:info@dodoworkout.com">info@dodoworkout.com</a><br>
+    {{strtolower(__("phone_short"))}}: <a href="tel:+421 950 451 310">+421 950 451 310</a><br>
+    {{strtolower(__("business_id"))}}: 56841337
 </p>
 @endsection
 {{-- @formatter:on --}}
