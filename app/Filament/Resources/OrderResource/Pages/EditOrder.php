@@ -14,6 +14,7 @@ class EditOrder extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            OrderResource\Actions\ResendOrderCreatedEmailAction::make(),
         ];
     }
 }

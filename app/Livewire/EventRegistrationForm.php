@@ -96,10 +96,10 @@ class EventRegistrationForm extends Component implements HasForms
                 return;
             }
             $order = $this->storeOrder($data);
-            $formSubmission = $this->storeFormSubmission($data, $order);
+            $this->storeFormSubmission($data, $order);
             $this->submitted = true;
             $order->refresh();
-            $order->notify(new OrderCreated($this->eventData['id'], $order, $formSubmission));
+            OrderService::resendOrderCreatedNotification(order: $order);
             Storage::disk("local")->deleteDirectory(self::TEMP_DIR);
         } catch (Exception $e) {
             $this->notifyError($e->getMessage());
@@ -382,8 +382,6 @@ class EventRegistrationForm extends Component implements HasForms
 
             }
         }
-
-        $submission->load("formFields.formField");
 
         return $submission;
     }

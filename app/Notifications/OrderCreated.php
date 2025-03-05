@@ -6,28 +6,21 @@ use App\Models\Event;
 use App\Models\FormSubmission;
 use App\Models\Order;
 use Exception;
-use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\HtmlString;
 
 class OrderCreated extends Notification
 {
     protected Event $event;
+    protected ?FormSubmission $formSubmission;
 
     /**
      * Create a new notification instance.
      * @throws Exception
      */
-    public function __construct(Event|int $event, protected Order $order, protected ?FormSubmission $formSubmission){
-        if(is_int($event)) {
-            $this->event = Event::find($event);
-            if(!$this->event) {
-                throw new Exception("Event not found: " . $event);
-            }
-        } else {
-            $this->event = $event;
-        }
+    public function __construct(protected Order $order)
+    {
+        $this->formSubmission = FormSubmission::where("order_id", $order->id)->with(["priceable", "formFields.formField"])->first();
     }
 
     /**
@@ -46,22 +39,26 @@ class OrderCreated extends Notification
             ->subject(__('ord_email_subject') . " - " . $this->order->fullOrderNumber)
             ->markdown("email.order.order-details", [
                 'order' => $this->order,
-                'event' => $this->event,
                 'formSubmission' => $this->formSubmission,
             ]);
 
-        $attachments = $this->event->getMedia("confirmation_email_attachments");
-        if (!empty($attachments)) {
-            foreach ($attachments as $attachment) {
-                if (file_exists($attachment->getPath())) {
-                    $message->attach($attachment->getPath(), [
-                        'as' => $attachment->file_name,
-                        'mime' => $attachment->mime_type,
-                    ]);
-                }
-            }
-        }
+        $this->addAttachments($message);
 
         return $message;
+    }
+
+    private function addAttachments(MailMessage $message): void
+    {
+        $attachments = $this->formSubmission?->priceable?->getMedia("confirmation_email_attachments") ?? [];
+        if (empty($attachments)) return;
+
+        foreach ($attachments as $attachment) {
+            if (file_exists($attachment->getPath())) {
+                $message->attach($attachment->getPath(), [
+                    'as' => $attachment->file_name,
+                    'mime' => $attachment->mime_type,
+                ]);
+            }
+        }
     }
 }

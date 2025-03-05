@@ -5,11 +5,15 @@ namespace App\Services;
 use App\DataTransferObjects\Order\StoreOrderDTO;
 use App\Enum\OrderCountry;
 use App\Misc\MorphMap;
+use App\Models\FormSubmission;
 use App\Models\Order;
 use App\Models\PaymentType;
 use App\Models\ShippingType;
+use App\Notifications\OrderCreated;
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class OrderService
 {
@@ -106,5 +110,35 @@ class OrderService
         // Here add branch when needed to add foreign country VAT
 
         return $baseCountryVAT;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function resendOrderCreatedNotification(Order $order): void
+    {
+        try {
+            $order->notify(new OrderCreated($order));
+
+            Notification::make()
+                ->title('Úspešne odoslané.')
+                ->body('Potvrdenie o objednávke bolo úspešne znovu odoslané na zákazníkov email.')
+                ->success()
+                ->send();
+
+        } catch (Exception $e) {
+
+            if(app()->hasDebugModeEnabled()) {
+                throw $e;
+            } else {
+                Log::critical($e->getMessage());
+                Notification::make()
+                    ->title('Niečo sa nepodarilo.')
+                    ->body('Kontaktuj prosím Miša :P #resendOrderNotification.')
+                    ->danger()
+                    ->send();
+            }
+
+        }
     }
 }

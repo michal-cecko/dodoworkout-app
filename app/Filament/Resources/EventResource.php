@@ -21,6 +21,7 @@ use Filament\Resources\Concerns\Translatable;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use FilamentTiptapEditor\TiptapEditor;
 
 class EventResource extends CommonResource
 {
@@ -211,10 +212,9 @@ class EventResource extends CommonResource
                 'default' => 12,
             ]);
 
-        $fields['confirmation_email_content'] = RichEditor::make('confirmation_email_content')
+        $fields['confirmation_email_content'] = TiptapEditor::make('confirmation_email_content')
             ->label("Text k potvrdzovaciemu emailu")
-            ->columnSpan(12)
-            ->toolbarButtons(['bold', 'bulletList', 'h1', 'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'underline', 'undo']);
+            ->columnSpan(12);
 
         $fields['confirmation_email_attachments'] = SpatieMediaLibraryFileUpload::make('confirmation_email_attachments')
             ->label("Prílohy k potvrdzovaciemu emailu")
