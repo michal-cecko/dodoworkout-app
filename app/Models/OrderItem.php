@@ -33,6 +33,11 @@ class OrderItem extends Model
         return $this->morphTo();
     }
 
+    public function getFinalPricePerUnitAttribute(): float
+    {
+        return $this->price_per_unit - $this->discount_amount_per_unit;
+    }
+
     public function formSubmission(): HasOne
     {
         return $this->hasOne(FormSubmission::class, 'order_item_id');

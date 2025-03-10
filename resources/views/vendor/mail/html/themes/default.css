@@ -52,6 +52,11 @@ h6 {
     line-height: 1.2;
 }
 
+hr{
+    margin: 2rem 0 !important;
+    border-color: #edeff2 !important;
+}
+
 h1 {
     font-size: 26px;
 }

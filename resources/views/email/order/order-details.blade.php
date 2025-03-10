@@ -131,7 +131,7 @@
 <td style="padding: 10px;">{{ $item->name }}</td>
 <td style="padding: 10px; text-align: right;">{{ $item->quantity }}</td>
 <td style="padding: 10px; text-align: right;">
-{{ number_format($item->price_per_unit, 2) }} {{ $order->currency ?? 'EUR' }}
+{{ number_format($item->final_price_per_unit, 2) }} {{ $order->currency ?? 'EUR' }}
 </td>
 <td style="padding: 10px; text-align: right;">
 {{ number_format($item->total_no_vat, 2) }} {{ $order->currency ?? 'EUR' }}
@@ -221,7 +221,7 @@
     Dominik Klimek <br>
     {{strtolower(__("email"))}}: <a href="mailto:info@dodoworkout.com">info@dodoworkout.com</a><br>
     {{strtolower(__("phone_short"))}}: <a href="tel:+421 950 451 310">+421 950 451 310</a><br>
-    {{strtolower(__("business_id"))}}: 56841337
+    {{__("business_id")}}: 56841337
 </p>
 @endsection
 {{-- @formatter:on --}}

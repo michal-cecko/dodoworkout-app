@@ -137,7 +137,7 @@ class EventRegistrationForm extends Component implements HasForms
         ];
 
         if (!empty($this->event->last_price)) {
-            $cartItem['price'] = $this->event->last_price;
+            $cartItem['price'] = $this->event->price;
             $cartItem['discount'] = (float)$this->event->last_price - (float)$this->event->price;
             $cartItem['last_price'] = $this->event->last_price;
         }

@@ -499,7 +499,7 @@ class FrontendOrderForm extends Form
         $paymentFields['note'] = Textarea::make('note')
             ->label(__('ord_fld_note'))
             ->placeholder(__('ord_fld_note_placeholder'))
-            ->columnSpan('full')
+            ->columnSpan(12)
             ->rows(4);
 
         return Grid::make([
