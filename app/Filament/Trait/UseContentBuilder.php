@@ -134,36 +134,6 @@ trait UseContentBuilder
         }
     }
 
-    protected function afterSave(): void
-    {
-        $record = $this->record;
-
-        $directory = $record->builder_images_path;
-
-        if (Storage::disk('public')->exists($directory)) {
-            $files = Storage::disk('public')->files($directory);
-            $content = $record->content;
-
-            $submittedFiles = [];
-            foreach ($content as $block => $data) {
-                if ($data['type'] === 'gallery') {
-                    foreach ($data['data']['images'] as $image) {
-                        $submittedFiles[] = $image;
-                    }
-                } else if($data['type'] === 'media') {
-                    $submittedFiles[] = $data['media'];
-                }
-            }
-
-            // delete files that are not in the submitted content
-            foreach ($files as $file) {
-                if (!in_array($file, $submittedFiles)) {
-                    Storage::disk('public')->delete($file);
-                }
-            }
-        }
-    }
-
     /**
      * Update file paths in the JSON content.
      *
