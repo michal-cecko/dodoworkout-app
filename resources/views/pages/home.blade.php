@@ -165,7 +165,6 @@
             </div>
         </section>
     @endif
-
 @endsection
 
 @section("scripts")

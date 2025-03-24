@@ -54,8 +54,16 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()
-                    ->defaultLocales(array_map(fn($locale) => strtolower($locale->value), config('app.locales')))
+                    ->defaultLocales(array_map(fn($locale) => strtolower($locale->value), config('app.locales'))),
             )
+            ->plugin( \Awcodes\Curator\CuratorPlugin::make()
+                ->label('Media')
+                ->pluralLabel('Media')
+                ->navigationIcon('heroicon-o-photo')
+                ->navigationGroup('Content')
+                ->navigationSort(3)
+                ->navigationCountBadge()
+                ->defaultListView('grid'))
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,

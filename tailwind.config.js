@@ -5,11 +5,12 @@ export default {
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
-        "./resources/**/*.blade.php",
-        "./resources/**/*.js",
         "./resources/**/*.vue",
         "./vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css",
-        './vendor/jaocero/radio-deck/resources/views/**/*.blade.php',
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        /*'./vendor/awcodes/filament-curator/resources/!**!/!*.blade.php',*/
+        /*'./vendor/jaocero/radio-deck/resources/views/!**!/!*.blade.php',*/
     ],
     theme: {
         extend: {

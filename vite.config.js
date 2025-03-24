@@ -6,10 +6,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/app.js',
+                'resources/js/post.js',
                 'resources/js/home.js',
-
                 'resources/css/app.css',
-                'resources/css/filament/dashboard/theme.css'
+                'resources/css/filament/dashboard/theme.css',
             ],
             refresh: true,
         }),

@@ -129,27 +129,10 @@
 
             <div class="max-md:hidden absolute top-[40%] rotate-[-7deg] bg-progress-curve" style="background: url('/svg/progress.svg') repeat-x center;"></div>
         </div>
-
-        <script type="module" defer>
-            import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
-
-            const swiper = new Swiper('#workshops-swiper', {
-                slidesPerView: 1,
-                loop: true,
-                navigation: {
-                    nextEl: '#workshop-swiper-next',
-                    prevEl: '#workshop-swiper-prev'
-                },
-                breakpoints: {
-                    '768': {
-                        slidesPerView: 2,
-                    },
-                    '1280': {
-                        slidesPerView: 3,
-                    }
-                }
-            })
-        </script>
         </div>
     @endif
+@endsection
+
+@section("scripts")
+    @vite(['resources/js/post.js'])
 @endsection

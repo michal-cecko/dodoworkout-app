@@ -33,7 +33,7 @@ class PageController extends Controller
             ->firstOrFail();
 
         // Get related posts by shared tags
-        $relatedPosts = Post::whereHas('tags', function ($query) use ($post) {
+        $relatedPosts = Post::withWhereHas('tags', function ($query) use ($post) {
             $query->whereIn('tags.id', $post->tags->pluck('id'));
         })
             ->where('id', '!=', $post->id) // Exclude the current post

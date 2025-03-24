@@ -24,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap(MorphMap::make());
 
+        Model::preventLazyLoading(!app()->isProduction());
+        JsonResource::withoutWrapping();
+
         Livewire::component('filament-notifications', Notifications::class);
     }
 }
