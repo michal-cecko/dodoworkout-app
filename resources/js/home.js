@@ -1,4 +1,4 @@
-import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11.2.5/swiper-bundle.min.js'
+import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11.2.6/+esm'
 
 const heroSwiper = new Swiper('#hero-swiper', {
     slidesPerView: 1,

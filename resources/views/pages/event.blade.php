@@ -196,7 +196,7 @@
                 {!! svgIcon("svg/progress.svg", ['class' => ['max-lg:hidden absolute top-[50%] w-[calc(100vw * 2)]']]) !!}
 
                 <script type="module" defer>
-                    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11.2.5/swiper-bundle.min.js'
+                    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11.2.6/+esm'
 
                     const swiper = new Swiper('#workshops-swiper', {
                         slidesPerView: 1,
