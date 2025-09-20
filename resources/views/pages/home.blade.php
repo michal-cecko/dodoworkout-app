@@ -20,7 +20,7 @@
                                     </p>
                                     <div class="flex ml-2">
                                         <a class="btn" data-variant="primary"
-                                           href="{{LocaleService::getLocalizedRoutePathByName(name: "event", parameters: ['event' => app()->currentLocale() === "sk" ? 'wswcf-academy-2-dnove-skolenie-trenerov-kalisteniky' : "become-a-certified-street-workout-and-calisthenics-trainer"])}}">{!! __("home_certification_slide_button_primary") !!}</a>
+                                           href="{{LocaleService::getLocalizedRoutePathByName(name: "event", parameters: ['event' => 'stan-sa-certifikovaným-trenerom-kalisteniky'])}}">{!! __("home_certification_slide_button_primary") !!}</a>
                                     </div>
                                 </div>
 
