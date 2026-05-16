@@ -110,7 +110,7 @@
                         <h3 class="font-bold text-2xl hfont max-lg:text-2xl max-lg:mb-8">
                             @if($event->last_few_left)
                                 <span class="highlight">{{__("event_register_cta_partial")}},</span><br
-                                    class="max-lg:hidden"/>{{__("still_places_left", ["count" => $event->participants_available])}}
+                                    class="max-lg:hidden"/>{{ trans_choice("still_places_left", $event->participants_available, ["count" => $event->participants_available]) }}
                             @else
                                 <span class="highlight">{{__("event_register_cta_partial")}}</span>
                             @endif

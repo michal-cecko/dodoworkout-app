@@ -15,7 +15,7 @@
             @if(!empty($event->participants_count))
                 <div class="info-item">
                     {!! svgIcon("icon/icon-user_group.svg", ['class' => ['text-primary mx-auto']]) !!}
-                    <span class="{{ $event->last_few_left ? "text-primary font-bold" : "" }}">{{ __("places_left", ["count" => $event->participants_available]) }}</span>
+                    <span class="{{ $event->last_few_left ? "text-primary font-bold" : "" }}">{{ trans_choice("places_left", $event->participants_available, ["count" => $event->participants_available]) }}</span>
                 </div>
             @endif
 
