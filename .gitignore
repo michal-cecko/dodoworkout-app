@@ -72,3 +72,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Composer auth credentials
+auth.json
