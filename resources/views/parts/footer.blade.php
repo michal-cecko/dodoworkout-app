@@ -48,6 +48,6 @@
         </div>
     </div>
     <div class="bg-[#F8F8F8] border-t border-[#EEE5E5] h-16 flex items-center justify-center text-sm px-sm-0 px-6 text-center">
-        Copyright © 2025 | DODOWORKOUT | {{__("all_rights_reserved")}} | <a style="display: inline-block; margin-left: 0.2rem" href="https://synapps.sk">Made by <b>Synapps</b></a>
+        Copyright © 2025 | DODOWORKOUT | {{__("all_rights_reserved")}} | <a style="display: inline-block; margin-left: 0.2rem" href="https://cecko.dev" target="_blank" rel="noopener">{{__("made_by")}} <b>Michal Čečko</b></a>
     </div>
 </footer>
